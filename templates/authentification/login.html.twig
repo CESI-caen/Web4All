@@ -1,0 +1,22 @@
+{% extends 'authentification.html.twig' %}
+
+{% block title %}login{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <section>
+        <img src="{{ asset('build/images/duck.gif')}}">
+        <form>
+            <label class="titre">Email<br><input name="email" type="email" size="30" placeholder="email@domain.com" required ></label>
+            <br><br>
+            <label class="titre">Password<br><input name="password" type="password" size="30" placeholder="value" required ></label>
+            <br>
+            <button id="send" type="submit"></button hidden>
+            <label class="button" for="send">Sign in</label>
+            <br><br>
+        </form>
+    </section>
+{% endblock %}
