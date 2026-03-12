@@ -82,6 +82,27 @@
 
 ## Mockup
 
+## Arborescence d'url
+
+- web4all/
+
+	- web4all/Entreprise/Créer/
+	- web4all/Entreprise/Modifier/{{id}}/
+	- web4all/Entreprise/{{id}}/
+
+	- web4all/Offre/Créer/
+	- web4all/Offre/Modifier/{{id}}/
+	- web4all/Offre/Postuler/{{id}}/
+	- web4all/Offre/{{id}}/
+
+	- web4all/Compte/Login/
+	- web4all/Compte/Sign-in/
+	- web4all/Compte/{{id}}/
+		- web4all/Compte/{{id}}/Wishlist/
+		*si étudiant*
+		- web4all/Compte/{{id}}/Likes/
+		*si étudiant*
+
 ## Gestion de projet (scrum master)
 
 ### Planning de review/meeting
