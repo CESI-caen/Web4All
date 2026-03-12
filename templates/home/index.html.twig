@@ -1,20 +1,61 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Stages</title>
+    <link rel="stylesheet" href="{{ asset('assets/home/index.css') }}">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <button class="mobile-nav-button">
+                <img
+                <span>Recherche</span>
+            </button>
+            <div class="header-title">Accueil</div>
+            <button class="mobile-nav-button">
+                <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <span>Recherche</span>
+            </button>
+        </div>
+    </header>
 
-{% block title %}Hello HomeController!{% endblock %}
+    <main>
+        <div class="main-container">
+            <h1>Bienvenue sur la page de stages</h1>
+            <p>Découvrez les meilleures opportunités de stages pour votre carrière.</p>
+            <button class="main-button">Voir les offres de stages</button>
+        </div>
+    </main>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/Web4All.local/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/Web4All.local/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+    <!-- MOBILE NAVIGATION -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-container">
+            <button class="mobile-nav-button">
+                <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                </svg>
+                <span>Accueil</span>
+            </button>
+            <button class="mobile-nav-button">
+                <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span>Favoris</span>
+            </button>
+            <button class="mobile-nav-button">
+                <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <span>Recherche</span>
+            </button>
+        </div>
+    </nav>
+</body>
+</html>
