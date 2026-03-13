@@ -20,9 +20,12 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('app', './assets/styles/authentification/app.css')
+
     .addEntry('login', './assets/styles/authentification/login.css')
     .addEntry('home', './assets/styles/home/index.css')
+    .addEntry('header', './assets/styles/header.css')
+    .addEntry('footer', './assets/styles/footer.css')
+
 
     .copyFiles({
         from: "./assets/images",
