@@ -1,47 +1,54 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de Stages</title>
-    {{ encore_entry_link_tags('home') }}
-</head>
-<body>
-    <!-- HEADER -->
-    <header>
-        <div class="header-container">
-            <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_burger_menu.png')}}" alt="Menu">
-            </button>
-            <div class="header-title">Accueil</div>
-            <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_notification.png')}}" alt="Notification">
-            </button>
-        </div>
-    </header>
+{% extends "base.html.twig" %}
 
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+
+{% block title %}
+    Page de Stages
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('home') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+
+{% block javascripts %}{% endblock %}
+
+
+{% block header %}
+    {{ include('header.html.twig')}}
+{% endblock %}
+
+
+{% block body %}
     <main>
-        <div class="main-container">
-            <h1>Bienvenue sur la page de stages</h1>
-            <p>Découvrez les meilleures opportunités de stages pour votre carrière.</p>
-            <button class="main-button">Voir les offres de stages</button>
+        <div name="Container Offres" class="offre-container">
+            {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
+
+            {% for offre in 0..3 %}
+                <div name="Bulle Offre" class="offre-item">
+                    <head>
+                        <p class="bulle-offre-titre">Offre {{offre}}</p>
+                        <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
+                    </head>
+                    <hr>
+                    <div class="bulle-offre-detail">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </main>
+{% endblock %}
 
-    <!-- MOBILE NAVIGATION -->
-    <nav class="mobile-nav">
-        <div class="mobile-nav-container">
-            <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/Home_sans.png')}}" alt="Home">            
 
-            </button>
-            <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_coeur.png')}}" alt="Whishlist">
-            </button>
-            <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_loupe.png')}}" alt="Recherche">
-            </button>
-        </div>
-    </nav>
-</body>
-</html>
+{% block footer %}
+    {{ include('footer.html.twig')}}
+{% endblock %}
+

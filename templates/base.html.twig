@@ -6,18 +6,18 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}StyleSheet{% endblock %}
         {% block javascripts %}JavaScript{% endblock %}
+        {% block head %}{% endblock %}
     </head>
 
-    <header>
-        {% block header %}Header{% endblock %}
-    </header>
-
     <body>
+        <header>
+            {% block header %}Header{% endblock %}
+        </header>
+
         {% block body %}Body{% endblock %}
+
+        <footer>
+            {% block footer %}Footer{% endblock %}
+        </footer>
     </body>
-
-    <footer>
-        {% block footer %}Footer{% endblock %}
-    </footer>
-
 </html>
