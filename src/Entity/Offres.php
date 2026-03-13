@@ -14,16 +14,16 @@ class Offres
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: "Id_offre", type: "integer")]
+    #[ORM\Column(name: "Id_offre", type: Types::INTEGER)]
     private ?int $id = null;
 
     #[ORM\Column(name: "Descriptif", type: Types::TEXT, nullable: true)]
     private ?string $descriptif = null;
 
-    #[ORM\Column(name: "Debut", type: Types::DATE_MUTABLE)]
+    #[ORM\Column(name: "Debut", type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $debut = null;
 
-    #[ORM\Column(name: "Fin", type: Types::DATE_MUTABLE)]
+    #[ORM\Column(name: "Fin", type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fin = null;
 
     #[ORM\Column(name: "Duree", length: 50, nullable: true)]
@@ -71,7 +71,7 @@ class Offres
         return $this->debut;
     }
 
-    public function setDebut(\DateTimeInterface $debut): static
+    public function setDebut(?\DateTimeInterface $debut): static
     {
         $this->debut = $debut;
 
@@ -83,7 +83,7 @@ class Offres
         return $this->fin;
     }
 
-    public function setFin(\DateTimeInterface $fin): static
+    public function setFin(?\DateTimeInterface $fin): static
     {
         $this->fin = $fin;
 

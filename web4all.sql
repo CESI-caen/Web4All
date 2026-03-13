@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 13 mars 2026 à 13:40
+-- Généré le : ven. 13 mars 2026 à 15:53
 -- Version du serveur : 8.0.45-0ubuntu0.24.04.1
 -- Version de PHP : 8.3.6
 
@@ -52,12 +52,12 @@ CREATE TABLE `Créer` (
 
 CREATE TABLE `Entreprises` (
   `Id_entreprise` int NOT NULL,
-  `Nom_entreprise` varchar(50) NOT NULL,
-  `Domaine` varchar(50) NOT NULL,
-  `Email_RH` varchar(50) NOT NULL,
-  `Telephone_entreprise` varchar(50) NOT NULL,
-  `Descriptif` varchar(50) NOT NULL,
-  `Id_ville` varchar(50) NOT NULL
+  `Nom_Entreprise` varchar(50) DEFAULT NULL,
+  `Domaine` varchar(50) DEFAULT NULL,
+  `Email_RH` varchar(50) DEFAULT NULL,
+  `Telephone` varchar(50) DEFAULT NULL,
+  `Descriptif` varchar(50) DEFAULT NULL,
+  `Id_ville` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -69,8 +69,8 @@ CREATE TABLE `Entreprises` (
 CREATE TABLE `Offres` (
   `Id_offre` int NOT NULL,
   `Descriptif` text,
-  `Debut` date NOT NULL,
-  `Fin` date NOT NULL,
+  `Debut` date DEFAULT NULL,
+  `Fin` date DEFAULT NULL,
   `Duree` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -93,8 +93,15 @@ CREATE TABLE `Postuler` (
 
 CREATE TABLE `Types` (
   `Id_type` int NOT NULL,
-  `Nom_type` varchar(30) NOT NULL
+  `Nom_type` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `Types`
+--
+
+INSERT INTO `Types` (`Id_type`, `Nom_type`) VALUES
+(1, 'Etudiant');
 
 -- --------------------------------------------------------
 
@@ -104,14 +111,21 @@ CREATE TABLE `Types` (
 
 CREATE TABLE `Utilisateurs` (
   `Id_utilisateur` int NOT NULL,
-  `Nom_utilisateurs` varchar(50) NOT NULL,
-  `Prenom_utilisateurs` varchar(50) NOT NULL,
-  `Email_utilisateurs` varchar(100) NOT NULL,
-  `mot_de_passe` varchar(50) NOT NULL,
-  `Telephone_utilisateurs` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Id_ville` varchar(50) NOT NULL,
+  `Nom` varchar(50) DEFAULT NULL,
+  `Prenom` varchar(50) DEFAULT NULL,
+  `Email` varchar(100) DEFAULT NULL,
+  `mot_de_passe` varchar(50) DEFAULT NULL,
+  `Telephone` varchar(17) DEFAULT NULL,
+  `Id_ville` int NOT NULL,
   `Id_type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `Utilisateurs`
+--
+
+INSERT INTO `Utilisateurs` (`Id_utilisateur`, `Nom`, `Prenom`, `Email`, `mot_de_passe`, `Telephone`, `Id_ville`, `Id_type`) VALUES
+(1, 'Dupont', 'Jean', 'jean.dupont@email.com', 'password123', '0601020304', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -120,10 +134,21 @@ CREATE TABLE `Utilisateurs` (
 --
 
 CREATE TABLE `Villes` (
-  `Id_ville` varchar(50) NOT NULL,
-  `Nom_ville` varchar(50) NOT NULL,
-  `CP` int NOT NULL
+  `Id_ville` int NOT NULL,
+  `Nom_ville` varchar(50) DEFAULT NULL,
+  `CP` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `Villes`
+--
+
+INSERT INTO `Villes` (`Id_ville`, `Nom_ville`, `CP`) VALUES
+(1, 'Caen', 14000),
+(2, 'Le Mans', 72000),
+(3, 'Paris', 75000),
+(4, 'Le Havre', 76000),
+(5, 'Grenoble', 38000);
 
 -- --------------------------------------------------------
 
@@ -201,6 +226,40 @@ ALTER TABLE `Villes`
 ALTER TABLE `Vouloir`
   ADD PRIMARY KEY (`Id_utilisateur`,`Id_offre`),
   ADD KEY `Id_offre` (`Id_offre`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `Entreprises`
+--
+ALTER TABLE `Entreprises`
+  MODIFY `Id_entreprise` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Offres`
+--
+ALTER TABLE `Offres`
+  MODIFY `Id_offre` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Types`
+--
+ALTER TABLE `Types`
+  MODIFY `Id_type` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `Utilisateurs`
+--
+ALTER TABLE `Utilisateurs`
+  MODIFY `Id_utilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `Villes`
+--
+ALTER TABLE `Villes`
+  MODIFY `Id_ville` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Contraintes pour les tables déchargées

@@ -10,25 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
 class Villes
 {
     #[ORM\Id]
-    #[ORM\Column(name: "Id_ville", length: 50)]
-    private ?string $id = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: "Id_ville", type: "integer")]
+    private ?int $id = null;
 
     #[ORM\Column(name: "Nom_ville", length: 50)]
     private ?string $nomVille = null;
 
-    #[ORM\Column(name: "CP", type: "integer")]
-    private ?int $cp = null;
+    #[ORM\Column(name: "CP", length: 50)]
+    private ?string $cp = null;
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(string $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getNomVille(): ?string
@@ -43,12 +37,12 @@ class Villes
         return $this;
     }
 
-    public function getCp(): ?int
+    public function getCp(): ?string
     {
         return $this->cp;
     }
 
-    public function setCp(int $cp): static
+    public function setCp(string $cp): static
     {
         $this->cp = $cp;
 

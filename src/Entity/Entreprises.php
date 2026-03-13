@@ -14,7 +14,7 @@ class Entreprises
     #[ORM\Column(name: "Id_entreprise", type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(name: "Nom_entreprise", length: 50)]
+    #[ORM\Column(name: "Nom_Entreprise", length: 50)]
     private ?string $nomEntreprise = null;
 
     #[ORM\Column(name: "Domaine", length: 50)]
@@ -23,8 +23,8 @@ class Entreprises
     #[ORM\Column(name: "Email_RH", length: 50)]
     private ?string $emailRh = null;
 
-    #[ORM\Column(name: "Telephone_entreprise", length: 50)]
-    private ?string $telephoneEntreprise = null;
+    #[ORM\Column(name: "Telephone", length: 50)]
+    private ?string $telephone = null;
 
     #[ORM\Column(name: "Descriptif", length: 50)]
     private ?string $descriptif = null;
@@ -74,14 +74,14 @@ class Entreprises
         return $this;
     }
 
-    public function getTelephoneEntreprise(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->telephoneEntreprise;
+        return $this->telephone;
     }
 
-    public function setTelephoneEntreprise(string $telephoneEntreprise): static
+    public function setTelephone(string $telephone): static
     {
-        $this->telephoneEntreprise = $telephoneEntreprise;
+        $this->telephone = $telephone;
 
         return $this;
     }

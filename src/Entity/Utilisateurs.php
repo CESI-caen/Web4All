@@ -16,20 +16,20 @@ class Utilisateurs
     #[ORM\Column(name: "Id_utilisateur", type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(name: "Nom_utilisateurs", length: 50)]
-    private ?string $nomUtilisateurs = null;
+    #[ORM\Column(name: "Nom", length: 50)]
+    private ?string $nom = null;
 
-    #[ORM\Column(name: "Prenom_utilisateurs", length: 50)]
-    private ?string $prenomUtilisateurs = null;
+    #[ORM\Column(name: "Prenom", length: 50)]
+    private ?string $prenom = null;
 
-    #[ORM\Column(name: "Email_utilisateurs", length: 100)]
-    private ?string $emailUtilisateurs = null;
+    #[ORM\Column(name: "Email", length: 100)]
+    private ?string $email = null;
 
     #[ORM\Column(name: "mot_de_passe", length: 50)]
     private ?string $motDePasse = null;
 
-    #[ORM\Column(name: "Telephone_utilisateurs", length: 20)]
-    private ?string $telephoneUtilisateurs = null;
+    #[ORM\Column(name: "Telephone", length: 17)]
+    private ?string $telephone = null;
 
     #[ORM\ManyToOne(targetEntity: Villes::class)]
     #[ORM\JoinColumn(name: "Id_ville", referencedColumnName: "Id_ville", nullable: false)]
@@ -76,38 +76,38 @@ class Utilisateurs
         return $this->id;
     }
 
-    public function getNomUtilisateurs(): ?string
+    public function getNom(): ?string
     {
-        return $this->nomUtilisateurs;
+        return $this->nom;
     }
 
-    public function setNomUtilisateurs(string $nomUtilisateurs): static
+    public function setNom(string $nom): static
     {
-        $this->nomUtilisateurs = $nomUtilisateurs;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getPrenomUtilisateurs(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->prenomUtilisateurs;
+        return $this->prenom;
     }
 
-    public function setPrenomUtilisateurs(string $prenomUtilisateurs): static
+    public function setPrenom(string $prenom): static
     {
-        $this->prenomUtilisateurs = $prenomUtilisateurs;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getEmailUtilisateurs(): ?string
+    public function getEmail(): ?string
     {
-        return $this->emailUtilisateurs;
+        return $this->email;
     }
 
-    public function setEmailUtilisateurs(string $emailUtilisateurs): static
+    public function setEmail(string $email): static
     {
-        $this->emailUtilisateurs = $emailUtilisateurs;
+        $this->email = $email;
 
         return $this;
     }
@@ -124,14 +124,14 @@ class Utilisateurs
         return $this;
     }
 
-    public function getTelephoneUtilisateurs(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->telephoneUtilisateurs;
+        return $this->telephone;
     }
 
-    public function setTelephoneUtilisateurs(string $telephoneUtilisateurs): static
+    public function setTelephone(string $telephone): static
     {
-        $this->telephoneUtilisateurs = $telephoneUtilisateurs;
+        $this->telephone = $telephone;
 
         return $this;
     }
@@ -203,7 +203,9 @@ class Utilisateurs
 
     public function removeOffresPostulee(Offres $offresPostulee): static
     {
-        $this->offresPostulees->removeElement($offresPostulee);
+        if ($this->offresPostulees->removeElement($offresPostulee)) {
+            $offresPostulee->removePostulant($this);
+        }
 
         return $this;
     }
@@ -227,7 +229,9 @@ class Utilisateurs
 
     public function removeOffresSouhaitee(Offres $offresSouhaitee): static
     {
-        $this->offresSouhaitees->removeElement($offresSouhaitee);
+        if ($this->offresSouhaitees->removeElement($offresSouhaitee)) {
+            $offresSouhaitee->removeSouhaiteesPar($this);
+        }
 
         return $this;
     }
@@ -251,7 +255,9 @@ class Utilisateurs
 
     public function removeOffresCree(Offres $offresCree): static
     {
-        $this->offresCrees->removeElement($offresCree);
+        if ($this->offresCrees->removeElement($offresCree)) {
+            $offresCree->removeCreateur($this);
+        }
 
         return $this;
     }
