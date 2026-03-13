@@ -8,9 +8,9 @@
     - [Spécifications Techniques](#spécifications-techniques)
 - [Wireframe](#wireframe-mobile-first)
 - [Mockup](#mockup)
+- [Arborescence d'url](#arborescence-durl)
 - [Gestion de projet](#gestion-de-projet-scrum-master)
     - [Planning de Review/Meeting](#planning-de-reviewmeeting)
-
 
 ## Cahier des charges
 
@@ -84,24 +84,29 @@
 
 ## Arborescence d'url
 
+Racine 
 - web4all/
 
-	- web4all/Entreprise/Créer/
-	- web4all/Entreprise/Modifier/{{id}}/
-	- web4all/Entreprise/{{id}}/
 
-	- web4all/Offre/Créer/
-	- web4all/Offre/Modifier/{{id}}/
-	- web4all/Offre/Postuler/{{id}}/
-	- web4all/Offre/{{id}}/
+Pages Entreprises
+- web4all/Entreprise/Créer/
+- web4all/Entreprise/{{id}}/Modifier/
+- web4all/Entreprise/{{id}}/
 
-	- web4all/Compte/Login/
-	- web4all/Compte/Sign-in/
-	- web4all/Compte/{{id}}/
-		- web4all/Compte/{{id}}/Wishlist/
-		*si étudiant*
-		- web4all/Compte/{{id}}/Likes/
-		*si étudiant*
+Pages Offres
+- web4all/Offre/Créer/
+- web4all/Offre/{{id}}/
+- web4all/Offre/{{id}}/Modifier/
+- web4all/Offre/{{id}}/Postuler/
+
+Pages Comptes
+- web4all/Compte/Login/
+- web4all/Compte/Sign-in/
+- web4all/Compte/{{id}}/
+- web4all/Compte/{{id}}/Wishlist/
+	> *si étudiant*
+- web4all/Compte/{{id}}/Likes/
+	> *si étudiant*
 
 ## Gestion de projet (scrum master)
 
