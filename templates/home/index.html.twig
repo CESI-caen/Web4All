@@ -28,12 +28,19 @@
 
 {% block body %}
     <main>
-        <div name="Container Bulle Offre" class="bulle-offre-container">
+        <div name="Container Offres" class="offre-container">
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
 
-            {% for offre in 0..1 %}
-                <div name="Bulle Offre" class="bulle-offre-item">
-                    Lorem Impsum
+            {% for offre in 0..3 %}
+                <div name="Bulle Offre" class="offre-item">
+                    <head>
+                        <p class="bulle-offre-titre">Offre {{offre}}</p>
+                        <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
+                    </head>
+                    <hr>
+                    <div class="bulle-offre-detail">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
+                    </div>
                 </div>
             {% endfor %}
         </div>

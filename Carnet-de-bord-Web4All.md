@@ -105,8 +105,6 @@ Pages Comptes
 - web4all/Compte/{{id}}/
 - web4all/Compte/{{id}}/Wishlist/
 	> *si étudiant*
-- web4all/Compte/{{id}}/Likes/
-	> *si étudiant*
 
 ## Gestion de projet (scrum master)
 
