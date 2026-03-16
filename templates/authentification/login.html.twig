@@ -2,13 +2,22 @@
 
 {% block title %}login{% endblock %}
 
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('login') }}
 {% endblock %}
 
+{% block javascripts %}{% endblock %}
+
+
+{% block header %}{% endblock %}
+
 {% block body %}
-    <section>
-        <img src="{{ asset('build/images/duck.gif')}}">
+    <section class = "container">
+        <h1>Welcome to Web4All ! </h1>
         <form>
             <label class="titre">Email<br><input name="email" type="email" size="30" placeholder="email@domain.com" required ></label>
             <br><br>
@@ -18,5 +27,10 @@
             <label class="button" for="send">Sign in</label>
             <br><br>
         </form>
+        <div class="divider">
+            <span>or</span>
+        </div>
+        
+
     </section>
 {% endblock %}
