@@ -7,10 +7,13 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('login') }}
+    {{ encore_entry_link_tags('login.css') }}
+    {{ encore_entry_link_tags('authentification') }}
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('login.js') }}
+{% endblock %}
 
 
 {% block header %}{% endblock %}
@@ -20,17 +23,18 @@
         <h1>Welcome to Web4All ! </h1>
         <form>
             <label class="titre">Email<br><input name="email" type="email" size="30" placeholder="email@domain.com" required ></label>
-            <br><br>
+            <br>
             <label class="titre">Password<br><input name="password" type="password" size="30" placeholder="value" required ></label>
             <br>
-            <button id="send" type="submit"></button hidden>
-            <label class="button" for="send">Sign in</label>
-            <br><br>
+            <button class="bouton-a" id="login" type="submit">Login</button>
+            <br>
         </form>
         <div class="divider">
             <span>or</span>
         </div>
-        
+        <button class="bouton-b" id="create-account">Create an account</button>
 
     </section>
 {% endblock %}
+
+{% block footer %}{% endblock %}
