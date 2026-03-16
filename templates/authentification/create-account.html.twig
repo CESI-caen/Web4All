@@ -48,19 +48,15 @@
          <label class="titre">Nom<br>
          <input name="nom" type="text" placeholder="Nom" required>
          </label>
-         <br>
          <label class="titre">Prenom<br>
          <input name="prenom" type="text" placeholder="Prenom" required>
          </label>
-         <br>
          <label class="titre">Genre<br>
          <input name="genre" type="text" placeholder="Genre" required>
          </label>
-         <br>
          <label class="titre">Ville<br>
          <input name="ville" type="text" placeholder="Ville" required>
          </label>
-         <br>
          <label class="titre">Type de compte<br></label><br>
          <label class="switch">
             <input type="radio" name="account_type" value="user" checked>
@@ -83,8 +79,17 @@
          <input name="password_confirm" type="password" placeholder="Confirmer le mot de passe" required>
          </label>
          <br>
+         <div class="buttons">
+            <label>
+            <input type="hidden" name="page" value="1">
+            <button formnovalidate class="bouton-b" id="annuler">Annuler</button>
+            </label>
+            <button class="bouton-a" id="terminer">Terminer</button>
+            
+        </div>
         </form>
     </section>
+    
 {% endif %}
 {% endblock %}
 
