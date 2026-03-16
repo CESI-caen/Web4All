@@ -9,16 +9,48 @@ body {
    MAIN CONTENT
    ============================================ */
 
+
 main {
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
   /*
     padding: 2rem 1.5rem 8rem;
   */
+    .menu-panel {
+      top: 0;
+      left: 0;
+      right: 0;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: absolute;
+    background-color: #eee;
+    z-index: 1;
+    
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    
+  }
+
+  .menu-item:hover {
+    background-color: #f5f5f5;
+  }
+
 
   .offre-container{
     padding: 10px;
     align-content: center;
+    
     /*
     border: 3px solid black ;
     border-radius: 5px;
@@ -59,6 +91,7 @@ main {
     }
   }
 }
+
 
 /* ============================================
    RESPONSIVE ADJUSTMENTS
