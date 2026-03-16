@@ -29,6 +29,8 @@ Encore
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')
 
+    /* Fichiers css non commit (dans .gitignore) */
+    .addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
 
     .copyFiles({
         from: "./assets/images",
