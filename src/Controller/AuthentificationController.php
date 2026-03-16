@@ -8,15 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AuthentificationController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
+    #[Route('/login', name: 'Login')]
     public function sign_in(): Response
     {
         return $this->render('authentification/login.html.twig');
     }
 
-    #[Route('/sign-in', name: 'app_sign_in')]
+    #[Route('/create-account', name: 'CreateAccount')]
     public function sign_up(): Response
     {
-        return $this->render('authentification/sign_in.html.twig');
+        return $this->render('authentification/create-account.html.twig');
     }
 }

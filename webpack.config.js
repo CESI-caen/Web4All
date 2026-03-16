@@ -22,7 +22,10 @@ Encore
      */
 
     .addEntry('login', './assets/styles/authentification/login.css')
+    .addEntry('create-account', './assets/styles/authentification/create-account.css')
+
     .addEntry('home', './assets/styles/home/index.css')
+    
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')
 
