@@ -1,10 +1,42 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Create Account{% endblock %}
+
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('create-account') }}
 {% endblock %}
+
+
 {% block javascripts %}{% endblock %}
 
 
-{% block body %}{% endblock %}
+{% block header %}
+    {# Pas de header nécessaire #}
+{% endblock %}
+
+
+{% block body %}
+    {# 
+    Nom
+    Prenom
+    Genre
+    Ville de résidence
+    Type de compte
+        Pilote
+        Recruteur
+        Etudiant
+    Email
+    Mdp
+    Mdp (2nd validation)
+     #}
+
+
+     
+{% endblock %}
+
+
+{% block footer %}
+    {# Pas de footer nécessaire #}
+{% endblock %}
