@@ -4,7 +4,7 @@
         <img src="{{ asset('build/images/icon_burger_menu.png')}}" alt="Menu">
     </button>
 
-    <div class="header-title">Accueil</div>
+    <button class="mobile-nav-button"> <div class="header-title">Accueil</div> </button>
 
     <button class="mobile-nav-button">
         <img src="{{ asset('build/images/icon_notification.png')}}" alt="Notification">
@@ -13,6 +13,7 @@
 </div>
 
 <script>
+/*Script qui permet l'affichage ou non du men*/
 function toggleMenu() {
     if(MenuPannel.hidden) {
         MenuPannel.hidden = false;
