@@ -28,6 +28,7 @@ Encore
     .addEntry('create-account.js', './assets/scripts/authentification/create-account.js')
 
     .addEntry('home', './assets/styles/home/index.css')
+    .addEntry('index.js', './assets/scripts/home/index.js')
     
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')

@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+
+{% set page_title = "Pagetype" %} {#Selon ce qu'on veut#}
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('home') }} {#Exemple#}
+    {{ encore_entry_link_tags('header') }} {#Exemple#}
+    {{ encore_entry_link_tags('footer') }} {#Exemple#}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('index.js') }} {#Exemple#}
+{% endblock %}
+
+
+{% block header %}
+
+{% endblock %}
+
+
+{% block body %}
+    <main>
+    </main>
+{% endblock %}
+
+
+{% block footer %}
+    {{ include('footer.html.twig')}}
+{% endblock %}
+

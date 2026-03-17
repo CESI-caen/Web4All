@@ -3,21 +3,36 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}StyleSheet{% endblock %}
-        {% block javascripts %}JavaScript{% endblock %}
-        {% block head %}{% endblock %}
+        <title>
+        {% block title %}
+            Welcome!
+        {% endblock %}</title>
+        {% block stylesheets %}
+            StyleSheet
+        {% endblock %}
+        {% block javascripts %}
+            JavaScript
+        {% endblock %}
+        {% block head %}
+
+        {% endblock %}
     </head>
 
     <body>
         <header>
-            {% block header %}Header{% endblock %}
+            {% block header %}
+                Header
+            {% endblock %}
         </header>
 
-        {% block body %}Body{% endblock %}
+        {% block body %}
+            Body
+        {% endblock %}
 
         <footer>
-            {% block footer %}Footer{% endblock %}
+            {% block footer %}
+                Footer
+            {% endblock %}
         </footer>
     </body>
 </html>
