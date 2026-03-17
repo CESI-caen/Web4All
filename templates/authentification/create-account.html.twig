@@ -57,16 +57,24 @@
          <label class="titre">Ville<br>
          <input name="ville" type="text" placeholder="Ville" required>
          </label>
+
+
          <label class="titre">Type de compte<br></label><br>
          <label class="switch">
-            <input type="radio" name="account_type" value="user" checked>
+            <input type="radio" name="account_type" value="pilote" checked>
             <span class="slider">Pilote</span>
         </label>
         <label class="switch">
-            <input type="radio" name="account_type" value="company">
+            <input type="radio" name="account_type" value="recruteur">
             <span class="slider">Recruteur</span>
         </label>
+
         <br><br>
+        <label class="groupe">
+            <span id="labelGroupe">École</span><br>
+            <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+        </label>
+        <br>
         <label class="email">Email<br>
         <input name="email" type="email" value = {{ email }} required>
         </label>

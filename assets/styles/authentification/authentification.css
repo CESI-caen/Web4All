@@ -6,16 +6,18 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  margin: 0;
+  margin-bottom: 5vh;
 }
 
 .container {
   text-align: center;
+  width: 80vw;
+  max-width: 500px;
 }
 
 form {
+  margin-inline: auto ;
   background: white;
-  width: 320px;
   padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
