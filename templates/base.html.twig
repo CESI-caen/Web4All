@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html>
+{# Le Texte dans les blocs title, stylesheets, ... sont là pour ne pas oublier de les utilisées lors de l'extend dans un autre fichier Twig #}
 
+<html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
         {% block title %}
             Welcome!
         {% endblock %}</title>
         {% block stylesheets %}
+            {{ encore_entry_link_tags('header') }} {#css du header de base#}
+            {{ encore_entry_link_tags('footer') }} {#css du footer de base#}
             StyleSheet
         {% endblock %}
         {% block javascripts %}
             JavaScript
         {% endblock %}
         {% block head %}
-
+            Head
         {% endblock %}
     </head>
 
