@@ -122,16 +122,13 @@ main {
    PC
    ============================================ */
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
 
   main {
-    
     display: grid;
-    grid-template-columns: 280px 1fr;
-    grid-template-areas: 
-      "menu content";
-
     gap: 2rem;
+    grid-template-areas: "menu content";
+    grid-template-columns: 280px 1fr;
   }
 
   .menu-panel {
@@ -139,7 +136,7 @@ main {
     max-width: 300px;
     position: sticky;
     bottom: 0;
-  }
+  } 
 
   .offre-container {
     grid-area: content;
