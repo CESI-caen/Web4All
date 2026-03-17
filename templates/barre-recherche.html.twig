@@ -1,0 +1,9 @@
+    <div class='barre-recherche'>
+            <form method="get" action="{{ search_action | default()}}">
+                    <label for="recherche-input" class="sr-only">Rechercher</label>
+                    <input id="recherche-input" type="search" name="{{ recherche_input_name | default('recherche')}}" placeholder="{{ recherche_placeholder | default('Rechercher …')}}">
+                    <button type="submit">
+                            <img src="{{ recherche_submit_icone | default( asset('build/images/icon_loupe.png') ) }}" alt="loupe_icone-lancer_recherche">
+                    </button>
+            </form>
+    </div>
