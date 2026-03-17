@@ -1,82 +1,161 @@
+/* ============================================
+   BASE
+   ============================================ */
+
 body {
   background: linear-gradient(135deg, #f9fafb 0%, #ffffff 50%, #f3f4f6 100%);
   color: #1f2937;
   line-height: 1.6;
   min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 /* ============================================
-   MAIN CONTENT
+   Mobile First
    ============================================ */
 
 main {
   max-width: 1280px;
   margin: 0 auto;
-  /*
-    padding: 2rem 1.5rem 8rem;
-  */
-
-  .offre-container{
-    padding: 10px;
-    align-content: center;
-    /*
-    border: 3px solid black ;
-    border-radius: 5px;
-    */
-
-    .offre-item{
-      /*
-      border: 2px dotted black;
-      border-radius: 3px;
-      */
-      margin-bottom: 15px;
-      
-      .bulle-offre-titre{
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin: 0;
-      }
-
-      .bulle-offre-dates{
-        font-size: small;
-        font-family: 'Times New Roman', Times, serif;
-        margin: 0;
-      }
-
-      hr{
-        margin-top: 1px;
-        margin-bottom: 1px;
-      }
-
-      .bulle-offre-detail{
-        font-style: italic;
-
-        p{
-          margin: 0;
-        }
-      }
-    }
-  }
+  padding: 1rem;
+  position: relative;
 }
 
 /* ============================================
-   RESPONSIVE ADJUSTMENTS
+   MENU PANEL
    ============================================ */
 
-@media (max-width: 640px) {
-  .header-container {
-    padding: 0.75rem 1rem;
-  }
+.menu-panel {
+  position: sticky;
+  top: 80px;
 
-  .header-title {
-    font-size: 1.25rem;
-  }
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+/* items */
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.menu-item-pc {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* ============================================
+   OFFRES
+   ============================================ */
+
+.offre-container {
+  padding: 10px;
+}
+
+.offre-item {
+  margin-bottom: 15px;
+}
+
+.bulle-offre-titre {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 15px;
+}
+
+.bulle-offre-dates {
+  font-size: 12px;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+}
+
+.offre-item hr {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.bulle-offre-detail {
+  font-style: italic;
+}
+
+.bulle-offre-detail p {
+  margin: 0;
+}
+
+/* ============================================
+   TABLETTE
+   ============================================ */
+
+@media (min-width: 768px) {
 
   main {
-    /*
-      padding: 1.5rem 1rem 8rem;
-    */
+    padding: 1.5rem;
+  }
+
+  .menu-panel {
+    top: 96px;
+  }
+
+  .menu-item {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+  
+}
+
+/* ============================================
+   PC
+   ============================================ */
+
+@media (min-width: 1024px) {
+
+  main {
+    display: grid;
+    gap: 2rem;
+    grid-template-areas: "menu content";
+    grid-template-columns: 280px 1fr;
+  }
+
+  .menu-panel {
+    grid-area: menu;
+    max-width: 300px;
+    position: sticky;
+    bottom: 0;
+  } 
+
+  .offre-container {
+    grid-area: content;
+  }
+  .menu-item-pc {
+    display: flex;
   }
 
 }

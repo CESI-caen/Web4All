@@ -28,11 +28,43 @@
 
 {% block body %}
     <main>
-        <div name="Container Offres" class="offre-container">
+    <div id="MenuPannel" class="menu-panel" hidden> 
+        <!-- Profil -->
+        <div class="menu-item">
+            <button > Nom Prénom</button>
+        </div>
+
+        <div class="menu-item">
+            <button > Profil</button>
+        </div>
+
+        <div class="menu-item">
+            <button > Fichiers personnels</button>
+        </div>
+
+        <div class="menu-item">
+            <button > Création de compte Etudiant Si Pilote scolaire</button>
+        </div>
+
+        <div class="menu-item">
+            <button > Paramètres </button>
+        </div>
+        <div class="menu-item-pc">
+            <button > Whishlist </button>
+        </div>
+        <div class="menu-item-pc">
+            <button > Recherche </button>
+        </div>
+        <div class="menu-item">
+            <button > Déconnexion </button>
+        </div>
+    </div>
+
+        <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
 
             {% for offre in 0..3 %}
-                <div name="Bulle Offre" class="offre-item">
+                <div name="Bulle-Offre" class="offre-item">
                     <head>
                         <p class="bulle-offre-titre">Offre {{offre}}</p>
                         <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
