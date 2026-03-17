@@ -20,9 +20,12 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-
-    .addEntry('login', './assets/styles/authentification/login.css')
-    .addEntry('create-account', './assets/styles/authentification/create-account.css')
+    
+    .addEntry('authentification', './assets/styles/authentification/authentification.css')
+    .addEntry('login.css', './assets/styles/authentification/login.css')
+    .addEntry('login.js', './assets/scripts/authentification/login.js')
+    .addEntry('create-account.css', './assets/styles/authentification/create-account.css')
+    .addEntry('create-account.js', './assets/scripts/authentification/create-account.js')
 
     .addEntry('home', './assets/styles/home/index.css')
     

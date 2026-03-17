@@ -1,42 +1,104 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Create account{% endblock %}
 
-{% block title %}Create Account{% endblock %}
-
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('create-account') }}
+    {{ encore_entry_link_tags('create-account.css') }}
+    {{ encore_entry_link_tags('authentification') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{encore_entry_script_tags('create-account.js')}}
 {% endblock %}
 
 
-{% block javascripts %}{% endblock %}
-
-
-{% block header %}
-    {# Pas de header nécessaire #}
-{% endblock %}
-
+{% block header %}{% endblock %}
 
 {% block body %}
-    {# 
-    Nom
-    Prenom
-    Genre
-    Ville de résidence
-    Type de compte
-        Pilote
-        Recruteur
-        Etudiant
-    Email
-    Mdp
-    Mdp (2nd validation)
-     #}
+    {% if page == 1 %}
+    <section class="container">
+        <h1>Welcome to Web4All ! </h1>
+        <h2>Create an account</h2>
+        <p>Enter your email to sign up for this app</p>
+        <form method="POST" action="{{ path('create-account') }}"> 
+            <label class="titre">Email<br>
+                <input name="email" type="email" placeholder="email@domain.com" required>
+            </label>
+            <br><br>
+            <input type="hidden" name="page" value="2">
+            <button class="bouton-a" id="continue" type="submit">Continue</button>
+            <br><br>
+        </form>
+        <div class="divider">
+            <span>or</span>
+        </div>
+    </section>
+    <section class="container">
+        <h2>Already have an account ?</h2>
+        <p>Click the button below to login</p>
+    <button class="bouton-b" id="login">Login</button>
+{% elseif page == 2 %}
+    <section class="container">
+        <h2>Inscription</h2>
+        <form>
+         <label class="titre">Nom<br>
+         <input name="nom" type="text" placeholder="Nom" required>
+         </label>
+         <label class="titre">Prenom<br>
+         <input name="prenom" type="text" placeholder="Prenom" required>
+         </label>
+         <label class="titre">Genre<br>
+         <input name="genre" type="text" placeholder="Genre" required>
+         </label>
+         <label class="titre">Ville<br>
+         <input name="ville" type="text" placeholder="Ville" required>
+         </label>
 
 
-     
+         <label class="titre">Type de compte<br></label><br>
+         <label class="switch">
+            <input type="radio" name="account_type" value="pilote" checked>
+            <span class="slider">Pilote</span>
+        </label>
+        <label class="switch">
+            <input type="radio" name="account_type" value="recruteur">
+            <span class="slider">Recruteur</span>
+        </label>
+
+        <br><br>
+        <label class="groupe">
+            <span id="labelGroupe">École</span><br>
+            <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+        </label>
+        <br>
+        <label class="email">Email<br>
+        <input name="email" type="email" value = {{ email }} required>
+        </label>
+        <br>
+        <label class="titre">Mot de passe<br>
+         <input name="password" type="password" placeholder="Mot de passe" required>
+         </label>
+         <br>
+         <label class="titre">Confirmation du mot de passe<br>
+         <input name="password_confirm" type="password" placeholder="Confirmer le mot de passe" required>
+         </label>
+         <br>
+         <div class="buttons">
+            <label>
+            <input type="hidden" name="page" value="1">
+            <button formnovalidate class="bouton-b" id="annuler">Annuler</button>
+            </label>
+            <button class="bouton-a" id="terminer">Terminer</button>
+            
+        </div>
+        </form>
+    </section>
+    
+{% endif %}
 {% endblock %}
 
-
-{% block footer %}
-    {# Pas de footer nécessaire #}
-{% endblock %}
+{% block footer %}{% endblock %}
