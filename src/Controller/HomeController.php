@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig',['page_title' => 'Accueil',]);
     }
-    #[Route('/parametres', name: 'Parametre')]
+    #[Route('/parametres', name: 'Parametres')]
     public function settings(): Response
     {
         return $this->render('home/settings.html.twig',['page_title' => 'Parametres',]);
