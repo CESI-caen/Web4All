@@ -28,6 +28,7 @@
 
 {% block body %}
     <main>
+
     <div id="MenuPannel" class="menu-panel" hidden> 
         <!-- Profil -->
         <div class="menu-item">
@@ -60,6 +61,13 @@
         </div>
     </div>
 
+        <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
+            <h1>Notifications</h1>
+            <div class="notif-item">
+                <button > Notification selon bdd</button>
+            </div>
+        </div>
+
         <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
 
@@ -76,6 +84,7 @@
                 </div>
             {% endfor %}
         </div>
+        
     </main>
 {% endblock %}
 
