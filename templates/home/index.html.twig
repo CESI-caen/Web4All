@@ -24,19 +24,7 @@
 
 
 {% block header %}
-    <div class="header-container">
-    
-    <button class="mobile-nav-button" onclick="toggleMenu()">
-        <img src="{{ asset('build/images/icon_burger_menu.png')}}" alt="Menu">
-    </button>
-
-    <button class="mobile-nav-button"> <div class="header-title"><a href="/">{{ page_title }}</a></div> </button>
-
-    <button class="mobile-nav-button" onclick="toggleNotif()">
-        <img src="{{ asset('build/images/icon_notification.png')}}" alt="Notification">
-    </button>
-</div>
-
+    {{ include('home/header-home.html.twig') }}
 {% endblock %}
 
 
