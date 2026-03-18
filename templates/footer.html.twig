@@ -2,13 +2,13 @@
     <nav class="mobile-nav">
         <div class="mobile-nav-container">
             <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/Home_sans.png')}}" alt="Home">            
+                {% block boutton_gauche %}{% endblock %}            
             </button>
             <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_coeur.png')}}" alt="Whishlist">
+                {% block boutton_milieu %}{% endblock %}
             </button>
             <button class="mobile-nav-button">
-                <img src="{{ asset('build/images/icon_loupe.png')}}" alt="Recherche">
+                {% block boutton_droite %}{% endblock %}
             </button>
         </div>
     </nav>
