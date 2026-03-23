@@ -1,5 +1,11 @@
 <div class="header-container">
-    {% block boutton_gauche %}{% endblock %}
+    {% block boutton_gauche %}
+        <button class="mobile-nav-button">
+            <div class="header-title">
+                <a href="{{ path(ancien_page_title) }}"><img src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+            </div>
+        </button>
+    {% endblock %}
 
     <button class="mobile-nav-button">
         <div class="header-title">
@@ -7,5 +13,7 @@
         </div>
     </button>
 
-    {% block boutton_droite %}{% endblock %}
+    {% block boutton_droite %}
+        <button class="mobile-nav-button" ></button>
+    {% endblock %}
 </div>

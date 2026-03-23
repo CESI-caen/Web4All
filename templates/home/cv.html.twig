@@ -22,12 +22,12 @@
 
 
 {% block header %}
-    {{ include('home/header-autre.html.twig')}}
+    {{ include('header.html.twig')}}
 {% endblock %}
 
 
-{% block body %}
-    <main>
+{% block main %}
+    
         <form action="{{ path('upload') }}" method="post" enctype="multipart/form-data" > <!-- Possible de limiter ici : accept=".pdf,.png,.jpg,.jpeg" -->
             
             <div class="boite-upload">
@@ -35,14 +35,11 @@
                 
                 <img src="{{asset('build/images/icon_file.png')}}" onclick="document.getElementById('input-cv').click()" alt="Fichier">
             </div>
-            
+            <br>
             <button class="bouton-a" id="Upload" type="submit">Upload</button>
 
         </form>
-    </main>
-
-</body>
-</html>
+    
 {% endblock %}
 
 

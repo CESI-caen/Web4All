@@ -22,11 +22,43 @@
 
 
 {% block header %}
-    {{ include('home/header-autre.html.twig')}}
+    {{ include('header.html.twig')}}
 {% endblock %}
 
 
-{% block body %}
+{% block main %}
+   <div class="settings-container">
+
+    <aside class="settings-menu">
+        <ul>
+            <li><a href="#profile">Profil</a></li>
+            <li><a href="#security">Sécurité</a></li>
+            <li><a href="#notifications">Notifications</a></li>
+            <li><a href="#privacy">Confidentialité</a></li>
+        </ul>
+    </aside>
+
+    <section class="settings-content">
+        <div id="profile" class="settings-section">
+            <h2>Profil</h2>
+            <p>Modifier vos informations.</p>
+        </div>
+
+        <div id="security" class="settings-section">
+            <h2>Sécurité</h2>
+            <p>Changer le mot de passe.</p>
+        </div>
+
+        <div id="notifications" class="settings-section">
+            <h2>Notifications</h2>
+        </div>
+
+        <div id="privacy" class="settings-section">
+            <h2>Confidentialité</h2>
+        </div>
+    </section>
+
+</div>
    
 {% endblock %}
 

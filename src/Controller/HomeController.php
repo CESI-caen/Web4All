@@ -17,6 +17,13 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig',['ancien_page_title' => 'null','page_title' => $currentRoute,]); // Utiliser les names des routes pour les liens --> {{ path('Home') }}
     }
 
+    #[Route('/profil', name: 'Profil')]
+    public function profil(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
+
     #[Route('/parametres', name: 'Paramètres')]   // Route pour la page de paramètres
     public function settings(Request $request): Response
     {
@@ -60,9 +67,4 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('Fichier Personnels');
     }
     
-    #[Route('/profil', name: 'Profil')]
-    public function profil(): Response
-    {
-        return $this->render('home/profil.html.twig');
-    }
 }

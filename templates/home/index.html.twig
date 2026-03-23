@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
 
+
 {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock %}
@@ -36,7 +37,7 @@
         </div>
 
         <div class="menu-item">
-            <button > Profil</button>
+            <button ><a href="{{ path('Profil') }}"> Profils </a></button>
         </div>
 
         <div class="menu-item">
@@ -56,11 +57,12 @@
         <div class="menu-item-pc">
             <button > Recherche </button>
         </div>
+        
         <div class="menu-item">
             <button > Déconnexion </button>
         </div>
     </div>
-
+        {# <!-- {{ include("components/barre-recherche.html.twig") }} --> #}
         <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
             <h1>Notifications</h1>
             <div class="notif-item">
