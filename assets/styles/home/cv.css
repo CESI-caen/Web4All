@@ -1,0 +1,83 @@
+/* ============================================
+   BASE
+============================================ */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+
+  background: linear-gradient(
+    135deg,
+    #f9fafb 0%,
+    #ffffff 50%,
+    #f3f4f6 100%
+  );
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ============================================
+   FORMULAIRE
+============================================ */
+     
+.boite-upload {
+    border: 1px solid #ccc; /* Bordure grise */
+    border-radius: 10px;    /* Coins arrondis */
+    padding: 10px 15px;     /* Espace intérieur */
+    display: flex;          /* Aligne le texte et l'icône sur la même ligne */
+    justify-content: space-between; /* Pousse l'icône à droite */
+    align-items: center;    /* Centre verticalement */
+    cursor: pointer;        /* Change le curseur en main au survol */
+    }
+
+.texte-placeholder {
+    color: #aaa;
+    font-family: sans-serif;
+    }
+
+/*===========
+Bouton
+============================================ */
+.bouton-a {
+  width: 100%;
+  padding: 12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* ============================================
+   TABLETTE
+============================================ */
+
+@media (min-width: 768px) {
+
+  
+
+}
+
+/* ============================================
+   PC
+============================================ */
+
+@media (min-width: 1024px) {
+
+.bouton-a:hover {
+  background: #eee;
+  color: Black;
+}  
+
+}
+
+/* 1. Style du texte "CV" au-dessus du champ */
+        

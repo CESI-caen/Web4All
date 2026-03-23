@@ -12,7 +12,7 @@
 
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('home') }}
+    {{ encore_entry_link_tags('settings') }}
     {{ encore_entry_link_tags('header') }}
     {{ encore_entry_link_tags('footer') }}
 {% endblock %}
@@ -22,15 +22,7 @@
 
 
 {% block header %}
-    <div class="header-container">
-
-        <button class="mobile-nav-button" >﹤</button>
-
-        <button class="mobile-nav-button"> <div class="header-title">{{ page_title }}</div> </button>
-
-        <button class="mobile-nav-button"></button>
-
-    </div>
+    {{ include('home/header-autre.html.twig')}}
 {% endblock %}
 
 
@@ -40,6 +32,6 @@
 
 
 {% block footer %}
-    {{ include('footer.html.twig')}}
+    {{ include('home/footer-home.html.twig')}}
 {% endblock %}
 

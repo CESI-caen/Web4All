@@ -29,11 +29,11 @@ Encore
 
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('index.js', './assets/scripts/home/index.js')
+    .addEntry('settings', './assets/styles/home/settings.css')
+    .addEntry('cv', './assets/styles/home/cv.css')
     
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')
-
-    .addEntry('barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
 
     /* Fichiers css non commit (dans .gitignore) */
     .addEntry('test-barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
