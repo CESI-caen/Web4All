@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -38,14 +39,14 @@ class HomeController extends AbstractController
         return $this->render('home/cv.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);    // 'ancien_page_title' => 'Home'  <-- non dynamique
     }
 
-    #[Route('/upload', name: 'upload', methods: ['POST'])]    // Route pour gérer l'upload de fichiers
-    public function upload(Request $request): Response
+    #[Route('/upload', name: 'upload', methods: ['POST'])]
+    public function upload(Request $request, SluggerInterface $slugger): Response // On ajoute SluggerInterface ici
     {
         $file = $request->files->get('file');
 
         if ($file) {
 
-                /* Exemple de conditions à ajouter pour limiter les types de fichiers et la taille (non fonctionnel pour le moment, à revoir) :
+            /* Exemple de conditions à ajouter pour limiter les types de fichiers et la taille (non fonctionnel pour le moment, à revoir) :
 
             $allowedTypes = ['application/pdf','image/png','image/jpeg'];
 
@@ -57,14 +58,37 @@ class HomeController extends AbstractController
                 return new Response("Fichier trop lourd");
             }
             */
+           //$email = $user->getUserIdentifier();
+            $email = "louisperrin332@gmail.com";  // test
+    
+            // On récupère ce qu'il y a avant le @
+            $userNameBeforeAt = explode('@', $email)[0];
+            
+            // On sécurise le nom
+            $safeFilename = $slugger->slug($userNameBeforeAt);
+            
+            // On génère le nom final unique
+            $newFilename = $safeFilename . '.' . $file->guessExtension();
+            //$newFilename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension(); // Pour avoir plusieurs fichiers par utilisateur.
 
-            $file->move(
-                $this->getParameter('kernel.project_dir').'/public/uploads',
-                $file->getClientOriginalName()
-            );
+            // 2. On déplace le fichier UNE SEULE FOIS avec le nouveau nom
+            try {
+                $file->move(
+                    $this->getParameter('kernel.project_dir') . '/public/uploads',
+                    $newFilename
+                );
+                // Optionnel : ajouter un message de succès
+                $this->addFlash('success', 'Fichier renommé en ' . $newFilename . ' et enregistré !');
+            } catch (FileException $e) {
+                // Gérer l'erreur si le dossier n'est pas accessible
+            }
         }
 
         return $this->redirectToRoute('Fichier Personnels');
     }
+
     
 }
+
+
+    
