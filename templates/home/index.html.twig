@@ -16,6 +16,7 @@
     {{ encore_entry_link_tags('home') }}
     {{ encore_entry_link_tags('header') }}
     {{ encore_entry_link_tags('footer') }}
+    {{ encore_entry_link_tags('barre-de-recherche') }}
 {% endblock %}
 
 
@@ -63,6 +64,7 @@
         </div>
     </div>
         {# <!-- {{ include("components/barre-recherche.html.twig") }} --> #}
+
         <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
             <h1>Notifications</h1>
             <div class="notif-item">
@@ -72,7 +74,7 @@
 
         <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
-
+           {# {{ include("components/barre-recherche.html.twig") }} #} 
             {% for offre in 0..3 %}
                 <div name="Bulle-Offre" class="offre-item">
                     <head>
