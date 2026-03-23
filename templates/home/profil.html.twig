@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Profil
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('profil') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block header %}
+    {{ include('header.html.twig') }}
+{% endblock %}
+
+{% block main %} 
+    <section class="container">
+        
+        <div id="photo-profil">
+            <img src="{{ asset('build/images/louis.jpg')}}" alt="photo de profil">
+            <p>Modifier la photo de profil</p>
+        </div>
+
+        <div id="data">
+            <form method="post">
+                <label>Nom :<br>
+                    <input type="text" name="nom" placeholder="Nom">
+                </label><br><br>
+
+                <label>Prénom :<br>
+                    <input type="text" name="prenom" placeholder="Prénom">
+                </label><br><br>
+
+                <label>Genre :<br>
+                    <input type="text" name="genre" placeholder="Genre">
+                </label><br><br>
+
+                <label>Ville :<br>
+                    <input type="text" name="ville" placeholder="Ville">
+                </label><br><br>
+
+                <label>Description :</label><br>
+                <textarea id="Description" name="Description" rows="5" placeholder="Écrivez votre description ici..."></textarea>
+
+                <br><br>
+                <button type="submit">Modifier</button>
+            </form>
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('footer.html.twig') }}
+{% endblock %}
