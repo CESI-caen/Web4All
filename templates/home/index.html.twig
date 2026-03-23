@@ -7,7 +7,7 @@
 
 
 {% block title %}
-    Page de Stages
+    {{ page_title }}
 {% endblock %}
 
 
@@ -18,11 +18,13 @@
 {% endblock %}
 
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('index.js') }}
+{% endblock %}
 
 
 {% block header %}
-    {{ include('header.html.twig')}}
+    {{ include('home/header-home.html.twig') }}
 {% endblock %}
 
 
@@ -38,7 +40,7 @@
         </div>
 
         <div class="menu-item">
-            <button > Fichiers personnels</button>
+            <button ><a href="{{ path('Fichier Personnels') }}"> Fichier personnels </a></button>
         </div>
 
         <div class="menu-item">
@@ -46,7 +48,7 @@
         </div>
 
         <div class="menu-item">
-            <button > Paramètres </button>
+            <button ><a href="{{ path('Paramètres') }}"> Paramètres </a></button>
         </div>
         <div class="menu-item-pc">
             <button > Whishlist </button>
@@ -86,6 +88,6 @@
 
 
 {% block footer %}
-    {{ include('footer.html.twig')}}
+    {{ include('home/footer-home.html.twig')}}
 {% endblock %}
 

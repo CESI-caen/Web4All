@@ -25,3 +25,10 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
+
+### TESTS ###
+src/Controller/Test*
+templates/tests/*
+assets/styles/tests/*

@@ -84,7 +84,7 @@
 
 ## Arborescence d'url
 
-Racine 
+Page Home
 - web4all/
 
 
@@ -99,10 +99,14 @@ Pages Offres
 - web4all/Offre/{{id}}/Modifier/
 - web4all/Offre/{{id}}/Postuler/
 
-Pages Comptes
-- web4all/Compte/Login/
-- web4all/Compte/Sign-in/
+Pages Autres
+- web4all/Login/
+- web4all/Create-account/
+- web4all/Parametres/
+
+Pages Comtpes
 - web4all/Compte/{{id}}/
+- web4all/Compte/{{id}}/Modifier/
 - web4all/Compte/{{id}}/Wishlist/
 	> *si étudiant*
 
