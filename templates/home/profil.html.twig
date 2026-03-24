@@ -31,25 +31,48 @@
         <div id="data">
             <form method="post">
                 <label>Nom :<br>
-                    <input type="text" name="nom" value="Nom"> {# a remplacer par les valeurs de la bdd dans value#}
+                    <input type="text" name="nom" value="Nom" required> {# a remplacer par les valeurs de la bdd dans value#}
                 </label><br><br>
 
                 <label>Prénom :<br>
-                    <input type="text" name="prenom" value="Prénom">
+                    <input type="text" name="prenom" value="Prénom" required>
                 </label><br><br>
 
                 <label>Genre :<br>
-                    <input type="text" name="genre" value="Genre">
+                    <select>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                        <option value="Autre">Autre</option>
+                    </select>
                 </label><br><br>
 
                 <label>Ville :<br>
-                    <input type="text" name="ville" value="Ville">
+                    <input type="text" name="ville" value="Ville" required>
                 </label><br><br>
 
                 <label>Description :</label><br>
                 <textarea id="Description" name="Description" rows="5" placeholder="Écrivez votre description ici..."></textarea>
 
                 <br><br>
+                <label class="titre">Genre<br>
+                <input name="genre" type="text" placeholder="Genre" required>
+                </label><br><br>
+
+                <label class="titre">Ville<br>
+                <input name="ville" type="text" placeholder="Ville" required>
+                </label><br><br>
+
+                <label class="groupe">
+                <span id="labelGroupe">École</span><br>
+                <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+                </label><br>
+
+                <br>
+                <label class="email">Email<br>
+                <input name="email" type="email" value = "email" required>
+                </label><br><br>
+
+                <br>
                 <button type="submit">mettre a jour</button>
             </form>
         </div>
