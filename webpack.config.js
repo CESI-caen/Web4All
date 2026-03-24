@@ -30,7 +30,7 @@ Encore
     // Home
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('profil', './assets/styles/home/profil.css')
-    .addEntry('whish-list', './assets/styles/home/whish-list.css')
+    .addEntry('wishlist', './assets/styles/home/wishlist.css')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
     
@@ -43,7 +43,7 @@ Encore
     .addEntry('barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
 
     // TEST
-    .addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
+    //.addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
 
     .copyFiles({
         from: "./assets/images",
