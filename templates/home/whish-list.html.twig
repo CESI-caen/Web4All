@@ -1,0 +1,45 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    WishList
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('whish-list') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+{% block main %}
+    <section class="container">
+        {% for i in 1..15 %}
+        <div class="item">
+            <img src="{{ asset('build/images/louis.jpg') }}" alt="photo">
+
+            <div class="content">
+                <p class="title">Nom Recruteur</p>
+                <p class="subtitle">Nom de l'offre</p>
+            </div>
+
+            <div class="actions">
+                <img class="plus" src="{{ asset('build/images/plus.png') }}" alt="plus">
+                <img class="heart" src="{{ asset('build/images/coeur.png') }}" alt="heart">
+            </div>
+        </div>
+    {% endfor %}
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}
