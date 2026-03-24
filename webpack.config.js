@@ -20,24 +20,25 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    
+    // Authentification
     .addEntry('authentification', './assets/styles/authentification/authentification.css')
     .addEntry('login.css', './assets/styles/authentification/login.css')
     .addEntry('login.js', './assets/scripts/authentification/login.js')
     .addEntry('create-account.css', './assets/styles/authentification/create-account.css')
     .addEntry('create-account.js', './assets/scripts/authentification/create-account.js')
 
+    // Home
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('profil', './assets/styles/home/profil.css')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
     
+    // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
 
+    // Composants
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')
-
-    
     .addEntry('barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
 
     .copyFiles({
