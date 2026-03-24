@@ -41,6 +41,9 @@ Encore
     .addEntry('footer', './assets/styles/footer.css')
     .addEntry('barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
 
+    // TEST
+    .addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
+
     .copyFiles({
         from: "./assets/images",
         to: 'images/[path][name].[ext]'

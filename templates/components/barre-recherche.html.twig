@@ -1,9 +1,13 @@
-    <div class='barre-recherche'>
-            <form method="get" action="{{ search_action | default()}}">
-                    <label for="recherche-input" class="sr-only">Rechercher</label>
-                    <input id="recherche-input" type="search" name="{{ recherche_input_name | default('recherche')}}" placeholder="{{ recherche_placeholder | default('Rechercher …')}}">
-                    <button type="submit">
-                            <img src="{{ recherche_submit_icone | default( asset('build/images/icon_loupe.png') ) }}" alt="loupe_icone-lancer_recherche">
-                    </button>
-            </form>
-    </div>
+<div class="barre-recherche">
+        <div class='recherche-container'>
+                <form method="get" action="{{ search_action | default()}}">
+                        <div class="boutton-recherche-3">
+                                <label for="recherche-input">Rechercher</label>
+                                <button type="submit">
+                                        <img src="{{ recherche_submit_icone | default( asset('build/images/icon_loupe.png') ) }}" alt="loupe_icone-lancer_recherche">
+                                </button>
+                        </div>
+                        <input id="recherche-input" type="search" name="{{ recherche_input_name | default('recherche')}}" placeholder="{{ recherche_placeholder | default('…')}}">
+                </form>
+        </div>
+</div>
