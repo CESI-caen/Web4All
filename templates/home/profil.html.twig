@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends 'components/base.html.twig' %}
 
 {% block head %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
 {% block javascripts %}{% endblock %}
 
 {% block header %}
-    {{ include('header.html.twig') }}
+    {{ include('components/header.html.twig')}}
 {% endblock %}
 
 {% block main %} 
@@ -58,5 +58,5 @@
 {% endblock %}
 
 {% block footer %}
-    {{ include('footer.html.twig') }}
+    {{ include('components/footer.html.twig') }}
 {% endblock %}

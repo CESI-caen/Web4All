@@ -40,7 +40,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/upload', name: 'upload', methods: ['POST'])]
-    public function upload(Request $request, SluggerInterface $slugger): Response // On ajoute SluggerInterface ici
+    public function upload(Request $request, SluggerInterface $slugger): Response 
     {
         $file = $request->files->get('file');
 
