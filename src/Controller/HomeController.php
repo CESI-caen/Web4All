@@ -25,6 +25,13 @@ class HomeController extends AbstractController
         return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
 
+    #[Route('/whish-list', name: 'WhishList')]
+    public function whishList(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        return $this->render('home/whish-list.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
+
     #[Route('/cv', name: 'Fichier Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response
     {

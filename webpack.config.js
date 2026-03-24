@@ -30,6 +30,7 @@ Encore
     // Home
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('profil', './assets/styles/home/profil.css')
+    .addEntry('whish-list', './assets/styles/home/whish-list.css')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
     
