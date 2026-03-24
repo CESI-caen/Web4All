@@ -30,9 +30,10 @@ Encore
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('profil', './assets/styles/home/profil.css')
     .addEntry('index.js', './assets/scripts/home/index.js')
-    .addEntry('settings', './assets/styles/home/settings.css')
     .addEntry('cv', './assets/styles/home/cv.css')
     
+    .addEntry('settings', './assets/styles/parametre/index.css')
+
     .addEntry('header', './assets/styles/header.css')
     .addEntry('footer', './assets/styles/footer.css')
 

@@ -74,6 +74,7 @@ class HomeController extends AbstractController
                 $this->addFlash('success', 'Fichier renommé en ' . $newFilename . ' et enregistré !');
             } catch (FileException $e) {
                 // Gérer l'erreur si le dossier n'est pas accessible
+                echo "Erreur lors du déplacement du fichier : " . $e->getMessage();
             }
         }
 
