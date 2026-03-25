@@ -9,12 +9,14 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('wishlist') }}
+    {{ encore_entry_link_tags('wishlist.css') }}
     {{ encore_entry_link_tags('header') }}
     {{ encore_entry_link_tags('footer') }}
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('wishlist.js') }}
+{% endblock %}
 
 {% block header %}
     {{ include('components/header.html.twig')}}

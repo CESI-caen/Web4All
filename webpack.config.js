@@ -30,7 +30,8 @@ Encore
     // Home
     .addEntry('home', './assets/styles/home/index.css')
     .addEntry('profil', './assets/styles/home/profil.css')
-    .addEntry('wishlist', './assets/styles/home/wishlist.css')
+    .addEntry('wishlist.css', './assets/styles/home/wishlist.css')
+    .addEntry('wishlist.js', './assets/scripts/home/wishlist.js')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
     

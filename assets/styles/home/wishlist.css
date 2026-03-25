@@ -64,17 +64,30 @@ main {
     cursor: pointer;
 }
 
+.plus.active {
+    transform: rotate(360deg);
+    filter: brightness(0) saturate(100%) invert(32%) sepia(98%) saturate(2000%) hue-rotate(200deg);
+}
+
 .plus {
+    transition: 0.3s;
     padding: 5px;
     width: 40px;
     height: 40px;
     color: black;
     border-color: black;
 }
+
+.heart.active {
+    transform: rotate(360deg);
+    filter: brightness(0) saturate(100%) invert(19%) sepia(100%) saturate(5000%) hue-rotate(350deg);
+}
+
 .heart {
+    transition: 0.3s;
     padding: 10px;
     width: 30px;
     height: 30px;
-    color: red;
-    border-color: red;
+    color: black;
+    border-color: black;
 }
