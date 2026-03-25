@@ -1,5 +1,20 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
 .container {
-    width: 100%;
+    width: 80vw;
+    max-width: 500px;
+    background-color: white;
+    padding: 20px;
+    margin-top: 5vh;
+    margin-bottom: 20vh;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -13,10 +28,8 @@
 
 
 .item img {
-    width: 50px;
-    height: 50px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 50%;
 }
 
 
@@ -47,35 +60,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
     border: 2px solid black;
-    border-radius: 50%;
     cursor: pointer;
 }
 
+.plus {
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    color: black;
+    border-color: black;
+}
 .heart {
+    padding: 10px;
+    width: 30px;
+    height: 30px;
     color: red;
     border-color: red;
-}
-
-@media (min-width: 600px) {
-    .item {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .item img {
-        width: 150px;
-        height: 150px;
-    }
-    .plus, .heart {
-    width: 60px;
-    height: 60px;
-}
-
-    .content {
-        flex: 1;
-        margin-left: 15px;
-    }
 }
