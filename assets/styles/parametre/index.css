@@ -8,6 +8,7 @@ body {
   justify-content: center;
 }
 
+
 main {
   max-width: 400px;
   margin: 0 auto;
@@ -17,6 +18,11 @@ main {
 .container {
   padding: auto;
   border: 1px solid #e0e0e0;
+}
+
+.container a {
+  text-decoration: none;
+  color: inherit; /* enlève aussi le bleu */
 }
 
 
