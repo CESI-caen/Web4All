@@ -47,7 +47,7 @@ Encore
     .addEntry('barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
 
     // Themes
-    .addEntry('theme-clair', './assets/styles/themes/clair.css')
+    .addEntry('palette', './assets/styles/components/palette.css')
 
     // TEST
     //.addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
