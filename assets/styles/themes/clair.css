@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Design Tokens — Light Theme
+   Source of truth for all colors.
+   Import this file first in your HTML before any other stylesheet.
+   ========================================================================== */
+
+:root {
+
+  /* --- Backgrounds --- */
+  --color-bg-page:       #f5f5f5; /* page background */
+  --color-bg-container:  #ffffff; /* .container, cards, boxes */
+
+  /* --- Text --- */
+  --color-text-default:  #555555; /* body text, outside containers */
+
+  /* --- Borders & subtle surfaces --- */
+  --color-border:        #dddddd; /* input borders, container outlines */
+
+  /* --- Primary button (black) --- */
+  --color-btn-primary-bg:    #000000;
+  --color-btn-primary-text:  #ffffff;
+
+  /* --- Secondary button (light gray) --- */
+  --color-btn-secondary-bg:   #d6d6d6;
+  --color-btn-secondary-text: #000000;
+
+}

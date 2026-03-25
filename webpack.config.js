@@ -42,9 +42,12 @@ Encore
     .addEntry('modifier-mdp', './assets/styles/parametre/modifier-mdp.css')
 
     // Composants
-    .addEntry('header', './assets/styles/header.css')
-    .addEntry('footer', './assets/styles/footer.css')
+    .addEntry('header', './assets/styles/components/header.css')
+    .addEntry('footer', './assets/styles/components/footer.css')
     .addEntry('barre-de-recherche', './assets/styles/components/barre-de-recherche.css')
+
+    // Themes
+    .addEntry('theme-clair', './assets/styles/themes/clair.css')
 
     // TEST
     //.addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
