@@ -20,14 +20,14 @@ class ParametreController extends AbstractController
     public function Language(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('parametre/modifier-mdp.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
+        return $this->render('parametre/language.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
     }
 
     #[Route('/parametres/compte', name: 'Compte')]   // Route pour la page de paramètres
     public function Compte(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('parametre/modifier-mdp.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
+        return $this->render('parametre/compte.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
     }
 
     #[Route('/parametres/modifier-mdp', name: 'Modifier-mdp')]   // Route pour la page de paramètres

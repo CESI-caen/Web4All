@@ -10,11 +10,11 @@
 
 .switch .slider {
   padding: 10px 20px;
-  background-color: #ddd;
+  background-color: var(--color-btn-secondary-bg);
   border-radius: 20px;
 }
 
 .switch input:checked + .slider {
-  background-color: black;
+  background-color: var(--color-btn-primary-bg);
   color: white;
 }

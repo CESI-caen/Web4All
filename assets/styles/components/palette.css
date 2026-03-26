@@ -24,4 +24,36 @@
   --color-btn-secondary-bg:   #d6d6d6;
   --color-btn-secondary-text: #000000;
 
+  /* Inputs */
+  --color-input-bg:       #ffffff;
+  --color-input-text:     #000000;
+  --color-input-border:   #dddddd;
+  --color-input-placeholder: #888888;
+
+}
+
+.dark-theme {
+  /* Backgrounds */
+  --color-bg-page:       #0f172a; /* bleu nuit (moins triste que noir pur) */
+  --color-bg-container:  #1e293b; /* contraste doux */
+
+  /* Text */
+  --color-text-default:  #e2e8f0; /* plus lisible que gris */
+
+  /* Borders */
+  --color-border:        #334155;
+
+  /* Primary button */
+  --color-btn-primary-bg:    #3b82f6; /* bleu moderne */
+  --color-btn-primary-text:  #ffffff;
+
+  /* Secondary button */
+  --color-btn-secondary-bg:   #475569;
+  --color-btn-secondary-text: #e2e8f0;
+
+  /* Inputs */
+  --color-input-bg:       #334155;   /* fond sombre mais lisible */
+  --color-input-text:     #e2e8f0;   /* texte clair */
+  --color-input-border:   #475569;
+  --color-input-placeholder: #94a3b8;
 }
