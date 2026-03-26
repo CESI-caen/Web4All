@@ -32,7 +32,7 @@
 
 }
 
-.dark-theme {
+.dark {
   /* Backgrounds */
   --color-bg-page:       #0f172a; /* bleu nuit (moins triste que noir pur) */
   --color-bg-container:  #1e293b; /* contraste doux */
@@ -56,4 +56,9 @@
   --color-input-text:     #e2e8f0;   /* texte clair */
   --color-input-border:   #475569;
   --color-input-placeholder: #94a3b8;
+
+  .icon {
+    filter: brightness(0) saturate(100%) invert(97%) sepia(0%) saturate(14%) hue-rotate(268deg) brightness(90%) contrast(84%);
+  }
 }
+

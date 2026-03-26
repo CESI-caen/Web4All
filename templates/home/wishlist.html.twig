@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
     {{ encore_entry_link_tags('wishlist.css') }}
     {{ encore_entry_link_tags('header') }}
     {{ encore_entry_link_tags('footer') }}
@@ -34,8 +35,8 @@
             </div>
 
             <div class="actions">
-                <img class="plus" src="{{ asset('build/images/plus.png') }}" alt="plus">
-                <img class="heart" src="{{ asset('build/images/coeur.png') }}" alt="heart">
+                <img class="plus icon" src="{{ asset('build/images/plus.png') }}" alt="plus">
+                <img class="heart icon" src="{{ asset('build/images/coeur.png') }}" alt="heart">
             </div>
         </div>
     {% endfor %}

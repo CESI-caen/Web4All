@@ -12,6 +12,7 @@
 
 
 {% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
     {{ encore_entry_link_tags('cv') }}
     {{ encore_entry_link_tags('header') }}
     {{ encore_entry_link_tags('footer') }}
@@ -27,19 +28,19 @@
 
 
 {% block main %}
-    
+    <section class="container">
         <form action="{{ path('upload') }}" method="post" enctype="multipart/form-data" > <!-- Possible de limiter ici : accept=".pdf,.png,.jpg,.jpeg" -->
             
             <div class="boite-upload">
                 <span class="texte-placeholder" id="nom-fichier"><input type="file" name="file" id="input-cv" accept=".pdf" ></span>
                 
-                <img src="{{asset('build/images/icon_file.png')}}" onclick="document.getElementById('input-cv').click()" alt="Fichier">
+                <img class="icon" src="{{asset('build/images/icon_file.png')}}" onclick="document.getElementById('input-cv').click()" alt="Fichier">
             </div>
             <br>
             <button class="bouton-a" id="Upload" type="submit">Upload</button>
 
         </form>
-    
+    </section>    
 {% endblock %}
 
 
