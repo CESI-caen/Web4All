@@ -4,7 +4,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff;
+  background: var(--color-bg-page);
   justify-content: center;
 }
 
@@ -17,7 +17,7 @@ main {
 
 .container {
   padding: auto;
-  border: 1px solid #e0e0e0;
+  border: 2px solid var(--color-bg-container);
 }
 
 .container a {
@@ -30,8 +30,9 @@ main {
   padding: 12px 16px;
   font-size: 16px;
   font-weight: bold;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
   margin: 0px;
+  color: var(--color-text-default);
 }
 
 .item {
@@ -39,20 +40,21 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
   cursor: pointer;
 }
 
 .item-button{
-  color: Black;
+  color: var(--color-btn-primary-text);
   border: none;
   padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
+  background-color: var(--color-btn-primary-bg) ;
 }
 
 .item:hover {
-  background: #f5f5f5;
+  background: var(--color-btn-secondary-bg);
 }
 
 
