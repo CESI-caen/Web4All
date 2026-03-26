@@ -37,6 +37,7 @@ Encore
     
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
+    .addEntry('theme', './assets/scripts/parametre/theme.js')
     .addEntry('language', './assets/styles/parametre/language.css')
     .addEntry('compte', './assets/styles/parametre/compte.css')
     .addEntry('modifier-mdp', './assets/styles/parametre/modifier-mdp.css')
