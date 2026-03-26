@@ -13,7 +13,7 @@ toogleButton.addEventListener('click', () => {
     localStorage.theme = theme;
 });
 
-/*
+
 window.matchMedia("prefers-color-scheme: dark").addEventListener
 ("change", (event) => {
     body.classList.remove("dark");
@@ -23,4 +23,4 @@ window.matchMedia("prefers-color-scheme: dark").addEventListener
         localStorage.theme = "dark";
     }
 });
-*/
+
