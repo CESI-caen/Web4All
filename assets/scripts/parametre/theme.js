@@ -1,4 +1,4 @@
-const toogleButton = document.querySelector('.ThemePage');
+const toogleButton = document.querySelector('#ThemePage');
 const body = document.body;
 
 const savedTheme = localStorage.theme;
@@ -13,6 +13,7 @@ toogleButton.addEventListener('click', () => {
     localStorage.theme = theme;
 });
 
+/*
 window.matchMedia("prefers-color-scheme: dark").addEventListener
 ("change", (event) => {
     body.classList.remove("dark");
@@ -22,3 +23,4 @@ window.matchMedia("prefers-color-scheme: dark").addEventListener
         localStorage.theme = "dark";
     }
 });
+*/
