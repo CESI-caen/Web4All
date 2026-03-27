@@ -39,24 +39,24 @@
             <button > Nom Prénom</button>
         </div>
 
-        <div class="menu-item">
-            <button ><a href="{{ path('Profil') }}"> Profils </a></button>
-        </div>
+        <a href="{{ path('Profil') }}"> <div class="menu-item">
+            <button > Profils </button>
+        </div> </a>
 
-        <div class="menu-item">
-            <button ><a href="{{ path('Fichier Personnels') }}"> Fichier personnels </a></button>
-        </div>
+        <a href="{{ path('Fichier Personnels') }}"> <div class="menu-item">
+            <button > Fichier personnels </button>
+        </div> </a>
 
         <div class="menu-item">
             <button > Création de compte Etudiant Si Pilote scolaire</button>
         </div>
 
-        <div class="menu-item">
-            <button ><a href="{{ path('Paramètres') }}"> Paramètres </a></button>
-        </div>
-        <div class="menu-item-pc">
-            <button > <a href="{{ path('WishList') }}"> Wishlist </a> </button>
-        </div>
+       <a href="{{ path('Paramètres') }}"> <div class="menu-item">
+            <button > Paramètres </button>
+        </div> </a>
+       <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
+            <button >  Wishlist </button>
+        </div> </a> 
         <div class="menu-item-pc">
             <button > Recherche </button>
         </div>
@@ -71,6 +71,18 @@
             <h1>Notifications</h1>
             <div class="notif-item">
                 <button > Notification selon bdd</button>
+                {% for offre in 0..3 %}
+                <div name="Bulle-Offre" class="offre-item">
+                    <head>
+                        <p class="bulle-offre-titre">Offre {{offre}}</p>
+                        <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
+                    </head>
+                    <hr>
+                    <div class="bulle-offre-detail">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
+                    </div>
+                </div>
+            {% endfor %}
             </div>
         </div>
 

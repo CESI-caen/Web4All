@@ -16,11 +16,11 @@ class ParametreController extends AbstractController
         return $this->render('parametre/index.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Home'  <-- non dynamique
     }
 
-    #[Route('/parametres/language', name: 'Language')]   // Route pour la page de paramètres
+    #[Route('/parametres/langage', name: 'Langage')]   // Route pour la page de paramètres
     public function Language(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('parametre/language.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
+        return $this->render('parametre/langage.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute,]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
     }
 
     #[Route('/parametres/compte', name: 'Compte')]   // Route pour la page de paramètres

@@ -4,6 +4,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  color: var(--color-text-default); 
   background: var(--color-bg-page);
   justify-content: center;
 }
