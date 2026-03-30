@@ -1,0 +1,46 @@
+{# ###############################################################
+# CSS pour la page de recherche : web4all/recherche/             #
+############################################################### #}
+
+{% extends 'components/base.html.twig' %}
+
+
+{# Titre de l'onglet #}
+{% block title %}Recherche{% endblock %}
+
+
+{#  #}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('home') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+    {{ encore_entry_link_tags('barre-de-recherche') }}
+{% endblock %}
+
+
+{#  #}
+{% block javascripts %}{% endblock %}
+
+
+{#  #}
+{% block head %}{% endblock %}
+
+
+{#  #}
+{% block header %}
+    {{ include('recherche/header-recherche.html.twig')}}
+{% endblock %}
+
+
+{#  #}
+{% block main %}
+    {{ include('components/barre-recherche.html.twig')}}
+{% endblock %}
+
+
+{#  #}
+{% block footer %}
+    {{ include('recherche/footer-recherche.html.twig')}}
+{% endblock %}
+
