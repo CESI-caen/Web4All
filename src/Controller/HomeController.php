@@ -31,6 +31,12 @@ class HomeController extends AbstractController
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
+    #[Route('/creer_etudiant', name: 'Créer_Etudiant')] // Route pour la page de création d'étudiant
+    public function creer(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
 
     #[Route('/cv', name: 'Fichier Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response

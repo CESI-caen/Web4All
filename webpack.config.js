@@ -34,6 +34,7 @@ Encore
     .addEntry('wishlist.js', './assets/scripts/home/wishlist.js')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
+  
     
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
