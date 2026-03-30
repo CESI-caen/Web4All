@@ -30,9 +30,24 @@
 
 
 {% block main %}
+<form>
+<label class="titre">Mot de passe actuel<br>
+    <input name="current_password" type="password" placeholder="Mot de passe actuel" required>
+</label>
+<label class="titre">Nouveau mot de passe<br>
+    <input name="password" type="password" placeholder="Nouveau mot de passe" required>
+</label>
+<label class="titre">Confirmation du nouveau mot de passe<br>
+    <input name="password_confirm" type="password" placeholder="Confirmer le nouveau mot de passe" required>
+</label>
 
-<p> Lorsque qu'il y aura la BDD faire des requetes pour updater le mot de passe de l'utilisateur </p>
-
+<div class="buttons">
+<label>
+    <input type="hidden" name="page" value="1">
+</label>
+ <br>
+<button class="bouton-a" id="confirmer">Confirmer</button>
+</form>
    
 {% endblock %}
 

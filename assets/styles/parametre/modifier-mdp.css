@@ -15,7 +15,54 @@ main {
   padding: 1rem;
 }
 
+label.titre {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
 
+label.titre input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.buttons button {
+  flex: 1;
+}
+
+.bouton-a {
+  width: 5%;
+  padding: 12px;
+  background: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.bouton-b {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
 
 
 /* ============================================
