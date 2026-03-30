@@ -43,7 +43,7 @@ label.titre input {
 }
 
 .bouton-a {
-  width: 5%;
+  width: 100%;
   padding: 12px;
   background: var(--color-btn-primary-bg);
   color: var(--color-btn-primary-text);
@@ -52,18 +52,6 @@ label.titre input {
   font-size: 15px;
   cursor: pointer;
 }
-
-.bouton-b {
-  width: 100%;
-  padding: 12px;
-  background: var(--color-btn-secondary-bg);
-  color: var(--color-btn-secondary-text);
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
 
 /* ============================================
    TABLETTE
