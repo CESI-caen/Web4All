@@ -4,7 +4,6 @@ const switchbox = document.querySelector(".switch");
 const btn = document.querySelector(".btn");
 
 const savedTheme = localStorage.theme;
-console.log(savedTheme);
 
 if (savedTheme) {
     body.classList.add(savedTheme);
