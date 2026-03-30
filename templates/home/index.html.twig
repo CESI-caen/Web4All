@@ -71,19 +71,12 @@
             <h1>Notifications</h1>
             <div class="notif-item">
                 <button > Notification selon bdd</button>
-                {% for offre in 0..3 %}
-                <div name="Bulle-Offre" class="offre-item">
-                    <head>
-                        <p class="bulle-offre-titre">Offre {{offre}}</p>
-                        <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
-                    </head>
-                    <hr>
-                    <div class="bulle-offre-detail">
+            </div>
+            {% for offre in 0..3 %}
+                <div name="Bulle-Offre" class="notif-item">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
-                    </div>
                 </div>
             {% endfor %}
-            </div>
         </div>
 
         <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
