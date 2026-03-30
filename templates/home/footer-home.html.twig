@@ -2,15 +2,15 @@
 
 
 {% block boutton_gauche %}
-    <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home">
+    <a href="{{ path('Home') }}" id="Bouton_gauche"> <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home"> </a>
 {% endblock %}
 
 
 {% block boutton_milieu %}
-    <img class="icon" src="{{asset('build/images/icon_coeur.png')}}" alt="Whishlist">
+    <a href="{{ path('WishList') }}" id="Bouton_milieu"> <img class="icon" src="{{asset('build/images/icon_coeur.png')}}" alt="Whishlist"> </a>
 {% endblock %}
 
 
 {% block boutton_droite %}
-    <img class="icon" src="{{asset('build/images/icon_loupe.png')}}" alt="Recherche"> 
+    <a href="{{ path('Home') }}" id="Bouton_droite"> <img class="icon" src="{{asset('build/images/icon_loupe.png')}}" alt="Recherche"> </a>
 {% endblock %}
