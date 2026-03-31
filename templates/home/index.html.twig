@@ -36,36 +36,41 @@
     <div id="MenuPannel" class="menu-panel" hidden> 
         <!-- Profil -->
         <div class="menu-item">
-            <button > Nom Prénom</button>
+             Nom Prénom
         </div>
 
         <a href="{{ path('Profil') }}"> <div class="menu-item">
-            <button > Profils </button>
+             Profils 
         </div> </a>
 
         <a href="{{ path('Fichier Personnels') }}"> <div class="menu-item">
-            <button > Fichier personnels </button>
+             Fichier personnels 
         </div> </a>
 
         <a href="{{ path('Créer_Etudiant') }}"> <div class="menu-item">
-            <button > Création de compte Etudiant Si Pilote scolaire</button>
+             Création de compte Etudiant Si Pilote scolaire
         </div>
+
+        <a href="{{ path('Entreprise') }}"> <div class="menu-item">
+             Mon entreprise 
+        </div> </a>
+
         <a href="{{ path('MesOffres') }}"> <div class="menu-item">
-            <button > Mes offres </button>
+             Mes offres 
         </div> </a>
 
        <a href="{{ path('Paramètres') }}"> <div class="menu-item">
-            <button > Paramètres </button>
+             Paramètres 
         </div> </a>
        <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
-            <button >  Wishlist </button>
+              Wishlist 
         </div> </a> 
         <div class="menu-item-pc">
-            <button > Recherche </button>
+             Recherche 
         </div>
         
         <div class="menu-item">
-            <button > Déconnexion </button>
+             Déconnexion 
         </div>
     </div>
         {# {{ include("components/barre-recherche.html.twig") }} #}
@@ -73,7 +78,7 @@
         <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
             <h1>Notifications</h1>
             <div class="notif-item">
-                <button > Notification selon bdd</button>
+                 Notification selon bdd
             </div>
             {% for offre in 0..3 %}
                 <div name="Bulle-Offre" class="notif-item">
@@ -87,10 +92,10 @@
            {# {{ include("components/barre-recherche.html.twig") }} #} 
             {% for offre in 0..3 %}
                 <div name="Bulle-Offre" class="offre-item">
-                    <head>
+                    <header>
                         <p class="bulle-offre-titre">Offre {{offre}}</p>
                         <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
-                    </head>
+                    </header>
                     <hr>
                     <div class="bulle-offre-detail">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
