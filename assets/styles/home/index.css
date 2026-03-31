@@ -20,6 +20,7 @@ main {
   margin: 0 auto;
   padding: 1rem;
   position: relative;
+  padding-bottom: 70px;
 }
 
 /* ============================================
@@ -43,9 +44,6 @@ main {
   text-decoration: none;
   color: inherit; /* enlève aussi le bleu */
 }
-
-/* items */
-
 .menu-item {
   display: flex;
   justify-content: space-between;
@@ -63,9 +61,6 @@ main {
 .menu-item-pc {
   display: none;
 }
-
-
-
 
 /* ============================================
    Notif PANEL
