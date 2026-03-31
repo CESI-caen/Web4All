@@ -31,7 +31,9 @@ main {
 }
 
 
-.item img {
+.item .pp {
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -57,7 +59,14 @@ main {
 
 .actions {
     display: flex;
+    flex-direction: column;
     gap: 10px;
+}
+
+@media (min-width: 600px) {
+    .actions {
+        flex-direction: row;
+    }
 }
 
 
@@ -67,6 +76,7 @@ main {
     justify-content: center;
     border: 2px solid;
     cursor: pointer;
+    border-radius: 50%;
 }
 
 .plus.active {
