@@ -22,13 +22,12 @@
 
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('index.js') }}
     {{ encore_entry_script_tags('theme') }}
 {% endblock %}
 
 
 {% block header %}
-    {{ include('home/header-home.html.twig')}}
+    {{ include('home/header-home.html.twig')}}  {# Import les éléments du header ( Image |Titre |Image) #}
 {% endblock %}
 
 

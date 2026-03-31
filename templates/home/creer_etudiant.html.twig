@@ -8,69 +8,69 @@
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('palette') }}
-    {{ encore_entry_link_tags('create-account.css') }}
-    {{ encore_entry_link_tags('authentification') }}
+    {{ encore_entry_link_tags('creer_etudiant') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{encore_entry_script_tags('create-account.js')}}
+    {{ encore_entry_script_tags('index.js') }} 
     {{ encore_entry_script_tags('theme') }}
 {% endblock %}
 
 
-{% block header %}{% endblock %}
+{% block header %}
+    {{ include('components/header.html.twig')}}   {# Import les éléments du header ( Retour |Titre | ) #}
+{% endblock %}
 
 {% block main %}
 
-    <section class="container">
-        <h2> Inscription Etudiant </h2>
-        <form>
-         <label class="titre">Nom<br>
-         <input name="nom" type="text" placeholder="Nom" required>
-         </label>
-         <label class="titre">Prenom<br>
-         <input name="prenom" type="text" placeholder="Prenom" required>
-         </label>
-         <label>Genre :
-                    <select>
-                        <option value="">Sélectionner</option>
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
-                        <option value="Autre">Autre</option>
-                    </select>
-                </label>
-         <label class="titre">Ville Ecole <br>
-         <input name="ville" type="text" placeholder="Ville" required>
-         </label>
+
+<section class="container">
+    <form>
+        <label class="titre">Nom<br>
+            <input name="nom" type="text" placeholder="Nom" required>
+        </label>
+        <label class="titre">Prenom<br>
+            <input name="prenom" type="text" placeholder="Prenom" required>
+        </label>
+            <label>Genre :
+                <select>
+                    <option value="">Sélectionner</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                    <option value="Autre">Autre</option>
+                </select>
+            </label>
+        <label class="titre">Ville Ecole <br>
+            <input name="ville" type="text" placeholder="Ville" required>
+        </label>
 
         <label class="groupe">
             <span id="labelGroupe">École</span><br>
             <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
         </label>
-        <br>
         <label class="email">Email<br>
-        <input name="email" type="email" placeholder="Email" required>
+            <input name="email" type="email" placeholder="Email" required>
         </label>
-        <br>
         <label class="titre">Mot de passe<br>
-         <input name="password" type="password" placeholder="Mot de passe" required>
-         </label>
-         <br>
-         <label class="titre">Confirmation du mot de passe<br>
-         <input name="password_confirm" type="password" placeholder="Confirmer le mot de passe" required>
-         </label>
-         <br>
-         <div class="buttons">
+            <input name="password" type="password" placeholder="Mot de passe" required>
+        </label>
+        <label class="titre">Confirmation du mot de passe<br>
+             <input name="password_confirm" type="password" placeholder="Confirmer le mot de passe" required>
+        </label>
+        <div class="buttons">
             <label>
-            <input type="hidden" name="page" value="1">
-            <button formnovalidate class="bouton-b" id="annuler">Annuler</button>
+                <input type="hidden" name="page" value="1">
+                <button formnovalidate class="bouton-b" id="annuler">Annuler</button>
             </label>
-            <button class="bouton-a" id="terminer">Terminer</button>
-            
+                <button class="bouton-a" id="terminer">Terminer</button>
         </div>
-        </form>
-    </section>
+    </form>
+</section>
     
 {% endblock %}
 
-{% block footer %}{% endblock %}
+{% block footer %}
+    {{ include('home/footer-home.html.twig')}}
+{% endblock %}
