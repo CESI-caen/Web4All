@@ -1,4 +1,4 @@
-{% extends 'components/base.html.twig' %}
+
 
 {% block title %}Liste des utilisateurs{% endblock %}
 
@@ -9,8 +9,8 @@
     <ul>
         {% for user in users %}
             <li>
-                <a href="{{ path('user_show', {'id': user.id}) }}">
-                    {{ user.nom }} ({{ user.email }})
+                <a href="{{ path('user_show', {'id': user.Id_utilisateur}) }}">
+                    {{ user.Nom }} ({{ user.Email }})
                 </a>
             </li>
         {% endfor %}
