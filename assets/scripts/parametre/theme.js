@@ -10,6 +10,9 @@ if (savedTheme) {
 }
 
 if (switchbox) {
+        if (savedTheme === "dark") {
+            btn.classList.add("btn-change");
+        }
         switchbox.addEventListener("click", () => {
         btn.classList.toggle("btn-change");
         body.classList.toggle("dark");
