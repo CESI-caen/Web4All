@@ -1,0 +1,76 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Entreprise
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('entreprise.css') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+{% block main %} 
+    <section id="buttons">
+        <div class="button edit">Modifier l'entreprise</div>
+        <div class="button delete">Supprimer l'entreprise</div>
+    </section>
+    <section class="container">
+        <div id="photo" style="grid-area: photo;">
+            <img src="{{ asset('build/images/image.png') }}" alt="Photo de l'entreprise">
+        </div>
+        <div class="block" id="nom" style="grid-area: nom;">
+            <h1>Nom de l'entreprise</h1>
+        </div>
+        <div class="block" id="infos" style="grid-area: infos;">
+            <div class="info">
+                <p class="title">Adresse</p>
+                <p>Adresse de l'entreprise</p>
+            </div>
+            <div class="info">
+                <p class="title">Téléphone</p>
+                <p>Numéro de téléphone de l'entreprise</p>
+            </div>
+            <div class="info">
+                <p class="title">Email</p>
+                <p>Email de l'entreprise</p>
+            </div>
+        </div>
+        <div class="block" id="description" style="grid-area: description;">
+            <h1>Description de l'entreprise :</h1>
+            <p>Description de l'entreprise</p>
+        </div>
+        <div class="block" id="offres" style="grid-area: offres;">
+            <h2>Offres</h2>
+            <div id="liste">
+                {% for i in 1..5 %}
+                    <div class="offre">
+                        <img class="pp" src="{{ asset('build/images/image.png') }}" alt="photo">
+
+                        <div class="content">
+                            <p class="title">Nom Recruteur</p>
+                            <p class="subtitle">Nom de l'offre</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

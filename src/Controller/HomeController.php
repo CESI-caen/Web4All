@@ -38,6 +38,13 @@ class HomeController extends AbstractController
         return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
 
+    #[Route('/entreprise', name: 'Entreprise')]
+    public function entreprise(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
+
     #[Route('/mes-offres', name: 'MesOffres')]
     public function mesOffres(Request $request): Response
     {
