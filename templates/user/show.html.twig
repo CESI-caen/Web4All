@@ -1,12 +1,11 @@
-{% extends 'components/base.html.twig' %}
 
 {% block title %}Utilisateur{% endblock %}
 
 {% block body %}
-<h1>Utilisateur : {{ user.nom }}</h1>
+<h1>Utilisateur : {{ user.Nom }}</h1>
 
-<p>ID : {{ user.id }}</p>
-<p>Email : {{ user.email }}</p>
+<p>ID : {{ user.Id_utilisateur }}</p>
+<p>Email : {{ user.Email }}</p>
 
 <a href="{{ path('user_list') }}">Retour à la liste</a>
 {% endblock %}

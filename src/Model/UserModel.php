@@ -20,7 +20,7 @@ class UserModel
 
     public function getUserById(int $id): array|false
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateurs WHERE id = :id");
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateurs WHERE Id_utilisateur = :id");
         $stmt->execute(['id' => $id]);
         return $stmt->fetch();
     }
