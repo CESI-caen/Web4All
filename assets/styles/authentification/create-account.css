@@ -18,3 +18,12 @@
   background-color: var(--color-btn-primary-bg);
   color: white;
 }
+
+select 
+    {
+    border-radius: 8px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0px 0px;
+    border-color: var(--color-input-border);
+}
