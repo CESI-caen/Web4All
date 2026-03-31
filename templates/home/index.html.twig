@@ -32,59 +32,8 @@
 
 
 {% block main %}
-    <div id="MenuPannel" class="menu-panel" hidden> 
-        <!-- Profil -->
-        <div class="menu-item">
-             Nom Prénom
-        </div>
 
-        <a href="{{ path('Profil') }}"> <div class="menu-item">
-             Profils 
-        </div> </a>
-
-        <a href="{{ path('Fichier Personnels') }}"> <div class="menu-item">
-             Fichier personnels 
-        </div> </a>
-
-        <a href="{{ path('Créer_Etudiant') }}"> <div class="menu-item">
-             Création de compte Etudiant Si Pilote scolaire
-        </div>
-
-        <a href="{{ path('Entreprise') }}"> <div class="menu-item">
-             Mon entreprise 
-        </div> </a>
-
-        <a href="{{ path('MesOffres') }}"> <div class="menu-item">
-             Mes offres 
-        </div> </a>
-
-       <a href="{{ path('Paramètres') }}"> <div class="menu-item">
-             Paramètres 
-        </div> </a>
-       <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
-              Wishlist 
-        </div> </a> 
-        <div class="menu-item-pc">
-             Recherche 
-        </div>
-        
-        <div class="menu-item">
-             Déconnexion 
-        </div>
-    </div>
-        {# {{ include("components/barre-recherche.html.twig") }} #}
-
-        <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
-            <h1>Notifications</h1>
-            <div class="notif-item">
-                 Notification selon bdd
-            </div>
-            {% for offre in 0..3 %}
-                <div name="Bulle-Offre" class="notif-item">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
-                </div>
-            {% endfor %}
-        </div>
+    {% include('components/menu-burger.html.twig') %}  {# Import les éléments du menu burger #}
 
         <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
