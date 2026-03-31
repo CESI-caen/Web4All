@@ -36,6 +36,7 @@ Encore
     .addEntry('cv', './assets/styles/home/cv.css')
     .addEntry('mes-offres.css', './assets/styles/home/mes-offres.css')
     .addEntry('mes-offres.js', './assets/scripts/home/mes-offres.js')
+    .addEntry('creer_etudiant', './assets/styles/home/creer_etudiant.css')
 
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')

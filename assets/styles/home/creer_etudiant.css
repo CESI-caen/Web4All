@@ -1,0 +1,131 @@
+/* Base mobile */
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--color-bg-page);
+  min-height: 100vh;
+  margin: 0;
+  color: var(--color-text-default);
+  
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  padding: 16px;
+  padding-bottom: 70px;
+  box-sizing: border-box;
+}
+
+.container {
+  background: var(--color-bg-container);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label.titre,
+label.groupe,
+label.email {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--color-text-default);
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px; 
+  transition: border 0.2s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var( --color-input-placeholder);
+  opacity: 1;
+}
+
+.bouton-a,
+.bouton-b {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.bouton-a {
+  background: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+}
+
+.bouton-b {
+  background: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* ============================================
+   TABLETTE
+   ============================================ */
+@media (min-width: 640px) {
+
+  main {
+    padding: 32px;
+  }
+
+  .container {
+    max-width: 480px;
+  }
+
+  .buttons {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .buttons button {
+    flex: 1;
+  }
+
+}
+/* ============================================
+   PC
+============================================ */
+@media (min-width: 1024px) {
+
+  .container {
+    max-width: 520px;
+  }
+
+}
