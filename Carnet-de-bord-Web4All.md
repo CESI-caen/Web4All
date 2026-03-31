@@ -86,7 +86,7 @@
 
 Page Home
 - web4all/
-
+- web4all/en
 
 Pages Entreprises
 - web4all/Entreprise/Créer/
@@ -102,10 +102,17 @@ Pages Offres
 Pages Autres
 - web4all/Login/
 - web4all/Create-account/
-- web4all/Parametres/
 
-Pages Comtpes
+Pages Parametres
+- web4all/Parametres/
+- web4all/Parametres/compte
+- web4all/Parametres/langue
+- web4all/Parametres/modifier-mdp
+
+Pages Comptes 
 - web4all/Compte/{{id}}/
+- web4all/Compte/{{id}}/Créer/
+	> *si pilote*
 - web4all/Compte/{{id}}/Modifier/
 - web4all/Compte/{{id}}/Wishlist/
 	> *si étudiant*
