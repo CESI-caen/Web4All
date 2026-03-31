@@ -34,8 +34,9 @@ Encore
     .addEntry('wishlist.js', './assets/scripts/home/wishlist.js')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
-  
-    
+    .addEntry('mes-offres.css', './assets/styles/home/mes-offres.css')
+    .addEntry('mes-offres.js', './assets/scripts/home/mes-offres.js')
+
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
     .addEntry('theme', './assets/scripts/parametre/theme.js')
