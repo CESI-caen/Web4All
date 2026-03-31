@@ -15,8 +15,8 @@
             <button > Profils </button>
         </div> </a>
 
-        <a href="{{ path('Fichier Personnels') }}"> <div class="menu-item">
-            <button > Fichier personnels </button>
+        <a href="{{ path('Fichiers Personnels') }}"> <div class="menu-item">
+            <button > Fichiers personnels </button>
         </div> </a>
 
         <a href="{{ path('Inscription Etudiant') }}"> <div class="menu-item">
@@ -48,7 +48,7 @@
                 <button > Notification selon bdd</button>
             </div>
             {% for offre in 0..3 %}
-                <div name="Bulle-Offre" class="notif-item">
+                <div class="notif-item">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
                 </div>
             {% endfor %}

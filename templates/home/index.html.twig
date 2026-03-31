@@ -35,11 +35,11 @@
 
     {% include('components/menu-burger.html.twig') %}  {# Import les éléments du menu burger #}
 
-        <div id="ContainerPannel" name="Container-Offres" class="offre-container" >
+        <div id="ContainerPannel" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
            {# {{ include("components/barre-recherche.html.twig") }} #} 
             {% for offre in 0..3 %}
-                <div name="Bulle-Offre" class="offre-item">
+                <div class="offre-item">
                     <header>
                         <p class="bulle-offre-titre">Offre {{offre}}</p>
                         <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
