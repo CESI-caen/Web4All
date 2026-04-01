@@ -38,6 +38,8 @@ Encore
     .addEntry('mes-offres.js', './assets/scripts/home/mes-offres.js')
     .addEntry('offre-detail.css', './assets/styles/home/offre-detail.css')
     .addEntry('offre-detail.js', './assets/scripts/home/offre-detail.js')
+    .addEntry('postuler-offre.css', './assets/styles/home/postuler-offre.css')
+    .addEntry('postuler-offre.js', './assets/scripts/home/postuler-offre.js')
     .addEntry('entreprise.css', './assets/styles/home/entreprise.css')
     .addEntry('entreprise.js', './assets/scripts/home/entreprise.js')
     .addEntry('creer_etudiant', './assets/styles/home/creer_etudiant.css')

@@ -1,0 +1,187 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Postuler - Web4All
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('postuler-offre.css') }}
+    {{ encore_entry_link_tags('header') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('postuler-offre.js') }}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    <div class="header-container">
+        <button class="mobile-nav-button">
+            <div class="header-title">
+                <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Retour"></a>
+            </div>
+        </button>
+
+        <button class="mobile-nav-button">
+            <div class="header-title">
+                <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}">Retour à l'offre</a>
+            </div>
+        </button>
+
+        <button class="mobile-nav-button" onclick="toggleNotif()">
+            <img class="icon" src="{{ asset('build/images/icon_notification.png')}}" alt="Notification">
+        </button>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <section class="postuler-container">
+        <!-- Section Hero -->
+        <div class="postuler-hero">
+            <div class="postuler-hero-content">
+                <div class="postuler-header-info">
+                    <h1 class="postuler-titre">Candidature</h1>
+                    <p class="postuler-meta">Offre chez {% if offre.entreprise and offre.entreprise.nom %}{{ offre.entreprise.nom }}{% else %}l'entreprise{% endif %}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Formulaire -->
+        <div class="postuler-form-section">
+            <form id="form-candidature" class="candidature-form">
+                <!-- Informations personnelles -->
+                <div class="form-section">
+                    <h2 class="section-title">Vos informations</h2>
+                    
+                    <div class="form-group">
+                        <label for="prenom" class="form-label">Prénom *</label>
+                        <input 
+                            type="text" 
+                            id="prenom" 
+                            name="prenom" 
+                            class="form-input" 
+                            placeholder="Votre prénom"
+                            required
+                        >
+                        <span class="form-error" id="error-prenom"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom" class="form-label">Nom *</label>
+                        <input 
+                            type="text" 
+                            id="nom" 
+                            name="nom" 
+                            class="form-input" 
+                            placeholder="Votre nom"
+                            required
+                        >
+                        <span class="form-error" id="error-nom"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="votre.email@example.com"
+                            required
+                        >
+                        <span class="form-error" id="error-email"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telephone" class="form-label">Téléphone</label>
+                        <input 
+                            type="tel" 
+                            id="telephone" 
+                            name="telephone" 
+                            class="form-input" 
+                            placeholder="+33 6 XX XX XX XX"
+                        >
+                        <span class="form-error" id="error-telephone"></span>
+                    </div>
+                </div>
+
+                <!-- Lettre de motivation -->
+                <div class="form-section">
+                    <h2 class="section-title">Votre candidature</h2>
+                    
+                    <div class="form-group">
+                        <label for="lettre" class="form-label">Lettre de motivation *</label>
+                        <textarea 
+                            id="lettre" 
+                            name="lettre" 
+                            class="form-textarea" 
+                            placeholder="Exprimez votre motivation pour cette offre..."
+                            rows="8"
+                            required
+                        ></textarea>
+                        <span class="form-helper">Minimum 50 caractères</span>
+                        <span class="form-error" id="error-lettre"></span>
+                    </div>
+
+                    <!-- Section CV existant -->
+                    <div class="form-group">
+                        <label class="form-label">Votre CV</label>
+                        <div class="cv-info-box">
+                            <div class="cv-info-icon">📄</div>
+                            <div class="cv-info-content">
+                                <p class="cv-info-text">Votre CV est enregistré sur votre compte.</p>
+                                <a href="{{ path('Fichiers Personnels') }}" class="cv-update-link">Mettre à jour votre CV</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mention légale -->
+                <div class="form-section">
+                    <div class="form-group form-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="conditions" 
+                            name="conditions" 
+                            class="form-checkbox-input"
+                            required
+                        >
+                        <label for="conditions" class="form-checkbox-label">
+                            J'accepte que mes données soient traitées conformément à la politique de confidentialité *
+                        </label>
+                        <span class="form-error" id="error-conditions"></span>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="btn-soumettre">
+                        Soumettre ma candidature
+                    </button>
+                    <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}" class="btn btn-secondary">
+                        Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Message de succès (caché par défaut) -->
+        <div id="success-message" class="success-message" style="display:none;">
+            <div class="success-icon">✓</div>
+            <h2>Candidature envoyée !</h2>
+            <p>Merci de votre candidature. Nous reviendrons vers vous prochainement.</p>
+            <a href="{{ path('Home') }}" class="btn btn-primary">Retourner à l'accueil</a>
+        </div>
+    </section>
+
+    <!-- Meta data pour JS -->
+    <div id="offre-data" 
+         data-offre-id="{{ offre.idOffre }}"
+         style="display:none;">
+    </div>
+{% endblock %}
