@@ -26,9 +26,12 @@
         <h1>Welcome to Web4All ! </h1>
         <h2>Create an account</h2>
         <p>Enter your email to sign up for this app</p>
+        {% if error is defined and error %}
+            <div class="alert alert-error">{{ error }}</div>
+        {% endif %}
         <form method="POST" action="{{ path('create-account') }}"> 
             <label class="titre">Email<br>
-                <input name="email" type="email" placeholder="email@domain.com" required>
+                <input name="email" type="email" placeholder="email@domain.com" value="{{ email|e }}" required>
             </label>
             <br><br>
             <input type="hidden" name="page" value="2">
@@ -51,7 +54,7 @@
 {% elseif page == 2 %}
     <section class="container">
         <h2>Inscription</h2>
-        <form>
+        <form method="POST" action="{{ path('create-account') }}">
          <label class="titre">Nom<br>
          <input name="nom" type="text" placeholder="Nom" required>
          </label>
@@ -87,9 +90,13 @@
             <span id="labelGroupe">École</span><br>
             <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
         </label>
-        <br>
+        <br><br>
         <label class="email">Email<br>
         <input name="email" type="email" value = {{ email }} required>
+        </label>
+        <br><br>
+        <label class="telephone">Téléphone<br>
+        <input name="telephone" type="tel" placeholder="01 02 03 04 05" required>
         </label>
         <br>
         <label class="titre">Mot de passe<br>

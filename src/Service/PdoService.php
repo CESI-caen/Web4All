@@ -13,7 +13,7 @@ class PdoService
         $host = $parts['host'];
         $db   = ltrim($parts['path'], '/');
         $user = $parts['user'];
-        $pass = $parts['pass'];
+        $pass = $parts['pass'] == "A2%23DevWeb!" ? "A2#DevWeb!" : $parts['pass'];
 
         $this->pdo = new \PDO(
             "mysql:host=$host;dbname=$db;charset=utf8mb4",

@@ -25,16 +25,16 @@ class UserModel
         return $stmt->fetch();
     }
 
-    public function addUser(string $nom, string $email): bool
+    public function addUser(string $nom,string $prenom, string $email, string $telephone, string $password): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO Utilisateurs (nom, email) VALUES (:nom, :email)");
-        return $stmt->execute(['nom' => $nom, 'email' => $email]);
+        $stmt = $this->pdo->prepare("INSERT INTO Utilisateurs (nom, prenom, email, telephone, mot_de_passe, Id_ville, Id_type) VALUES (:nom, :prenom, :email, :telephone, :password, 1, 1)");
+        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'telephone' => $telephone, 'password' => $password]);
     }
 
-    public function updateUser(int $id, string $nom, string $email): bool
+    public function updateUser(int $id, string $nom, string $prenom, string $email, string $telephone): bool
     {
-        $stmt = $this->pdo->prepare("UPDATE Utilisateurs SET nom = :nom, email = :email WHERE id = :id");
-        return $stmt->execute(['nom' => $nom, 'email' => $email, 'id' => $id]);
+        $stmt = $this->pdo->prepare("UPDATE Utilisateurs SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone WHERE id = :id");
+        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'telephone' => $telephone, 'id' => $id]);
     }
 
     public function deleteUser(int $id): bool
