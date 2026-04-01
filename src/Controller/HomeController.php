@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\OffresRepository;
+use App\Repository\UtilisateursRepository;
 use App\Entity\Offres;
 
 class HomeController extends AbstractController
@@ -122,6 +123,78 @@ class HomeController extends AbstractController
         }
 
         return $this->redirectToRoute('Fichier Personnels');
+    }
+
+    #[Route('/offre/{id}', name: 'AfficherOffre')]
+    public function afficherOffre(int $id, OffresRepository $offresRepository, Request $request): Response
+    {
+        $offre = $offresRepository->find($id);
+        
+        if (!$offre) {
+            throw $this->createNotFoundException('Offre non trouvée');
+        }
+
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('home/offre-detail.html.twig', [
+            'offre' => $offre,
+            'ancien_page_title' => 'Home',
+            'page_title' => $currentRoute,
+        ]);
+    }
+
+    #[Route('/api/check-cv', name: 'CheckCv', methods: ['POST'])]
+    public function checkCv(UtilisateursRepository $utilisateursRepository, Request $request): Response
+    {
+        try {
+            // Récupérer l'ID utilisateur depuis le body de la requête
+            $data = json_decode($request->getContent(), true);
+            $userId = $data['userId'] ?? null;
+
+            if (!$userId) {
+                return $this->json(['error' => 'User ID not provided'], 400);
+            }
+
+            // Récupérer l'utilisateur depuis la base de données
+            $utilisateur = $utilisateursRepository->find($userId);
+            
+            if (!$utilisateur) {
+                return $this->json(['error' => 'User not found'], 404);
+            }
+
+            // Vérifier si l'utilisateur a un CV
+            $hasCv = $utilisateur->isCv() ?? false;
+
+            return $this->json([
+                'hasCv' => $hasCv,
+                'userId' => $userId,
+                'prenom' => $utilisateur->getPrenom(),
+                'nom' => $utilisateur->getNom(),
+                'email' => $utilisateur->getEmail(),
+                'telephone' => $utilisateur->getTelephone(),
+            ]);
+        } catch (\Exception $e) {
+            return $this->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    #[Route('/offre/{id}/postuler', name: 'PostulerOffre')]
+    public function postulerOffre(int $id, OffresRepository $offresRepository, Request $request): Response
+    {
+        $offre = $offresRepository->find($id);
+        
+        if (!$offre) {
+            throw $this->createNotFoundException('Offre non trouvée');
+        }
+
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('home/postuler-offre.html.twig', [
+            'offre' => $offre,
+            'ancien_page_title' => 'Offre',
+            'page_title' => $currentRoute,
+        ]);
+    }
+
+    
     }    
 }
 
