@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 01 avr. 2026 à 13:42
+-- Généré le : mer. 01 avr. 2026 à 14:35
 -- Version du serveur : 8.0.45-0ubuntu0.24.04.1
 -- Version de PHP : 8.3.6
 
@@ -115,11 +115,12 @@ CREATE TABLE `Noter_2` (
 
 CREATE TABLE `Offres` (
   `Id_offre` bigint NOT NULL,
-  `Descriptif` text,
-  `Date_debut` date DEFAULT NULL,
-  `Date_fin` date DEFAULT NULL,
-  `Duree` int DEFAULT NULL,
-  `Renumeration` decimal(10,2) DEFAULT NULL,
+  `Nom` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Descriptif` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Date_debut` date NOT NULL,
+  `Date_fin` date NOT NULL,
+  `Duree` int NOT NULL,
+  `Renumeration` decimal(10,2) NOT NULL,
   `Id_entreprise` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -202,8 +203,8 @@ INSERT INTO `Villes` (`Id_ville`, `Nom`, `CP`) VALUES
 (17, 'Charente-Maritime', '17000'),
 (18, 'Cher', '18000'),
 (19, 'Corrèze', '19000'),
-(20, "Côte-d'Or", '21000'),
-(21, "Côtes-d'Armor", '22000'),
+(20, 'Côte-d\'Or', '21000'),
+(21, 'Côtes-d\'Armor', '22000'),
 (22, 'Creuse', '23000'),
 (23, 'Dordogne', '24000'),
 (24, 'Doubs', '25000'),
@@ -278,12 +279,12 @@ INSERT INTO `Villes` (`Id_ville`, `Nom`, `CP`) VALUES
 (93, 'Hauts-de-Seine', '92000'),
 (94, 'Seine-Saint-Denis', '93000'),
 (95, 'Val-de-Marne', '94000'),
-(96, "Val-d'Oise", '95000'),
-(97, "Guadeloupe", '97100'),
-(98, "Martinique", '97200'),
-(99, "Guyane", '97300'),
-(100, "La Réunion", '97400'),
-(101, "Mayotte", '97600');
+(96, 'Val-d\'Oise', '95000'),
+(97, 'Guadeloupe', '97100'),
+(98, 'Martinique', '97200'),
+(99, 'Guyane', '97300'),
+(100, 'La Réunion', '97400'),
+(101, 'Mayotte', '97600');
 
 -- --------------------------------------------------------
 

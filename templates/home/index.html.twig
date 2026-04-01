@@ -38,10 +38,10 @@
         <div id="ContainerPannel" class="offre-container" >
             {# foreach offre in offres && offre<24h(recent) → afficher les info de offre #}
            {# {{ include("components/barre-recherche.html.twig") }} #} 
-            {% for offre in 0..3 %}
+            {% for offre in offres %}
                 <div class="offre-item">
                     <header>
-                        <p class="bulle-offre-titre">Offre {{offre}}</p>
+                        <p class="bulle-offre-titre">Offre {{offre.Descriptif}}</p>
                         <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
                     </header>
                     <hr>
