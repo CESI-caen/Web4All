@@ -46,7 +46,7 @@ class UserModel
 
     public function deleteUser(int $id): bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM Utilisateurs WHERE id = :id");
+        $stmt = $this->pdo->prepare("DELETE FROM Utilisateurs WHERE Id_utilisateur = :id");
         return $stmt->execute(['id' => $id]);
     }
 }

@@ -54,6 +54,7 @@ class AuthentificationController extends AbstractController
         $DomaineModel = new DomaineModel($pdo);
         $ExercerDansModel = new ExercerDansModel($pdo);
         $error = null;
+        $success = null;
 
         if ($request->isMethod('POST') && $request->request->get('nom') && $request->request->get('prenom')) {
             $nom = $request->request->get('nom');
@@ -74,33 +75,8 @@ class AuthentificationController extends AbstractController
                 $page = 2;
             } 
             else {
-                if ($account === 'Recruteur') {
+                if ($account === 'recruteur') {
                     $ecole = null;
-                    $EntrepriseNom = $request->request->get('Entreprise');
-                    $Villeentreprise = $request->request->get('ville-entreprise');
-                    $cpEntreprise = $request->request->get('cp-entreprise');
-                    $descriptif = $request->request->get('description-entreprise');
-                    $telEntreprise = $request->request->get('telephone-entreprise');
-                    $emailEntreprise = $request->request->get('Email-entreprise');
-                    $domaine = $request->request->all('domaine');
-
-
-                    $villeRow = $VilleModel->getIdByName($Villeentreprise);
-                    if (!$villeRow) {
-                        $VilleModel->addCity($Villeentreprise, $cpEntreprise);
-                        $villeRow = $VilleModel->getIdByName($Villeentreprise);
-                    }
-
-                    $EntrepriseModel->addEnterprise($EntrepriseNom, $emailEntreprise, $telEntreprise, $descriptif, (int) $villeRow['Id_ville'], 0);
-
-                    foreach ($domaine as $domaineName) {
-                        $domaineRow = $DomaineModel->getDomainByName($domaineName);
-                        if (!$domaineRow) {
-                            $DomaineModel->addDomain($domaineName);
-                            $domaineRow = $DomaineModel->getDomainByName($domaineName);
-                        }
-                        $ExercerDansModel->addRelation($EntrepriseModel->getEnterpriseByUserId(0)['Id_entreprise'], (int) $domaineRow['Id_domaine']);
-                    }
                 } else {
                     $ecole = $request->request->get('ecole');
                 }
@@ -118,7 +94,43 @@ class AuthentificationController extends AbstractController
                     $idAccount = (int) $accountRow['Id_type_compte'];
 
                     if ($userModel->addUser($nom, $prenom, $genre, $email, $telephone, $password, $ecole, $idVille, $idAccount)) {
-                        $EntrepriseModel->updateEnterpriseUser($EntrepriseModel->getEnterpriseByUserId(0)['Id_entreprise'], $userModel->getUserByEmail($email)['Id_utilisateur']);
+                        
+                        if ($account === 'recruteur') {
+                            $EntrepriseNom = $request->request->get('Entreprise');
+                            $Villeentreprise = $request->request->get('ville-entreprise');
+                            $cpEntreprise = $request->request->get('cp-entreprise');
+                            $descriptif = $request->request->get('description-entreprise');
+                            $telEntreprise = $request->request->get('telephone-entreprise');
+                            $emailEntreprise = $request->request->get('Email-entreprise');
+                            $domaine = $request->request->all('domaine');
+
+                            
+                            if ($EntrepriseModel->getEnterpriseByEmail($emailEntreprise)) {
+                                $error = "Cet e-mail d'entreprise est déjà utilisé. Veuillez en choisir un autre.";
+                                $userModel->deleteUser($userModel->getUserByEmail($email)['Id_utilisateur']);
+                                $page = 1;
+                                return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error]);
+                            }
+
+                            $villeRow = $VilleModel->getIdByName($Villeentreprise);
+                            if (!$villeRow) {
+                                $VilleModel->addCity($Villeentreprise, $cpEntreprise);
+                                $villeRow = $VilleModel->getIdByName($Villeentreprise);
+                            }
+
+                            $IdUser = $userModel->getUserByEmail($email)['Id_utilisateur'];
+
+                            $EntrepriseModel->addEnterprise($EntrepriseNom, $emailEntreprise, $telEntreprise, $descriptif, (int) $villeRow['Id_ville'], $IdUser);
+
+                            foreach ($domaine as $domaineName) {
+                                $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                                if (!$domaineRow) {
+                                    $DomaineModel->addDomain($domaineName);
+                                    $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                                }
+                                $ExercerDansModel->addRelation($EntrepriseModel->getEnterpriseByUserId($IdUser)['Id_entreprise'], (int) $domaineRow['Id_domaine']);
+                            }
+                        }
                         $success = "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.";
                         return $this->redirectToRoute('Login', ['email' => $email, 'success' => $success]);
                     }

@@ -105,7 +105,11 @@
                 <input name="description-entreprise" type="text" placeholder="description" required>
             </label>
             <label class="titre"> Ville de l'entreprise<br>
-                <input name="ville-entreprise" type="text" placeholder="ville" required>
+                <select name="ville-entreprise">
+                {% for ville in villes %}
+                    <option value="{{ ville.Nom }}">{{ ville.Nom }}</option>
+                {% endfor %}
+            </select>
             </label>
             <label class="titre"> Code postale de la ville de l'entreprise<br>
                 <input name="cp-entreprise" type="text" placeholder="code postale" required>

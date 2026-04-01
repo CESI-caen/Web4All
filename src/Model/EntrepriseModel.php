@@ -25,6 +25,13 @@ class EntrepriseModel
         return $stmt->fetch();
     }
 
+    public function getEnterpriseByEmail(string $email): array|false
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM Entreprises WHERE Email = :email");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch();
+    }
+
     public function getIdByEntreprise(string $nom): array|false
     {
         $stmt = $this->pdo->prepare("SELECT Id_entreprise FROM Entreprises WHERE Nom = :nom");
