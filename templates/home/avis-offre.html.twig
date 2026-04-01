@@ -34,13 +34,19 @@
 
     <form action="" method="post">
         <div>
-            <label for="titre">Titre de l'offre </label>
-            <input type="text" name="titre" required>
+            <label>Titre de l'offre :
+                <select> #TODO : remplacer par une liste d'offres réelles de la bdd 
+                    <option value="">Sélectionner</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                    <option value="Autre">Autre</option>
+                </select>
+            </label>
         </div>
 
         <div>
             <label for="commentaire">Commentaire sur L'offre</label>
-            <textarea name="comment" id="commentaire" required></textarea>
+            <textarea name="comment" id="commentaire" maxlength="450" required></textarea>
         </div>
         
         <div class="stars">

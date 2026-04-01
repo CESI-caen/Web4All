@@ -41,6 +41,19 @@ textarea {
     height: 200px;
     resize: vertical;
 }
+
+select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px; 
+  transition: border 0.2s;
+}
 .stars {
     display: flex;
     justify-content: center;
