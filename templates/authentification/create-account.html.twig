@@ -96,13 +96,13 @@
         <br><br>
         <div id="entreprise-info">
             <label class="titre"> Email de l'entreprise<br>
-                <input name="Email-entreprise" type="text" placeholder="email@domain.com" required>
+                <input name="Email-entreprise" type="text" placeholder="email@domain.com" >
             </label>
             <label class="titre"> Telephone de l'entreprise<br>
-                <input name="telephone-entreprise" type="tel" placeholder="telephone" required>
+                <input name="telephone-entreprise" type="tel" placeholder="telephone" >
             </label>
             <label class="titre"> Description de l'entreprise<br>
-                <input name="description-entreprise" type="text" placeholder="description" required>
+                <input name="description-entreprise" type="text" placeholder="description" >
             </label>
             <label class="titre"> Ville de l'entreprise<br>
                 <select name="ville-entreprise">
@@ -111,11 +111,8 @@
                 {% endfor %}
             </select>
             </label>
-            <label class="titre"> Code postale de la ville de l'entreprise<br>
-                <input name="cp-entreprise" type="text" placeholder="code postale" required>
-            </label>
             <label class="titre"> Domaine d'activité<br>
-                <input name="domaine[]" type="text" placeholder="Domaine d'activité" required>
+                <input name="domaine[]" type="text" placeholder="Domaine d'activité" >
                 <div id="domaines-container"></div>
                 <div id="add-domain-container">
                     <button class="bouton-a" type="button" id="add-domain">Ajouter un domaine</button>
