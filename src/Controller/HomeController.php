@@ -54,6 +54,20 @@ class HomeController extends AbstractController
         return $this->render('home/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
 
+    #[Route('/offre', name: 'Offre')]
+    public function afficherOffre(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('home/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
+
+    #[Route('/avis', name: 'Avis')]  // Avis d'une offre
+    public function avis(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('home/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
+    }
+
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response
     {
@@ -108,26 +122,7 @@ class HomeController extends AbstractController
         }
 
         return $this->redirectToRoute('Fichier Personnels');
-    }
-
-    #[Route('/offre/{id}', name: 'AfficherOffre')]
-    public function afficherOffre(int $id, OffresRepository $offresRepository, Request $request): Response
-    {
-        $offre = $offresRepository->find($id);
-        
-        if (!$offre) {
-            throw $this->createNotFoundException('Offre non trouvée');
-        }
-
-        $currentRoute = $request->attributes->get('_route');
-        return $this->render('home/offre-detail.html.twig', [
-            'offre' => $offre,
-            'ancien_page_title' => 'Home',
-            'page_title' => $currentRoute,
-        ]);
-    }
-
-    
+    }    
 }
 
 

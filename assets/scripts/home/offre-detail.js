@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Vérifier si l'utilisateur est connecté
         if (!isUserLoggedIn()) {
             alert("Vous devez être connecté pour postuler à une offre.");
-            window.location.href = "/profil"; // À adapter selon votre route
+            window.location.href = "/login"; // À adapter selon votre route
             return;
         }
 
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Vérifier si l'utilisateur est connecté
         if (!isUserLoggedIn()) {
             alert("Vous devez être connecté pour ajouter une offre à votre wishlist.");
-            window.location.href = "/profil"; // À adapter selon votre route
+            window.location.href = "/login"; // À adapter selon votre route
             return;
         }
 
