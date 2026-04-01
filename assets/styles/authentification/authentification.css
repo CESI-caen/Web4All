@@ -48,6 +48,15 @@ textarea::placeholder {
   color: var(--color-input-placeholder);
 }
 
+.success {
+  color: green;
+  background: rgba(0, 128, 0, 0.15);
+  border: 1px solid green;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+}
+
 #send {
   display: none;
 }
@@ -112,4 +121,22 @@ textarea::placeholder {
 
 .buttons button {
   flex: 1;
+}
+
+div.error {
+    color: red;
+    background: rgba(255, 0, 0, 0.15);
+    border: 1px solid red;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+div.success {
+    color: green;
+    background: rgba(0, 255, 0, 0.15);
+    border: 1px solid green;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 6px;
 }
