@@ -70,13 +70,13 @@
                     </select>
         </label><br>
 
-         <label class="titre">Ville<br>
-         <input name="ville" type="text" placeholder="Ville" required>
-         </label>
-
-         <label class="titre">Code Postal<br>
-         <input name="cp" type="text" placeholder="Code Postal" required>
-         </label>
+         <label class="titre">Ville :<br>
+            <select name="ville">
+                {% for ville in villes %}
+                    <option value="{{ ville.Nom }}">{{ ville.Nom }}</option>
+                {% endfor %}
+            </select>
+        </label>
 
          <label class="titre">Type de compte<br></label><br>
          <label class="switch">
