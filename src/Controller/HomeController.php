@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\OffresRepository;
+use App\Entity\Offres;
 
 class HomeController extends AbstractController
 {
@@ -106,6 +108,23 @@ class HomeController extends AbstractController
         }
 
         return $this->redirectToRoute('Fichier Personnels');
+    }
+
+    #[Route('/offre/{id}', name: 'AfficherOffre')]
+    public function afficherOffre(int $id, OffresRepository $offresRepository, Request $request): Response
+    {
+        $offre = $offresRepository->find($id);
+        
+        if (!$offre) {
+            throw $this->createNotFoundException('Offre non trouvée');
+        }
+
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('home/offre-detail.html.twig', [
+            'offre' => $offre,
+            'ancien_page_title' => 'Home',
+            'page_title' => $currentRoute,
+        ]);
     }
 
     
