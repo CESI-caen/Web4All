@@ -32,7 +32,7 @@ class UserModel
         return $stmt->fetch();
     }
 
-    public function addUser(string $nom,string $prenom, string $genre, string $email, string $telephone, string $password, string $ecole, int $idVille, int $idAccount): bool
+    public function addUser(string $nom,string $prenom, string $genre, string $email, string $telephone, string $password, $ecole, int $idVille, int $idAccount): bool
     {
         $stmt = $this->pdo->prepare("INSERT INTO Utilisateurs (nom, prenom, genre, email, telephone, mdp, Ecole, Id_ville, Id_type_compte) VALUES (:nom, :prenom, :genre, :email, :telephone, :password, :ecole, :id_ville, :id_account)");
         return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'genre' => $genre, 'email' => $email, 'telephone' => $telephone, 'password' => $password, 'ecole' => $ecole, 'id_ville' => $idVille, 'id_account' => $idAccount]);

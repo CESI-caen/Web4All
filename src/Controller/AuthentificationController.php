@@ -10,6 +10,9 @@ use App\Service\PdoService;
 use App\Model\UserModel;
 use App\Model\AccountModel;
 use App\Model\VilleModel;
+use App\Model\EntrepriseModel;
+use App\Model\DomaineModel;
+use App\Model\ExercerDansModel;
 
 
 
@@ -47,6 +50,9 @@ class AuthentificationController extends AbstractController
         $userModel = new UserModel($pdo);
         $AccountModel = new AccountModel($pdo);
         $VilleModel = new VilleModel($pdo);
+        $EntrepriseModel = new EntrepriseModel($pdo);
+        $DomaineModel = new DomaineModel($pdo);
+        $ExercerDansModel = new ExercerDansModel($pdo);
         $error = null;
 
         if ($request->isMethod('POST') && $request->request->get('nom') && $request->request->get('prenom')) {
@@ -56,7 +62,6 @@ class AuthentificationController extends AbstractController
             $email = $request->request->get('email');
             $password = $request->request->get('password');
             $genre = $request->request->get('genre');
-            $ecole = $request->request->get('ecole');
             $account = $request->request->get('account_type');
             $ville = $request->request->get('ville');
             $cp = $request->request->get('cp');
@@ -71,6 +76,33 @@ class AuthentificationController extends AbstractController
             else {
                 if ($account === 'Recruteur') {
                     $ecole = null;
+                    $EntrepriseNom = $request->request->get('Entreprise');
+                    $Villeentreprise = $request->request->get('ville-entreprise');
+                    $cpEntreprise = $request->request->get('cp-entreprise');
+                    $descriptif = $request->request->get('description-entreprise');
+                    $telEntreprise = $request->request->get('telephone-entreprise');
+                    $emailEntreprise = $request->request->get('Email-entreprise');
+                    $domaine = $request->request->all('domaine');
+
+
+                    $villeRow = $VilleModel->getIdByName($Villeentreprise);
+                    if (!$villeRow) {
+                        $VilleModel->addCity($Villeentreprise, $cpEntreprise);
+                        $villeRow = $VilleModel->getIdByName($Villeentreprise);
+                    }
+
+                    $EntrepriseModel->addEnterprise($EntrepriseNom, $emailEntreprise, $telEntreprise, $descriptif, (int) $villeRow['Id_ville'], 0);
+
+                    foreach ($domaine as $domaineName) {
+                        $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                        if (!$domaineRow) {
+                            $DomaineModel->addDomain($domaineName);
+                            $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                        }
+                        $ExercerDansModel->addRelation($EntrepriseModel->getEnterpriseByUserId(0)['Id_entreprise'], (int) $domaineRow['Id_domaine']);
+                    }
+                } else {
+                    $ecole = $request->request->get('ecole');
                 }
 
                 $villeRow = $VilleModel->getIdByName($ville);
@@ -86,6 +118,7 @@ class AuthentificationController extends AbstractController
                     $idAccount = (int) $accountRow['Id_type_compte'];
 
                     if ($userModel->addUser($nom, $prenom, $genre, $email, $telephone, $password, $ecole, $idVille, $idAccount)) {
+                        $EntrepriseModel->updateEnterpriseUser($EntrepriseModel->getEnterpriseByUserId(0)['Id_entreprise'], $userModel->getUserByEmail($email)['Id_utilisateur']);
                         $success = "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.";
                         return $this->redirectToRoute('Login', ['email' => $email, 'success' => $success]);
                     }

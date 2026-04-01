@@ -9,7 +9,7 @@ if (savedTheme) {
     body.classList.add(savedTheme);
 }
 
-if (switchbox) {
+if (switchbox && btn) {
         if (savedTheme === "dark") {
             btn.classList.add("btn-change");
         }

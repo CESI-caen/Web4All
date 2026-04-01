@@ -28,3 +28,52 @@ select
     border-color: var(--color-input-border);
 }
 
+.domaine-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.domaine-item input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.domaine-item button {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.domaine-item button:hover {
+    background: #d32f2f;
+}
+
+#entreprise-info {
+    display: none;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#add-domain {
+    margin-top: 10px;
+    background: var(--color-btn-primary-bg);
+    color: var(--color-btn-primary-text);
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 50%;
+}
+
+#add-domain-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+
