@@ -23,8 +23,14 @@
 {% block main %}
     <section class = "container">
         <h1>Welcome to Web4All ! </h1>
+        {% if error is defined and error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        {% if success is defined and success %}
+            <div class="success">{{ success }}</div>
+        {% endif %}
         <form method="POST" action="{{ path('Login') }}">
-            <label class="titre">Email<br><input name="email" type="email" size="30" placeholder="email@domain.com" required ></label>
+            <label class="titre">Email<br><input name="email" type="email" size="30" placeholder="email@domain.com" value="{{ email|e }}" required ></label>
             <br>
             <label class="titre">Password<br><input name="password" type="password" size="30" placeholder="value" required ></label>
             <br>

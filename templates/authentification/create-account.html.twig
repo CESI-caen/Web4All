@@ -8,8 +8,8 @@
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('palette') }}
-    {{ encore_entry_link_tags('create-account.css') }}
     {{ encore_entry_link_tags('authentification') }}
+    {{ encore_entry_link_tags('create-account.css') }}
 {% endblock %}
 
 {% block javascripts %}
@@ -27,7 +27,7 @@
         <h2>Create an account</h2>
         <p>Enter your email to sign up for this app</p>
         {% if error is defined and error %}
-            <div class="alert alert-error">{{ error }}</div>
+            <div class="error">{{ error }}</div>
         {% endif %}
         <form method="POST" action="{{ path('create-account') }}"> 
             <label class="titre">Email<br>
@@ -63,7 +63,7 @@
          </label>
 
          <label class="titre">Genre :<br>
-                    <select>
+                    <select name="genre">
                         <option value="Homme">Homme</option>
                         <option value="Femme">Femme</option>
                         <option value="Autre">Autre</option>
@@ -74,6 +74,9 @@
          <input name="ville" type="text" placeholder="Ville" required>
          </label>
 
+         <label class="titre">Code Postal<br>
+         <input name="cp" type="text" placeholder="Code Postal" required>
+         </label>
 
          <label class="titre">Type de compte<br></label><br>
          <label class="switch">
@@ -88,7 +91,7 @@
         <br><br>
         <label class="groupe">
             <span id="labelGroupe">École</span><br>
-            <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+            <input id="inputGroupe" name="ecole" type="text" placeholder="École" required>
         </label>
         <br><br>
         <label class="email">Email<br>

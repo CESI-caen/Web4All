@@ -18,6 +18,13 @@ class UserModel
         return $stmt->fetchAll();
     }
 
+    public function getUserByEmail(string $email): array|false
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateurs WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        return $stmt->fetch();
+    }
+
     public function getUserById(int $id): array|false
     {
         $stmt = $this->pdo->prepare("SELECT * FROM Utilisateurs WHERE Id_utilisateur = :id");
@@ -25,16 +32,16 @@ class UserModel
         return $stmt->fetch();
     }
 
-    public function addUser(string $nom,string $prenom, string $email, string $telephone, string $password): bool
+    public function addUser(string $nom,string $prenom, string $genre, string $email, string $telephone, string $password, string $ecole, int $idVille, int $idAccount): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO Utilisateurs (nom, prenom, email, telephone, mot_de_passe, Id_ville, Id_type) VALUES (:nom, :prenom, :email, :telephone, :password, 1, 1)");
-        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'telephone' => $telephone, 'password' => $password]);
+        $stmt = $this->pdo->prepare("INSERT INTO Utilisateurs (nom, prenom, genre, email, telephone, mdp, Ecole, Id_ville, Id_type_compte) VALUES (:nom, :prenom, :genre, :email, :telephone, :password, :ecole, :id_ville, :id_account)");
+        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'genre' => $genre, 'email' => $email, 'telephone' => $telephone, 'password' => $password, 'ecole' => $ecole, 'id_ville' => $idVille, 'id_account' => $idAccount]);
     }
 
-    public function updateUser(int $id, string $nom, string $prenom, string $email, string $telephone): bool
+    public function updateUser(int $id, string $nom, string $prenom, string $genre, string $email, string $telephone): bool
     {
-        $stmt = $this->pdo->prepare("UPDATE Utilisateurs SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone WHERE id = :id");
-        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'telephone' => $telephone, 'id' => $id]);
+        $stmt = $this->pdo->prepare("UPDATE Utilisateurs SET nom = :nom, prenom = :prenom, genre = :genre, email = :email, telephone = :telephone WHERE id = :id");
+        return $stmt->execute(['nom' => $nom, 'prenom' => $prenom, 'genre' => $genre, 'email' => $email, 'telephone' => $telephone, 'id' => $id]);
     }
 
     public function deleteUser(int $id): bool
