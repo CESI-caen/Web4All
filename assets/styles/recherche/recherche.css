@@ -1,3 +1,71 @@
 /* ###############################################################
 # CSS pour la page de recherche : web4all/recherche/             #
 ############################################################### */
+
+
+/* ########## MAIN ########## */
+main {
+    padding: 10px;
+}
+
+/* ########## BODY ########## */
+body {
+    background: var(--color-bg-page);
+    color: var(--color-text-default);
+
+    margin: 0;
+}
+
+/* ########## RECHERCHE BARRE ########## */
+/* div de la barre de recherche */
+.recherche-barre {
+
+}
+
+/* ########## RECHERCHE FILTRES ########## */
+/* div des filtres de recherche, placé sous la barre de recherche */
+.recherche-filtres {
+
+}
+
+/* ########## FILTRES CONTAINER ########## */
+/* div contenant les différents filtres*/
+.filtres-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* ########## FILTRE ########## */
+/* style global pour tous les filtres */
+.filtre {
+    flex: 1 1 200px; /* permet aux filtres de s'adapter à la taille de l'écran, avec une largeur minimale de 200px */
+    display: flex;
+    flex-direction: column;
+
+    .dropdown-checkbox {
+        display: flex;
+        flex-direction: column;
+
+        .dropdown-liste {
+
+            label {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+.avoid-footer-overlap {
+    height: 70px; /* Même hauteur que le footer incéré, pour éviter le chevauchement */
+}
+
+@media (min-width: 1024px) {
+    main{
+        margin-right: 25%;
+        margin-left: 25%;
+    }
+}
