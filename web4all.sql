@@ -202,8 +202,8 @@ INSERT INTO `Villes` (`Id_ville`, `Nom`, `CP`) VALUES
 (17, 'Charente-Maritime', '17000'),
 (18, 'Cher', '18000'),
 (19, 'Corrèze', '19000'),
-(20, 'Côte-d\'Or', '21000'),
-(21, 'Côtes-d\'Armor', '22000'),
+(20, "Côte-d'Or", '21000'),
+(21, "Côtes-d'Armor", '22000'),
 (22, 'Creuse', '23000'),
 (23, 'Dordogne', '24000'),
 (24, 'Doubs', '25000'),
@@ -278,12 +278,12 @@ INSERT INTO `Villes` (`Id_ville`, `Nom`, `CP`) VALUES
 (93, 'Hauts-de-Seine', '92000'),
 (94, 'Seine-Saint-Denis', '93000'),
 (95, 'Val-de-Marne', '94000'),
-(96, 'Val-d\'Oise', '95000'),
-(97, 'Guadeloupe', '97100'),
-(98, 'Martinique', '97200'),
-(99, 'Guyane', '97300'),
-(100, 'La Réunion', '97400'),
-(101, 'Mayotte', '97600');
+(96, "Val-d'Oise", '95000'),
+(97, "Guadeloupe", '97100'),
+(98, "Martinique", '97200'),
+(99, "Guyane", '97300'),
+(100, "La Réunion", '97400'),
+(101, "Mayotte", '97600');
 
 -- --------------------------------------------------------
 
