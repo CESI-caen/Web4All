@@ -10,15 +10,13 @@ body {
 }
 
 form {
-    max-width: 300px;
+    max-width: 1024px;
     background-color: var(--color-bg-container);
     padding: 20px;
     margin: auto;
     margin-top: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-
-
 }
 div {
     margin-bottom: 15px;
@@ -86,4 +84,20 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+}
+
+/* ============================================
+   TABLETTE
+============================================ */
+
+@media (min-width: 768px) {
+
+}
+
+/* ============================================
+   PC
+============================================ */
+
+@media (min-width: 1024px) {
+
 }
