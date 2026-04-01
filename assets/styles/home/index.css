@@ -99,6 +99,7 @@ main {
 
 .offre-container {
   padding: 10px;
+  position: relative;
   z-index: 1;
 }
 
