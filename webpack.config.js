@@ -34,18 +34,19 @@ Encore
     .addEntry('wishlist.js', './assets/scripts/home/wishlist.js')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
-    .addEntry('mes-offres.css', './assets/styles/home/mes-offres.css')
-    .addEntry('mes-offres.js', './assets/scripts/home/mes-offres.js')
-    .addEntry('offre-detail.css', './assets/styles/home/offre-detail.css')
-    .addEntry('offre-detail.js', './assets/scripts/home/offre-detail.js')
-    .addEntry('postuler-offre.css', './assets/styles/home/postuler-offre.css')
-    .addEntry('postuler-offre.js', './assets/scripts/home/postuler-offre.js')
     .addEntry('entreprise.css', './assets/styles/home/entreprise.css')
     .addEntry('entreprise.js', './assets/scripts/home/entreprise.js')
     .addEntry('creer_etudiant', './assets/styles/home/creer_etudiant.css')
 
-    .addEntry('avis-offre.css', './assets/styles/home/avis-offre.css')
-    .addEntry('avis-offre.js', './assets/scripts/home/avis-offre.js')
+    //Offre
+    .addEntry('mes-offres.css', './assets/styles/offre/mes-offres.css')
+    .addEntry('mes-offres.js', './assets/scripts/offre/mes-offres.js')
+    .addEntry('offre-detail.css', './assets/styles/offre/offre-detail.css')
+    .addEntry('offre-detail.js', './assets/scripts/offre/offre-detail.js')
+    .addEntry('postuler-offre.css', './assets/styles/offre/postuler-offre.css')
+    .addEntry('postuler-offre.js', './assets/scripts/offre/postuler-offre.js')
+    .addEntry('avis-offre.css', './assets/styles/offre/avis-offre.css')
+    .addEntry('avis-offre.js', './assets/scripts/offre/avis-offre.js')
 
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')

@@ -15,22 +15,31 @@ class OffreController extends AbstractController
     public function mesOffres(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
 
-    #[Route('/offre', name: 'Offre')]    //#[Route('/offre/{id}', name: 'AfficherOffre')]
-                                            //#[Route('/api/check-cv', name: 'CheckCv', methods: ['POST'])]
-                                            //#[Route('/offre/{id}/postuler', name: 'PostulerOffre')]
+    //#[Route('/offre/{id}', name: 'AfficherOffre')]
+    //#[Route('/api/check-cv', name: 'CheckCv', methods: ['POST'])]
+    //#[Route('/offre/{id}/postuler', name: 'PostulerOffre')]
+
+    #[Route('/offre', name: 'Offre')]
     public function afficherOffre(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        return $this->render('home/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+    }
+
+    #[Route('/postuler', name: 'Postuler')]  // Postuler à une offre
+    public function postuler(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route');
+        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
     }
 
     #[Route('/avis', name: 'Avis')]  // Avis d'une offre
     public function avis(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        return $this->render('home/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
+        return $this->render('offre/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
     }
 }

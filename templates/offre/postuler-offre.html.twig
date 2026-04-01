@@ -12,31 +12,16 @@
     {{ encore_entry_link_tags('palette') }}
     {{ encore_entry_link_tags('postuler-offre.css') }}
     {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('postuler-offre.js') }}
+   {# {{ encore_entry_script_tags('postuler-offre.js') }} #}
     {{ encore_entry_script_tags('theme') }}
 {% endblock %}
 
 {% block header %}
-    <div class="header-container">
-        <button class="mobile-nav-button">
-            <div class="header-title">
-                <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Retour"></a>
-            </div>
-        </button>
-
-        <button class="mobile-nav-button">
-            <div class="header-title">
-                <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}">Retour à l'offre</a>
-            </div>
-        </button>
-
-        <button class="mobile-nav-button" onclick="toggleNotif()">
-            <img class="icon" src="{{ asset('build/images/icon_notification.png')}}" alt="Notification">
-        </button>
-    </div>
+    {{ include('components/header.html.twig')}}  {# Import les éléments du header ( Image |Titre |Image) #}
 {% endblock %}
 
 {% block main %}
@@ -46,7 +31,8 @@
             <div class="postuler-hero-content">
                 <div class="postuler-header-info">
                     <h1 class="postuler-titre">Candidature</h1>
-                    <p class="postuler-meta">Offre chez {% if offre.entreprise and offre.entreprise.nom %}{{ offre.entreprise.nom }}{% else %}l'entreprise{% endif %}</p>
+                    {# <p class="postuler-meta">Offre chez {% if offre.entreprise and offre.entreprise.nom %}{{ offre.entreprise.nom }}{% else %}l'entreprise{% endif %}</p> #}
+                    <p>Att PDO</p>
                 </div>
             </div>
         </div>
@@ -163,7 +149,8 @@
                     <button type="submit" class="btn btn-primary" id="btn-soumettre">
                         Soumettre ma candidature
                     </button>
-                    <a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}" class="btn btn-secondary">
+                    {#<a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}" class="btn btn-secondary">#}
+                    <p>Att PDO</p>
                         Annuler
                     </a>
                 </div>
@@ -181,7 +168,11 @@
 
     <!-- Meta data pour JS -->
     <div id="offre-data" 
-         data-offre-id="{{ offre.idOffre }}"
-         style="display:none;">
+        {# data-offre-id="{{ offre.idOffre }}" #}
+        <p>Att PDO</p>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {{ include('home/footer-home.html.twig')}}
 {% endblock %}
