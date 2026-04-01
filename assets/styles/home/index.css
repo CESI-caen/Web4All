@@ -30,14 +30,14 @@ main {
 .menu-panel {
   position: sticky;
   top: 62px;
-
+  padding-top: 25px;
   background-color: var(--color-bg-container);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   overflow: hidden;
 
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  z-index: 100;
+  z-index: 2;
 }
 
 .menu-panel a {
@@ -77,7 +77,7 @@ main {
     overflow: hidden;
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 100;
+    z-index: 2;
   }
 .notif-item{
   display: flex;
