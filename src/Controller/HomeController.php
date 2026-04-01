@@ -8,14 +8,40 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'Home')]  // Route pour la page d'accueil
-    
     public function index(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         return $this->render('home/index.html.twig',['ancien_page_title' => 'null','page_title' => $currentRoute,]); // Utiliser les names des routes pour les liens --> {{ path('Home') }}
+    }
+
+    #[Route('/recherche', name: 'Recherche')] // route de la page de recherche
+    public function recherche(Request $request): Response
+    {
+        $currentRoute = $request->attributes->get('_route');
+
+        // Pour récupérer les données de la recherche depuis l'Url
+        $recherche    = $request->query->get('recherche', '');
+        $filtre_type  = $request->query->all('filtre_type');  // Tableau [], 'all' est utilisé pour les checkboxes
+        $filtre_ville = $request->query->all('filtre_ville'); // Tableau []
+        $filtre_date  = $request->query->get('filtre_date');
+
+
+        return $this->render('recherche/recherche.html.twig', [
+            'ancien_page_title' => 'Home', 
+            'page_title' => $currentRoute, 
+            'villes' => ['ville_1'], // sera récupéré depuis la base de données
+            'domaines' => ['domaine_1'], // sera récupéré depuis la base de données
+            'choix_filtres' => [
+                $recherche,
+                $filtre_type,
+                $filtre_ville,
+                $filtre_date
+            ] // Utile pour préremplir les champs
+        ]);
     }
 
     #[Route('/profil', name: 'Profil')]
@@ -43,13 +69,6 @@ class HomeController extends AbstractController
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
-    }
-
-    #[Route('/mes-offres', name: 'MesOffres')]
-    public function mesOffres(Request $request): Response
-    {
-        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
     }
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
@@ -107,9 +126,8 @@ class HomeController extends AbstractController
 
         return $this->redirectToRoute('Fichier Personnels');
     }
+}    
 
-    
-}
 
 
     

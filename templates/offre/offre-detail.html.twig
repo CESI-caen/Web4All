@@ -1,0 +1,132 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Offre - Web4All
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('offre-detail.css') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('home') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('offre-detail.js') }}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}  {# Import les éléments du header ( Image |Titre |Image) #}
+{% endblock %}
+
+{% block main %}
+
+    <section class="offre-container">
+        <!-- Section Hero -->
+        <div class="offre-hero">
+            <div class="offre-hero-content">
+                <div class="offre-header-info">
+                    <h1 class="offre-titre">
+                        
+                            Offre d'emploi
+                     
+                    </h1>
+                    <p class="offre-meta">Publiée le {{ 'now'|date('d/m/Y') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Informations principales -->
+        <div class="offre-info-section">
+            <div class="offre-dates">
+                <div class="date-item">
+                    <span class="date-label">Début :</span>
+                    <span class="date-value">
+                      
+                            À définir
+                        
+                    </span>
+                </div>
+                <div class="date-item">
+                    <span class="date-label">Fin :</span>
+                    <span class="date-value">
+                        
+                            À définir
+                        
+                    </span>
+                </div>
+                <div class="date-item">
+                    <span class="date-label">Durée (Jours) :</span>
+                    <span class="date-value">
+                       
+                            À définir
+                        
+                    </span>
+                </div>
+            <div class="date-item">
+                    <span class="date-label">Rémunération (€):</span>
+                    <span class="date-value">
+                        
+                            À définir
+                        
+                    </span>
+                </div>
+            </div>
+
+            <div class="offre-badges">
+                <span class="badge">Nouvelle offre</span>
+            </div>
+        </div>
+
+        <!-- Section Description -->
+        <div class="offre-description-section">
+            <div class="offre-description-content">
+                <h2>Description de l'offre</h2>
+                <div class="offre-description-text">
+                    
+                        <p>Aucune description disponible pour cette offre.</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Actions -->
+        <div class="offre-actions-section">
+            <button class="offre-btn offre-btn-primary" id="btn-postuler">
+                <span class="btn-icon">📧</span>
+                Postuler
+            </button>
+            <button class="offre-btn offre-btn-secondary" id="btn-wishlist">
+                <span class="btn-icon">❤️</span>
+                Ajouter à la wishlist
+            </button>
+            <button class="offre-btn offre-btn-outline" id="btn-partager">
+                <span class="btn-icon">🔗</span>
+                Partager
+            </button>
+        </div>
+
+        <!-- Section Retour -->
+        <div class="offre-back-section">
+            <a href="{{ path('MesOffres') }}" class="offre-back-link">
+                ← Retour aux offres
+            </a>
+        </div>
+    </section>
+
+    <!-- Meta data pour JS -->
+    <div id="offre-data" 
+         data-offre-titre="Offre"
+         style="display:none;">
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ include('home/footer-home.html.twig')}}
+{% endblock %}

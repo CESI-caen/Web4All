@@ -34,11 +34,19 @@ Encore
     .addEntry('wishlist.js', './assets/scripts/home/wishlist.js')
     .addEntry('index.js', './assets/scripts/home/index.js')
     .addEntry('cv', './assets/styles/home/cv.css')
-    .addEntry('mes-offres.css', './assets/styles/home/mes-offres.css')
-    .addEntry('mes-offres.js', './assets/scripts/home/mes-offres.js')
     .addEntry('entreprise.css', './assets/styles/home/entreprise.css')
     .addEntry('entreprise.js', './assets/scripts/home/entreprise.js')
     .addEntry('creer_etudiant', './assets/styles/home/creer_etudiant.css')
+
+    //Offre
+    .addEntry('mes-offres.css', './assets/styles/offre/mes-offres.css')
+    .addEntry('mes-offres.js', './assets/scripts/offre/mes-offres.js')
+    .addEntry('offre-detail.css', './assets/styles/offre/offre-detail.css')
+    .addEntry('offre-detail.js', './assets/scripts/offre/offre-detail.js')
+    .addEntry('postuler-offre.css', './assets/styles/offre/postuler-offre.css')
+    .addEntry('postuler-offre.js', './assets/scripts/offre/postuler-offre.js')
+    .addEntry('avis-offre.css', './assets/styles/offre/avis-offre.css')
+    .addEntry('avis-offre.js', './assets/scripts/offre/avis-offre.js')
 
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
@@ -54,6 +62,10 @@ Encore
 
     // Themes
     .addEntry('palette', './assets/styles/components/palette.css')
+
+    // Recherche
+    .addEntry('recherche', './assets/styles/recherche/recherche.css')
+    .addEntry('recherche.js', '/assets/scripts/recherche/recherche.js')
 
     // TEST
     //.addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')

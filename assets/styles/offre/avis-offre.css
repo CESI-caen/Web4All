@@ -1,0 +1,89 @@
+body {
+  background: var(--color-bg-page);
+  color: var(--color-text-default);
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  
+
+}
+
+form {
+    max-width: 300px;
+    background-color: var(--color-bg-container);
+    padding: 20px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+
+}
+div {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: var(--color-input-bg);
+    color: var(--color-input-text);
+}
+textarea {
+    height: 200px;
+    resize: vertical;
+}
+
+select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px; 
+  transition: border 0.2s;
+}
+.stars {
+    display: flex;
+    justify-content: center;
+}
+.star {
+    width: 50px;
+    height: 30px;
+    background-size: cover;
+    margin: 0 2px;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: filter 0.2s;
+    padding-bottom: 20px;
+}
+.star.filled {
+    filter: none;
+}
+
+.startext {
+    display: flex;
+    align-items: center;    
+    justify-content: center; 
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--color-btn-primary-bg);
+    color: var(--color-btn-primary-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
