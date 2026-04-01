@@ -63,6 +63,10 @@ Encore
     // Themes
     .addEntry('palette', './assets/styles/components/palette.css')
 
+    // Recherche
+    .addEntry('recherche', './assets/styles/recherche/recherche.css')
+    .addEntry('recherche.js', '/assets/scripts/recherche/recherche.js')
+
     // TEST
     //.addEntry('test-barre-de-recherche', './assets/styles/tests/test-barre-de-recherche.css')
 
