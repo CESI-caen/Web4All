@@ -142,6 +142,7 @@ class AuthentificationController extends AbstractController
 
         $page = $request->request->get('page', 1);
         $email = $request->request->get('email', "");
+        $villes = $VilleModel->getAllCities();
 
         if ($page == 2 && $email && !$error) {
             $existingUser = $userModel->getUserByEmail($email);
