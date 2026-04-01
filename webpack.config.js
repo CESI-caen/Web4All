@@ -44,6 +44,9 @@ Encore
     .addEntry('entreprise.js', './assets/scripts/home/entreprise.js')
     .addEntry('creer_etudiant', './assets/styles/home/creer_etudiant.css')
 
+    .addEntry('avis-offre.css', './assets/styles/home/avis-offre.css')
+    .addEntry('avis-offre.js', './assets/scripts/home/avis-offre.js')
+
     // Parametre
     .addEntry('settings', './assets/styles/parametre/index.css')
     .addEntry('theme', './assets/scripts/parametre/theme.js')

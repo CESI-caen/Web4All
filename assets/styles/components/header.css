@@ -36,7 +36,8 @@ header {
   justify-content: center;
 
   flex: 1;
-  height: 100%;
+  padding: 0.5rem;
+  min-height: 50px;
 
   background: none;
   border: none;
