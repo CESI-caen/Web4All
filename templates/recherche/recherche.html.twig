@@ -1,0 +1,110 @@
+{# ###############################################################
+# TWIG pour la page de recherche : web4all/recherche/            #
+############################################################### #}
+
+{% extends 'components/base.html.twig' %}
+
+
+{# Titre de l'onglet #}
+{% block title %}Recherche{% endblock %}
+
+
+{#  #}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+    {{ encore_entry_link_tags('barre-de-recherche') }}
+    {{ encore_entry_link_tags('recherche') }}
+{% endblock %}
+
+
+{#  #}
+{% block javascripts %}
+    {{ encore_entry_script_tags('theme') }}
+    {{ encore_entry_script_tags('recherche.js') }}
+{% endblock %}
+
+
+{#  #}
+{% block head %}{% endblock %}
+
+
+{#  #}
+{% block header %}
+    {{ include('recherche/header-recherche.html.twig') }}
+{% endblock %}
+
+
+{#  #}
+{% block main %}
+    <form method="get" action="{{ path('Recherche') }}">
+        <div class="recherche-barre">
+            {{ include('components/barre-recherche.html.twig', {
+                action: encore_entry_script_tags('recherche.js'),
+                placeholder: 'test'
+            }) }}
+        </div>
+        <div class="recherche-filtres">
+            <div class="filtres-container" id="filtre-type-container">
+                <div class="filtre"> {# Menu déroulant à 1 choix possible #}
+                    <label for="filtre-type">Type de la recherche</label>
+                    <select id="filtre-type" name="filtre-type">
+                        <option value="offres">Offres</option>
+                        <option value="entreprises">Entreprises</option>
+                        <option value="comptes">Comptes</option> {# ATTENTION : Bien regarder la matrices de permissions pour la gestion backend #}
+                    </select>
+                </div>
+                <div class="filtre" id="filtre-date-container"> {# Menu déroulant à 1 choix possible #}
+                    <label for="filtre-date">Date de publication</label>
+                    <select id="filtre-date" name="filtre-date">
+                        <option value="toutes">Toutes les dates</option>
+                        <option value="24h">Les dernières 24 heures</option>
+                        <option value="7j"> Les 7 derniers jours</option>
+                        <option value="mois">Ce mois ci</option>
+                    </select>
+                </div>
+                <div class="filtre" name="filtre-ville-container"> {# Menu déroulant de cases à cocher pour la localisation (Ville), les villes sont récupéré depuis la bdd (voir .env) par le modele, et passé par le controller #}
+                    <div class="dropdown-checkbox" id="filtre-type-dropdown-ville">
+                        <label for="filtre-type-dropdown">Localisation</label>
+                        <button type="button" class="dropdown-trigger" aria-expanded="false" aria-controls="filtre-type-liste">
+                            0 Sélectionné
+                        </button>
+                        <ul class="dropdown-liste" id="filtre-type-liste-ville" hidden>
+                            {% for ville in villes %} {# passer 'villes' depuis le controller (à la place de '0..50') #}
+                            <li><label>
+                                <input type="checkbox" name="filtre_ville[]" value="{{ ville }}">
+                                TEST ({{ ville }})
+                            </label></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="filtre" id="filtre-domaine-container"> {# Menu déroulant de cases à cocher pour les domaines (Si 'offre'), les domaines sont récupérés depuis la bdd (voir .env) par le modele, et passé par le controller #}
+                    <div class="dropdown-checkbox" id="filtre-type-dropdown-domaine">
+                        <label for="filtre-type-dropdown">Domaines</label>
+                        <button type="button" class="dropdown-trigger" aria-expanded="false" aria-controls="filtre-type-liste">
+                            0 Sélectionné
+                        </button>
+                        <ul class="dropdown-liste" id="filtre-type-liste-domaine" hidden>
+                            {% for domaine in domaines %} {# #}
+                            <li><label>
+                                <input type="checkbox" name="filtre_domaine[]" value="{{ domaine }}">
+                                TEST ({{ domaine }})
+                            </label></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{#  #}
+{% block footer %}
+    <div class="avoid-footer-overlap"></div> {# Ajoute une div vide de 70px de haut qui ce place sous le footer pour éviter d'avoir des infomrations importantes de cahcé sous celui-ci#}
+    {{ include('recherche/footer-recherche.html.twig')}}
+{% endblock %}
+

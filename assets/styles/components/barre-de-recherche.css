@@ -5,39 +5,40 @@
 
 .recherche-container{ /* mauvais comportement à largeur = 340 px*/
 
-    border: 3px solid black;
-    border-radius: 10vw;
+    border: 3px solid var(--color-text-default);
+    border-radius: 5vw;
     padding: 1vw;
     overflow: hidden;
-    background-color: #ccccccbd;
+    background-color: var(--color-bg-container);
     container-type: inline-size;
+    color: var(--color-text-default);
         
-    form{
-        display: flex;
+
+    display: flex;
+    align-items: center;
+
+    .boutton-recherche-3{
         align-items: center;
+        display: flex;
+        flex-direction: row;
 
-        .boutton-recherche-3{
-            align-items: center;
-            display: flex;
-            flex-direction: row;
-
-            label{
-                margin-left: 10px;
-                margin-right: 5px;
-            }
-            button{
-            margin-left: 5px;
+        label{
+            margin-left: 10px;
             margin-right: 5px;
-            }
         }
-        input{
-            flex: 1;
-            margin-left: 5px;
-            margin-right: 10px;
-            height: 30px;
+        button{
+        margin-left: 5px;
+        margin-right: 5px;
         }
-
     }
+    input{
+        flex: 1;
+        margin-left: 5px;
+        margin-right: 10px;
+        height: 30px;
+    }
+
+
 
 }
 
@@ -47,36 +48,35 @@
 /* ##########################################################################*/
 
 @container (max-width: 368px) { /* Règle les problèmes de mauvais comportement, permet d'utiliser un autre css en fonction de la taille de la box parent */
-    .barre-recherche {
+    .recherche-container {
         border: 2px solid;
-        border-radius: 10px;
+        border-radius: 2vw;
 
-        form{
-            flex-direction: column;
-            min-width: 120px; /* taille pour laquelle le bouton loupe reste visible si trop rétrécit*/
-        
-            .boutton-recherche-3{
-                align-items: center;
-                display: flex;
-                flex-direction: row;
+        flex-direction: column;
+        min-width: 120px; /* taille pour laquelle le bouton loupe reste visible si trop rétrécit*/
+    
+        .boutton-recherche-3{
+            align-items: center;
+            display: flex;
+            flex-direction: row;
 
-                label{
-                    margin-left: 0px;
-                    margin-right: 4px;
-                }
-                button{
-                    margin-left: 4px;
-                    margin-right: 0px;
-                }
-            }
-            input{
-                height: 15px;
-                margin-top: 4px;
-                margin-bottom:  2px;
-
+            label{
                 margin-left: 0px;
+                margin-right: 4px;
+            }
+            button{
+                margin-left: 4px;
                 margin-right: 0px;
             }
+        }
+        input{
+            height: 15px;
+            width: 100%;
+
+            margin-top: 4px;
+            margin-bottom:  2px;
+            margin-left: 0px;
+            margin-right: 0px;
         }
     }
 }
