@@ -140,6 +140,6 @@ class AuthentificationController extends AbstractController
             }
         }
 
-        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error]);
+        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error]);
     }
 }
