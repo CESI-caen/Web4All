@@ -14,39 +14,39 @@ class AccountModel
 
     public function getAllAccount(): array
     {
-        $stmt = $this->pdo->query("SELECT * FROM Types_compte");
-        return $stmt->fetchAll();
+        $requete = $this->pdo->query("SELECT * FROM Types_compte");
+        return $requete->fetchAll();
     }
 
     public function getAccountById(int $id): array|false
     {
-        $stmt = $this->pdo->prepare("SELECT Nom FROM Types_compte WHERE Id_type_compte = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
+        $requete = $this->pdo->prepare("SELECT Nom FROM Types_compte WHERE Id_type_compte = :id");
+        $requete->execute(['id' => $id]);
+        return $requete->fetch();
     }
 
     public function getIdByAccount(string $nom): array|false
     {
-        $stmt = $this->pdo->prepare("SELECT Id_type_compte FROM Types_compte WHERE Nom = :nom");
-        $stmt->execute(['nom' => $nom]);
-        return $stmt->fetch();
+        $requete = $this->pdo->prepare("SELECT Id_type_compte FROM Types_compte WHERE Nom = :nom");
+        $requete->execute(['nom' => $nom]);
+        return $requete->fetch();
     }
 
     public function addAccount(string $type): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO Types_compte (type) VALUES (:type)");
-        return $stmt->execute(['type' => $type]);
+        $requete = $this->pdo->prepare("INSERT INTO Types_compte (type) VALUES (:type)");
+        return $requete->execute(['type' => $type]);
     }
 
     public function updateAccount(int $id, string $type): bool
     {
-        $stmt = $this->pdo->prepare("UPDATE Types_compte SET type = :type WHERE Id_type_compte = :id");
-        return $stmt->execute(['type' => $type, 'id' => $id]);
+        $requete = $this->pdo->prepare("UPDATE Types_compte SET type = :type WHERE Id_type_compte = :id");
+        return $requete->execute(['type' => $type, 'id' => $id]);
     }
 
     public function deleteAccount(int $id): bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM Types_compte WHERE Id_type_compte = :id");
-        return $stmt->execute(['id' => $id]);
+        $requete = $this->pdo->prepare("DELETE FROM Types_compte WHERE Id_type_compte = :id");
+        return $requete->execute(['id' => $id]);
     }
 }

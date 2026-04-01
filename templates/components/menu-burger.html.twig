@@ -4,11 +4,14 @@
     {{ encore_entry_script_tags('index.js') }}
 {% endblock %}
 
-
 <div id="MenuPannel" class="menu-panel" hidden> 
         <!-- Profil -->
         <div class="menu-item">
-            <button > Nom Prénom</button>
+           {% if user %}
+                <button > {{ user.prenom }} {{ user.nom }} </button>
+            {% else %}
+                <button > Invité </button>
+            {% endif %}
         </div>
 
         <a href="{{ path('Profil') }}"> <div class="menu-item">

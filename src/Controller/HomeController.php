@@ -7,21 +7,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use App\Service\PdoService;
+use App\Model\OffreModel;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'Home')]  // Route pour la page d'accueil
-    public function index(Request $request): Response
+    #[Route('/{id<\d+>}', name: 'Home')]
+    public function index(Request $request, $id): Response
     {
-        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/index.html.twig',['ancien_page_title' => 'null','page_title' => $currentRoute,]); // Utiliser les names des routes pour les liens --> {{ path('Home') }}
+        $pdo = new PdoService();
+        $OffreModel = new OffreModel($pdo);
+        $offres = $OffreModel->getAllOffres();
+
+        $currentRoute = $request->attributes->get('_route');
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? $id;
+        
+        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
     }
 
     #[Route('/recherche', name: 'Recherche')] // route de la page de recherche
     public function recherche(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
 
         // Pour récupérer les données de la recherche depuis l'Url
         $recherche    = $request->query->get('recherche', '');
@@ -40,7 +50,8 @@ class HomeController extends AbstractController
                 $filtre_type,
                 $filtre_ville,
                 $filtre_date
-            ] // Utile pour préremplir les champs
+            ],
+            'userId' => $userId
         ]);
     }
 
@@ -48,34 +59,49 @@ class HomeController extends AbstractController
     public function profil(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        
+        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     #[Route('/wishlist', name: 'WishList')]
     public function whishList(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        
+        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        
+        return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     #[Route('/entreprise', name: 'Entreprise')]
     public function entreprise(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        
+        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('home/cv.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);    // 'ancien_page_title' => 'Home'  <-- non dynamique
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        
+        return $this->render('home/cv.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);    // 'ancien_page_title' => 'Home'  <-- non dynamique
     }
 
     #[Route('/upload', name: 'upload', methods: ['POST'])]

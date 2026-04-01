@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,12 +27,28 @@ class AuthentificationController extends AbstractController
         if ($request->isMethod('POST')) {
             $pdo = new PdoService();
             $userModel = new UserModel($pdo);
+
             $email = $request->request->get('email');
             $password = $request->request->get('password');
 
             $user = $userModel->getUserByEmail($email);
-            if ($user && $user['Mdp'] === $password) {
-                return $this->redirectToRoute('Home'); 
+
+            if ($user && $user['Mdp'] === $password) { //password_verify($password, $user['Mdp'])
+
+                $request->getSession()->set('user', [
+                    'id' => $user['Id_utilisateur'],
+                    'nom' => $user['Nom'],
+                    'prenom' => $user['Prenom'],
+                    'email' => $user['Email'],
+                    'telephone' => $user['Telephone'],
+                    'genre' => $user['Genre'],
+                    'ecole' => $user['Ecole'],
+                    'id_type_compte' => $user['Id_type_compte']
+                ]);
+                
+                return $this->redirectToRoute('Home', [
+                    'id' => $user['Id_utilisateur']
+                ]);
             } else {
                 $error = 'Email ou mot de passe incorrect.';
                 $success = null; // clear success on error
@@ -65,7 +80,6 @@ class AuthentificationController extends AbstractController
             $genre = $request->request->get('genre');
             $account = $request->request->get('account_type');
             $ville = $request->request->get('ville');
-            $cp = $request->request->get('cp');
 
             if ($userModel->getUserByEmail($email)) {
                 $error = 'Cet e-mail est déjà utilisé. Veuillez en choisir un autre.';
@@ -82,10 +96,6 @@ class AuthentificationController extends AbstractController
                 }
 
                 $villeRow = $VilleModel->getIdByName($ville);
-                if (!$villeRow) {
-                    $VilleModel->addCity($ville, $cp);
-                    $villeRow = $VilleModel->getIdByName($ville);
-                }
 
                 $accountRow = $AccountModel->getIdByAccount($account);
 
@@ -98,7 +108,6 @@ class AuthentificationController extends AbstractController
                         if ($account === 'recruteur') {
                             $EntrepriseNom = $request->request->get('Entreprise');
                             $Villeentreprise = $request->request->get('ville-entreprise');
-                            $cpEntreprise = $request->request->get('cp-entreprise');
                             $descriptif = $request->request->get('description-entreprise');
                             $telEntreprise = $request->request->get('telephone-entreprise');
                             $emailEntreprise = $request->request->get('Email-entreprise');
@@ -151,7 +160,6 @@ class AuthentificationController extends AbstractController
                 $page = 1;
             }
         }
-
         return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error]);
     }
 }

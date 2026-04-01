@@ -41,12 +41,12 @@
             {% for offre in offres %}
                 <div class="offre-item">
                     <header>
-                        <p class="bulle-offre-titre">Offre {{offre.Descriptif}}</p>
-                        <p class="bulle-offre-dates">01/01 -> 01/03 2026</p>
+                        <p class="bulle-offre-titre">Offre {{offre.Nom}}</p>
+                        <p class="bulle-offre-dates">{{offre.Date_debut}} -> {{offre.Date_fin}}</p>
                     </header>
                     <hr>
                     <div class="bulle-offre-detail">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
+                        <p>{{offre.Descriptif}}</p>
                     </div>
                 </div>
             {% endfor %}

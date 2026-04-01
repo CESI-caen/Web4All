@@ -14,39 +14,39 @@ class DomaineModel
 
     public function getAllDomains(): array
     {
-        $stmt = $this->pdo->query("SELECT * FROM Domaines");
-        return $stmt->fetchAll();
+        $requete = $this->pdo->query("SELECT * FROM Domaines");
+        return $requete->fetchAll();
     }
 
     public function getDomainById(int $id): array|false
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM Domaines WHERE Id_domaine = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
+        $requete = $this->pdo->prepare("SELECT * FROM Domaines WHERE Id_domaine = :id");
+        $requete->execute(['id' => $id]);
+        return $requete->fetch();
     }
 
     public function getDomainByName(string $nom): array|false
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM Domaines WHERE Nom = :nom");
-        $stmt->execute(['nom' => $nom]);
-        return $stmt->fetch();
+        $requete = $this->pdo->prepare("SELECT * FROM Domaines WHERE Nom = :nom");
+        $requete->execute(['nom' => $nom]);
+        return $requete->fetch();
     }
 
     public function addDomain(string $nom): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO Domaines (Nom) VALUES (:nom)");
-        return $stmt->execute(['nom' => $nom]);
+        $requete = $this->pdo->prepare("INSERT INTO Domaines (Nom) VALUES (:nom)");
+        return $requete->execute(['nom' => $nom]);
     }
 
     public function updateDomain(int $id, string $nom): bool
     {
-        $stmt = $this->pdo->prepare("UPDATE Domaines SET Nom = :nom WHERE Id_domaine = :id");
-        return $stmt->execute(['nom' => $nom, 'id' => $id]);
+        $requete = $this->pdo->prepare("UPDATE Domaines SET Nom = :nom WHERE Id_domaine = :id");
+        return $requete->execute(['nom' => $nom, 'id' => $id]);
     }
 
     public function deleteDomain(int $id): bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM Domaines WHERE Id_domaine = :id");
-        return $stmt->execute(['id' => $id]);
+        $requete = $this->pdo->prepare("DELETE FROM Domaines WHERE Id_domaine = :id");
+        return $requete->execute(['id' => $id]);
     }
 }

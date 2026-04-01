@@ -2,7 +2,7 @@
 
 
 {% block boutton_gauche %}
-    <a href="{{ path('Home') }}" id="Bouton_gauche"> <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home"> </a>
+    <a href="{{ path('Home', {id: userId}) }}" id="Bouton_gauche"> <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home"> </a>
 {% endblock %}
 
 

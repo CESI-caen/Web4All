@@ -2,14 +2,22 @@
     {% block boutton_gauche %}
         <button class="mobile-nav-button">
             <div class="header-title">
-                <a href="{{ path(ancien_page_title) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+                {% if userId %}
+                    <a href="{{ path(ancien_page_title, {id: userId})  }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+                {% else %}
+                    <a href="{{ path('Login') }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+                {% endif %}
             </div>
         </button>
     {% endblock %}
 
     <button class="mobile-nav-button">
         <div class="header-title">
-            <a href="{{ path(page_title) }}">{{ page_title }}</a>
+            {% if userId %}
+                <a href="{{ path(page_title, {id: userId}) }}">{{ page_title }}</a>
+            {% else %}
+                <a href="{{ path('Login') }}">{{ page_title }}</a>
+            {% endif %}
         </div>
     </button>
 
