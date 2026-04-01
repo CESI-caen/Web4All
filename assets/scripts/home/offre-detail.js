@@ -36,54 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
      * Gérer le clic sur le bouton Postuler
      */
     function handlePostuler() {
-        console.log("Candidature pour l'offre:", offreId);
+        console.log("Redirection vers la candidature pour l'offre:", offreId);
         
         // Vérifier si l'utilisateur est connecté
         if (!isUserLoggedIn()) {
             alert("Vous devez être connecté pour postuler à une offre.");
-            window.location.href = "/profil"; // À adapter selon votre route
+            window.location.href = "/login"; // À adapter selon votre route
             return;
         }
 
-        // Afficher un message de confirmation
-        const confirmed = confirm("Êtes-vous sûr de vouloir postuler à cette offre ?");
-        if (!confirmed) return;
-
-        // Envoyer la candidature via AJAX
-        submitCandidacy();
-    }
-
-    /**
-     * Soumettre la candidature
-     */
-    function submitCandidacy() {
-        const btn = document.getElementById("btn-postuler");
-        const originalText = btn.textContent;
-
-        // État de chargement
-        btn.disabled = true;
-        btn.textContent = "Envoi en cours...";
-        btn.classList.add("offre-loading");
-
-        // Simuler l'envoi (à remplacer par un vrai appel API)
-        setTimeout(() => {
-            // En production, ceci serait un vrai appel fetch/AJAX
-            console.log("Candidature envoyée pour l'offre:", offreId);
-            
-            btn.disabled = false;
-            btn.classList.remove("offre-loading");
-            btn.textContent = "Candidature envoyée !";
-            btn.style.backgroundColor = "#28a745";
-
-            // Afficher un message de succès
-            showNotification("Votre candidature a été envoyée avec succès !", "success");
-
-            // Réinitialiser le bouton après 3 secondes
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.backgroundColor = "";
-            }, 3000);
-        }, 800);
+        // Rediriger vers la page de candidature
+        window.location.href = `/offre/${offreId}/postuler`;
     }
 
     /**
