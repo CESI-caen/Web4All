@@ -13,11 +13,12 @@ use \App\Model\UserModel;
 use \App\Model\VilleModel;
 use \App\Model\EntrepriseModel;
 use \App\Model\AccountModel;
+use \App\Model\VouloirModel;
 
 class HomeController extends AbstractController
 {
-    #[Route('/{id<\d+>}', name: 'Home')]
-    public function index(Request $request, $id): Response
+    #[Route(['/', '/home'], name: 'Home')]
+    public function index(Request $request): Response
     {
         $pdo = new PdoService();
         $OffreModel = new OffreModel($pdo);
@@ -25,8 +26,8 @@ class HomeController extends AbstractController
 
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? $id;
-        var_dump($user);    
+        $userId = $user['id'] ?? null;
+       
         return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
     }
 
@@ -110,12 +111,18 @@ class HomeController extends AbstractController
 
     #[Route('/wishlist', name: 'WishList')]
     public function whishList(Request $request): Response
-    {
+    {   
+        $pdo = new PdoService();
+        $VouloirModel = new VouloirModel($pdo);
+        
+
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        
-        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
+
+        $Wishlists = $VouloirModel->getWishLists($userId);
+
+        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'Wishlists' => $Wishlists]);
     }
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response

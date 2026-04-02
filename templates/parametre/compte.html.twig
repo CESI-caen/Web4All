@@ -31,10 +31,14 @@
 
 {% block main %}
 
-<p>Tu es connecté en tant que {{ user.prenom }} {{ user.nom }}</p>
-<p>Ton adresse email est {{ user.email }}</p>
-<p> ton téléphone est {{ user.telephone }}</p>
-<p> tu es {{user.nom_type_compte}}</p>
+<ul>
+
+    <li>Tu es connecté en tant que {{ user.prenom }} {{ user.nom }}</li><br>
+    <li>Ton adresse email est {{ user.email }}</li><br>
+    <li>Ton téléphone est {{ user.telephone }}</li><br>
+    <li>Tu es {{user.nom_type_compte}}</li><br>
+
+</ul>
    
 {% endblock %}
 
