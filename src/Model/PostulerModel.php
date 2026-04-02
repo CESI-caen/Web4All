@@ -3,7 +3,7 @@ namespace App\Model;
 
 use App\Service\PdoService;
 
-
+class PostulerModel
 // Modèle de la Postuler = noter une offre, qui représente la relation entre un utilisateur et une offre : "un étudiant peut postuler à une offre"
 {
     private \PDO $pdo;
