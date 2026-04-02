@@ -44,12 +44,12 @@
             <button >  Recherche </button>
         </div> </a> 
         
-        {% if user %}
-            <a href="{{ path('Login') }}"> <div class="menu-item-pc">
+        {% if user and user.id != 999 %}
+            <a href="{{ path('Deconnexion') }}"> <div class="menu-item-pc">
                 <button >  Deconnexion </button>
             </div> </a> 
         {% else %}
-            <a href="{{ path('Login') }}"> <div class="menu-item-pc">
+            <a href="{{ path('Connexion') }}"> <div class="menu-item-pc">
                 <button >  Connexion </button>
             </div> </a> 
         {% endif %}

@@ -2,7 +2,7 @@
 
 
 {% block boutton_gauche %}
-    {% if userId %}
+    {% if userId and userId != 0 %}
         <a href="{{ path('Home', {id: userId}) }}" id="Bouton_gauche"> <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home"> </a>
     {% else %}
         <a href="{{ path('Login') }}" id="Bouton_gauche"> <img class="icon" src="{{asset('build/images/Home_sans.png')}}" alt="Home"> </a>
