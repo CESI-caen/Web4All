@@ -9,6 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\PdoService;
 use App\Model\OffreModel;
+use \App\Model\UserModel;
+use \App\Model\VilleModel;
+use \App\Model\EntrepriseModel;
+use \App\Model\AccountModel;
 
 class HomeController extends AbstractController
 {
@@ -58,11 +62,50 @@ class HomeController extends AbstractController
     #[Route('/profil', name: 'Profil')]
     public function profil(Request $request): Response
     {
+        $UserModel = new UserModel(new PdoService());
+        $VilleModel = new VilleModel(new PdoService());
+        $EntrepriseModel = new EntrepriseModel(new PdoService());
+        $AccountModel = new AccountModel(new PdoService());
+
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        if ($request->isMethod('POST')) {
+            $nom = $request->request->get('nom');
+            $prenom = $request->request->get('prenom');
+            $email = $request->request->get('email');
+            $ville = $request->request->get('ville');
+            $genre = $request->request->get('genre');
+            $groupe = $request->request->get('groupe');
+            $phone = $UserModel->getUserById($userId)['Telephone'];
+            $password = $UserModel->getUserById($userId)['Mdp'];
+            if ($UserModel->getUserById($userId)['Id_type_compte'] == 3) {
+                $school = null;
+            } else {
+                $school = $groupe;
+            }
+            $id_city = $VilleModel->getIdByName($ville)['Id_ville'];
+
+            $id_type_account = $UserModel->getUserById($userId)['Id_type_compte'];
+
+            $UserModel->updateUser( $userId, $nom, $prenom, $genre, $email, $phone, $school, $password, $id_city, $id_type_account);
+        }
+
+        $nom = $UserModel->getUserById($userId)['Nom'];
+        $prenom = $UserModel->getUserById($userId)['Prenom'];
+        $email = $UserModel->getUserById($userId)['Email'];
+        $genre = $UserModel->getUserById($userId)['Genre'];
+        if ($UserModel->getUserById($userId)['Id_type_compte'] == 3) {
+            $groupe = $EntrepriseModel->getEnterpriseByUserId($userId)['Nom'];
+            $type_compte = 1;
+        } else {
+            $groupe = $UserModel->getUserById($userId)['Ecole'];
+            $type_compte = 2;
+        }
+        $ville = $VilleModel->getCityById($UserModel->getUserById($userId)['Id_ville'])['Nom'];
         
-        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
+        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'groupe' => $groupe, 'type_compte' => $type_compte, 'ville' => $ville, 'genre' => $genre]);
     }
 
     #[Route('/wishlist', name: 'WishList')]

@@ -30,7 +30,7 @@
 
 
 {% block main %}
-<form>
+<form method="POST">
 <label class="titre">Mot de passe actuel<br>
     <input name="current_password" type="password" placeholder="Mot de passe actuel" required>
 </label>
@@ -40,6 +40,8 @@
 <label class="titre">Confirmation du nouveau mot de passe<br>
     <input name="password_confirm" type="password" placeholder="Confirmer le nouveau mot de passe" required>
 </label>
+
+<p style="color : red; "> {{ message }}</p>
 
 <div class="buttons">
 <button class="bouton-a" id="confirmer">Confirmer</button>

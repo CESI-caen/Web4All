@@ -22,9 +22,13 @@
             <button > Fichiers personnels </button>
         </div> </a>
 
-        <a href="{{ path('Inscription Etudiant') }}"> <div class="menu-item">
-            <button > Création de compte Etudiant Si Pilote scolaire</button>
-        </div>
+        
+
+        {% if user and user.id != 999 and user.nom_type_compte == 'pilote' %}
+            <a href="{{ path('Inscription Etudiant') }}"> <div class="menu-item">
+            <button > Création de compte Etudiant</button>
+        </div> </a>
+        {% endif %}
 
         <a href="{{ path('Entreprise') }}"> <div class="menu-item">
             <button > Mon entreprise </button>
