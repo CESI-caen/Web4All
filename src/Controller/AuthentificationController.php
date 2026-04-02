@@ -124,10 +124,6 @@ class AuthentificationController extends AbstractController
                             }
 
                             $villeRow = $VilleModel->getIdByName($Villeentreprise);
-                            if (!$villeRow) {
-                                $VilleModel->addCity($Villeentreprise, $cpEntreprise);
-                                $villeRow = $VilleModel->getIdByName($Villeentreprise);
-                            }
 
                             $IdUser = $userModel->getUserByEmail($email)['Id_utilisateur'];
 

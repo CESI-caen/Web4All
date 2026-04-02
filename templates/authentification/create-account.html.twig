@@ -43,13 +43,13 @@
         </div>
         <h2>Already have an account ?</h2>
         <p>Click the button below to login</p>
-    <button class="bouton-b" id="login">Login</button>
+    <a href="{{ path('Login') }}"><button class="bouton-b" >Login</button></a>
         <div class="divider">
             <span>or</span>
         </div>
         <h2>No account needed</h2>
         <p>You can continue as a guest.</p>
-    <button class="bouton-b" id="guest"> <a href="{{ path('GuestLogin') }}" onclick="document.getElementById('guest').click() " > Continue as Guest </a> </button>
+     <button class="bouton-b" id="guest"> <a href="{{ path('GuestLogin') }}" onclick="document.getElementById('guest').click() " > Continue as Guest </a> </button>
     </section>
 {% elseif page == 2 %}
     <section class="container">

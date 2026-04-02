@@ -1,12 +1,5 @@
 
 
-const loginBtn = document.getElementById("login");
-if (loginBtn) {
-    loginBtn.onclick = function () {
-        window.location.href = "/login";
-    };
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     const radios = document.querySelectorAll('input[name="account_type"]');
     const labelGroupe = document.getElementById('labelGroupe');
