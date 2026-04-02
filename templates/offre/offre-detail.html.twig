@@ -95,23 +95,17 @@
 
         <!-- Section Actions -->
         <div class="offre-actions-section">
-            <button class="offre-btn offre-btn-primary" id="btn-postuler">
+            <button class="offre-btn offre-btn-primary" onclick="document.getElementById("btn_Postuler").click()">
                 <span class="btn-icon">📧</span>
-                Postuler
+                <a href="{{ path('Postuler') }}" id="btn_Postuler">Postuler</a>
             </button>
-            <button class="offre-btn offre-btn-secondary" id="btn-wishlist">
+            <button class="offre-btn offre-btn-secondary" onclick="">
                 <span class="btn-icon">❤️</span>
-                Ajouter à la wishlist
+                <a href="{{ path('Wishlist_ajout', {'id': offre.Id_offre}) }}" id="btn_wishlist">Wishlist</a>
             </button>
         </div>
 
     </section>
-
-    <!-- Meta data pour JS -->
-    <div id="offre-data" 
-         data-offre-titre="Offre"
-         style="display:none;">
-    </div>
 {% endblock %}
 
 {% block footer %}

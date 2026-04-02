@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\PdoService;
 use App\Model\OffreModel;
+use App\Model\VouloirModel;
 
 class OffreController extends AbstractController
 {
@@ -47,7 +48,21 @@ class OffreController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
+        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'MesOffres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]); // modifier le chermin retour 
+    }
+
+    #[Route('/wishlist_ajout/{id}', name: 'Wishlist_ajout')]
+    public function wishlist_ajout(int $id, Request $request): Response
+    {
+        $pdo = new PdoService();
+        $VouloirModel = new VouloirModel($pdo);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+    
+        $VouloirModel->addRelation($userId, $id);
+
+        // Rediriger vers la page de Home après ajout wishlist
+        return $this->redirectToRoute('Home');
     }
 
     #[Route('/avis', name: 'Avis')]  // Avis d'une offre
