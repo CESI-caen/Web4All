@@ -15,7 +15,9 @@ class OffreController extends AbstractController
     public function mesOffres(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     //#[Route('/offre/{id}', name: 'AfficherOffre')]
@@ -26,20 +28,26 @@ class OffreController extends AbstractController
     public function afficherOffre(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     #[Route('/postuler', name: 'Postuler')]  // Postuler à une offre
     public function postuler(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId]);
     }
 
     #[Route('/avis', name: 'Avis')]  // Avis d'une offre
     public function avis(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        return $this->render('offre/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute,]);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        return $this->render('offre/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId]);
     }
 }

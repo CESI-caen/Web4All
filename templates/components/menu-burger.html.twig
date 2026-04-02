@@ -40,13 +40,19 @@
        <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
             <button >  Wishlist </button>
         </div> </a> 
-        <div class="menu-item-pc">
-            <button > Recherche </button>
-        </div>
+        <a href="{{ path('Recherche') }}"> <div class="menu-item-pc">
+            <button >  Recherche </button>
+        </div> </a> 
         
-        <div class="menu-item">
-            <button > Déconnexion </button>
-        </div>
+        {% if user %}
+            <a href="{{ path('Login') }}"> <div class="menu-item-pc">
+                <button >  Deconnexion </button>
+            </div> </a> 
+        {% else %}
+            <a href="{{ path('Login') }}"> <div class="menu-item-pc">
+                <button >  Connexion </button>
+            </div> </a> 
+        {% endif %}
     </div>
         {# {{ include("components/barre-recherche.html.twig") }} #}
 

@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? $id;
-        
+        var_dump($user);
         return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
     }
 

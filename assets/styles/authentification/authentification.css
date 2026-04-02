@@ -10,6 +10,10 @@ body {
   color: var(--color-text-default);
 }
 
+a{
+  text-decoration: none;
+  color:var(--color-text-default);
+}
 .container {
   text-align: center;
   width: 80vw;
@@ -140,3 +144,4 @@ div.success {
     padding: 10px;
     border-radius: 6px;
 }
+

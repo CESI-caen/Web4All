@@ -46,8 +46,7 @@ class AuthentificationController extends AbstractController
                     'id_type_compte' => $user['Id_type_compte']
                 ]);
                 
-                return $this->redirectToRoute('Home', [
-                    'id' => $user['Id_utilisateur']
+                return $this->redirectToRoute('Home', ['id' => $user['Id_utilisateur']
                 ]);
             } else {
                 $error = 'Email ou mot de passe incorrect.';
@@ -70,6 +69,9 @@ class AuthentificationController extends AbstractController
         $ExercerDansModel = new ExercerDansModel($pdo);
         $error = null;
         $success = null;
+        // Session 
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
 
         if ($request->isMethod('POST') && $request->request->get('nom') && $request->request->get('prenom')) {
             $nom = $request->request->get('nom');
@@ -118,7 +120,7 @@ class AuthentificationController extends AbstractController
                                 $error = "Cet e-mail d'entreprise est déjà utilisé. Veuillez en choisir un autre.";
                                 $userModel->deleteUser($userModel->getUserByEmail($email)['Id_utilisateur']);
                                 $page = 1;
-                                return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error]);
+                                return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error, 'userId' => $userId]);
                             }
 
                             $villeRow = $VilleModel->getIdByName($Villeentreprise);
@@ -160,6 +162,49 @@ class AuthentificationController extends AbstractController
                 $page = 1;
             }
         }
-        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error]);
+        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error, 'userId' => $userId]);
+    }
+
+    #[Route('/guest-login', name: 'GuestLogin')]
+    public function guestLogin(Request $request): Response
+    {
+        // Créer une session d'invité
+        $request->getSession()->set('user', [
+            'id' => 999,
+            'nom' => 'Connecté en tant que ',
+            'prenom' => 'invité',
+            'email' => 'invite@gmail.com',
+            'telephone' => '0201030405',
+            'genre' => 'autre',
+            'ecole' => 'Aucune',
+            'id_type_compte' => '1'
+        ]);
+
+        // Récupérer l'ID de la session créée
+        $user = $request->getSession()->get('user');
+        $guestId = $user['id']; // Récupérer l'ID d'invité (999)
+    
+        // Rediriger vers la page d'accueil
+        return $this->redirectToRoute('Home', ['id' => $guestId]);
+    }
+
+    #[Route('/', name: 'Connexion')]
+    public function Connexion(Request $request): Response
+    {
+        if ($request->getSession()->has('user')) {
+            return $this->redirectToRoute('Home', ['id' => $request->getSession()->get('user')['id']]);
+        }else{
+            return $this->redirectToRoute('Login');
+        }
+    }
+
+    #[Route('/deconnexion', name: 'Deconnexion')]
+    public function Deconnexion(Request $request): Response
+    {
+        // Supprimer la session utilisateur
+        $request->getSession()->invalidate();
+        session_abort();
+        // Rediriger vers la page de login
+        return $this->redirectToRoute('Login');
     }
 }
