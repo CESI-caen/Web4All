@@ -57,7 +57,7 @@ class UserModel
      * @param string $gender The gender of the user
      * @param string $email The email of the user
      * @param string $phone The phone number of the user
-     * @param string $school The school of the user
+     * @param $school The school of the user, can be null
      * @param string $password The password of the user
      * @param string $school The school of the user
      * @param int $id_city The ID of the city of the user
@@ -65,7 +65,7 @@ class UserModel
      * 
      * @return bool True if the insertion was successful, false otherwise
      */
-    public function addUser(string $name,string $firstname, string $gender, string $email, string $phone, string $school ,string $password, int $id_city, int $id_account): bool
+    public function addUser(string $name,string $firstname, string $gender, string $email, string $phone, string $password, $school ,int $id_city, int $id_account): bool
     {
         $requete = $this->pdo->prepare("INSERT INTO Utilisateurs (Nom, Prenom, Genre, Email, Telephone, Mdp, Ecole, Id_ville, Id_type_compte) VALUES (:nom, :prenom, :genre, :email, :telephone, :password, :ecole, :id_ville, :id_account)");
         return $requete->execute(['nom' => $name, 'prenom' => $firstname, 'genre' => $gender, 'email' => $email, 'telephone' => $phone, 'password' => $password, 'ecole' => $school, 'id_ville' => $id_city, 'id_account' => $id_account]);

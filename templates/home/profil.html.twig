@@ -32,40 +32,34 @@
         </div>
 
         <div id="data">
-            <form method="post">
+            <form method="post" action="{{ path('Profil') }}">
                 <label>Nom :<br>
-                    <input type="text" name="nom" value="Nom" required> {# a remplacer par les valeurs de la bdd dans value#}
-                </label><br><br>
+                    <input type="text" name="nom" value={{ nom}} required>
 
                 <label>Prénom :<br>
-                    <input type="text" name="prenom" value="Prénom" required>
+                    <input type="text" name="prenom" value={{ prenom}} required>
                 </label><br><br>
 
                 <label>Genre :<br>
-                    <select>
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
-                        <option value="Autre">Autre</option>
+                    <select name="genre" required>
+                        <option value="Homme" {% if genre == 'Homme' %}selected{% endif %}>Homme</option>
+                        <option value="Femme" {% if genre == 'Femme' %}selected{% endif %}>Femme</option>
+                        <option value="Autre" {% if genre == 'Autre' %}selected{% endif %}>Autre</option>
                     </select>
                 </label><br><br>
 
-                <label>Description :</label><br>
-                <textarea id="Description" name="Description" rows="5" placeholder="Écrivez votre description ici..."></textarea>
-
-                <br><br>
-
                 <label class="titre">Ville<br>
-                <input name="ville" type="text" placeholder="Ville" required>
+                <input name="ville" type="text" placeholder="Ville" value={{ ville}} required>
                 </label><br><br>
 
                 <label class="groupe">
-                <span id="labelGroupe">École</span><br>
-                <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+                <span id="labelGroupe">{% if type_compte == 1 %}Entreprise{% else %}École{% endif %}</span><br>
+                {% if type_compte == 1 %}<input id="inputGroupe" name="groupe" type="text" value={{ groupe}} required readonly>{% else %}<input id="inputGroupe" name="groupe" type="text" value={{ groupe}} required>{% endif %}
                 </label><br>
 
                 <br>
                 <label class="email">Email<br>
-                <input name="email" type="email" value = "email" required>
+                <input name="email" type="email" value = {{ email}} required>
                 </label><br><br>
 
                 <br>
