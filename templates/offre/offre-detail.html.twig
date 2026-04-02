@@ -28,6 +28,12 @@
 {% block main %}
 
     <section class="offre-container">
+        {% if user and user.id == entreprise.Id_utilisateur %}
+            <div class="offre-actions-section">
+                <a href="{{ path('ModifierOffre', {'id': offre.Id_offre}) }}" class="offre-btn offre-btn-primary">Modifier l'offre</a>
+                <a href="#" class="offre-btn offre-btn-outline">Supprimer l'offre</a>
+            </div>
+        {% endif %}
         <!-- Section Hero -->
         <div class="offre-hero">
             <div class="offre-hero-content">

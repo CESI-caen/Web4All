@@ -149,15 +149,139 @@ class HomeController extends AbstractController
         return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
     }
 
-    #[Route('/entreprise', name: 'Entreprise')]
-    public function entreprise(Request $request): Response
+    #[Route('/entreprise/{id}', name: 'Entreprise')]
+    public function afficherEntreprise(int $id, Request $request): Response
     {
-        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        $pdo = new PdoService();
+        $EntrepriseModel = new EntrepriseModel($pdo);
+        $OffreModel = new OffreModel($pdo);
+        $ExercerDansModel = new \App\Model\ExercerDansModel($pdo);
+        $VilleModel = new VilleModel($pdo);
+
+        $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        // Récupérer les informations de l'entreprise
+        $entreprise = $EntrepriseModel->getEnterpriseById($id);
         
-        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
+        if (!$entreprise) {
+            throw $this->createNotFoundException('Entreprise non trouvée');
+        }
+
+        // Récupérer les offres de l'entreprise
+        $offres = $OffreModel->getOffresByEnterpriseId($id);
+        
+        // Récupérer les domaines de l'entreprise
+        $domaines = $ExercerDansModel->getDomainesByEnterprise($id);
+        
+        // Récupérer la ville de l'entreprise
+        $ville = $VilleModel->getCityById($entreprise['Id_ville']);
+
+        return $this->render('home/entreprise.html.twig', [
+            'ancien_page_title' => 'Home',
+            'page_title' => $currentRoute,
+            'userId' => $userId,
+            'user' => $user,
+            'entreprise' => $entreprise,
+            'offres' => $offres,
+            'domaines' => $domaines,
+            'ville' => $ville
+        ]);
     }
+
+    #[Route('/entreprises', name: 'ListEntreprises')]
+    public function listEntreprises(Request $request): Response
+    {
+        $pdo = new PdoService();
+        $EntrepriseModel = new EntrepriseModel($pdo);
+
+        $currentRoute = $request->attributes->get('_route');
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        $entreprises = $EntrepriseModel->getAllEnterprises();
+
+        return $this->render('home/entreprises.html.twig', [
+            'ancien_page_title' => 'Home',
+            'page_title' => $currentRoute,
+            'userId' => $userId,
+            'user' => $user,
+            'entreprises' => $entreprises
+        ]);
+    }
+
+    #[Route('/entreprise/{id}/modifier', name: 'ModifierEntreprise')]
+    public function modifierEntreprise(int $id, Request $request): Response
+    {
+        $pdo = new PdoService();
+        $EntrepriseModel = new EntrepriseModel($pdo);
+        $VilleModel = new VilleModel($pdo);
+        $ExercerDansModel = new \App\Model\ExercerDansModel($pdo);
+        $DomaineModel = new DomaineModel($pdo);
+
+        $currentRoute = $request->attributes->get('_route');
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        // Récupérer l'entreprise
+        $entreprise = $EntrepriseModel->getEnterpriseById($id);
+        
+        if (!$entreprise || $entreprise['Id_utilisateur'] != $userId) {
+            throw $this->createNotFoundException('Entreprise non trouvée ou accès non autorisé');
+        }
+
+        if ($request->isMethod('POST')) {
+            $nom = $request->request->get('nom');
+            $email = $request->request->get('email');
+            $telephone = $request->request->get('telephone');
+            $descriptif = $request->request->get('descriptif');
+            $ville = $request->request->get('ville');
+            $domaines = $request->request->all('domaines');
+
+            $villeRow = $VilleModel->getIdByName($ville);
+            $idVille = $villeRow ? (int)$villeRow['Id_ville'] : $entreprise['Id_ville'];
+
+            if ($EntrepriseModel->updateEnterprise($id, $nom, $email, $telephone, $descriptif, $idVille)) {
+                // Mettre à jour les domaines
+                // Supprimer les anciennes relations
+                $anciensDomaines = $ExercerDansModel->getDomainesByEnterprise($id);
+                foreach ($anciensDomaines as $domaine) {
+                    $ExercerDansModel->deleteRelation($id, $domaine['Id_domaine']);
+                }
+
+                // Ajouter les nouveaux domaines
+                foreach ($domaines as $domaineName) {
+                    $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                    if (!$domaineRow) {
+                        $DomaineModel->addDomain($domaineName);
+                        $domaineRow = $DomaineModel->getDomainByName($domaineName);
+                    }
+                    $ExercerDansModel->addRelation($id, (int)$domaineRow['Id_domaine']);
+                }
+
+                return $this->redirectToRoute('Entreprise', ['id' => $id]);
+            }
+        }
+
+        $villes = $VilleModel->getAllCities();
+        $domaines = $ExercerDansModel->getDomainesByEnterprise($id);
+        $tousLesDomaines = $DomaineModel->getAllDomains();
+        $ville = $VilleModel->getCityById($entreprise['Id_ville']);
+
+        return $this->render('home/modifier-entreprise.html.twig', [
+            'ancien_page_title' => 'Entreprise',
+            'page_title' => $currentRoute,
+            'userId' => $userId,
+            'user' => $user,
+            'entreprise' => $entreprise,
+            'villes' => $villes,
+            'domaines' => $domaines,
+            'tousLesDomaines' => $tousLesDomaines,
+            'ville' => $ville
+        ]);
+    }
+
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response

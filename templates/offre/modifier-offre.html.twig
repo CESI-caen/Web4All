@@ -1,0 +1,60 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Modifier l'offre
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('profil') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+{% block main %} 
+    <section class="container">
+        <div id="data">
+            <h1>Modifier l'offre</h1>
+            <form method="POST" action="{{ path('ModifierOffre', {'id': offre.Id_offre}) }}">
+                <label>Description<br>
+                    <textarea name="descriptif" rows="5" required>{{ offre.Descriptif }}</textarea>
+                </label><br><br>
+
+                <label>Date de début<br>
+                    <input type="date" name="date_start" value="{{ offre.Date_debut }}" required>
+                </label><br><br>
+
+                <label>Date de fin<br>
+                    <input type="date" name="date_end" value="{{ offre.Date_fin }}" required>
+                </label><br><br>
+
+                <label>Durée (en jours)<br>
+                    <input type="number" name="duration" value="{{ offre.Duree }}" required>
+                </label><br><br>
+
+                <label>Salaire<br>
+                    <input type="number" step="0.01" name="salary" value="{{ offre.Renumeration }}" required>
+                </label><br><br>
+
+                <button type="submit">Enregistrer les modifications</button>
+                <a href="{{ path('Offre', {'id': offre.Id_offre}) }}"><button type="button">Annuler</button></a>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

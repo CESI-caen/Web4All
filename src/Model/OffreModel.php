@@ -38,6 +38,18 @@ class OffreModel
         return $requete->fetchAll();
     }
 
+    /** Get all job offers for a specific enterprise
+     *
+     * @param int $enterpriseId The ID of the enterprise
+     * @return array The list of job offers for the enterprise
+     */
+    public function getOffresByEnterpriseId(int $enterpriseId): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :enterprise_id");
+        $requete->execute(['enterprise_id' => $enterpriseId]);
+        return $requete->fetchAll();
+    }
+
     /** Get a job offer by its ID
      *
      * @param int $id The ID of the offer
@@ -149,7 +161,7 @@ class OffreModel
      */
     public function updateOffre(int $id, string $description, string $date_start, string $date_end, int $duration, float $salary): bool // à completer avec request->request->get() ( string $descriptif, string $date_debut, string $date_fin, int $duree, float $renumeration)
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Description = :description, Date_debut = :date_debut, Date_fin = :date_fin, Duree = :duration, Renumeration = :salary WHERE Id_offre = :id");
+        $requete = $this->pdo->prepare("UPDATE Offres SET Descriptif = :description, Date_debut = :date_debut, Date_fin = :date_fin, Duree = :duration, Renumeration = :salary WHERE Id_offre = :id");
         return $requete->execute(['description' => $description, 'date_debut' => $date_start, 'date_fin' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id' => $id]);
     }
 
