@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block javascripts %}
-   {# {{ encore_entry_script_tags('postuler-offre.js') }} #}
+    {{ encore_entry_script_tags('postuler-offre.js') }}
     {{ encore_entry_script_tags('theme') }}
 {% endblock %}
 
@@ -31,8 +31,16 @@
             <div class="postuler-hero-content">
                 <div class="postuler-header-info">
                     <h1 class="postuler-titre">Candidature</h1>
-                    {# <p class="postuler-meta">Offre chez {% if offre.entreprise and offre.entreprise.nom %}{{ offre.entreprise.nom }}{% else %}l'entreprise{% endif %}</p> #}
-                    <p>Att PDO</p>
+                    {% if offre %}
+                        <p class="postuler-meta">
+                            Offre : <strong>{{ offre['Nom'] }}</strong> 
+                            {% if entreprise %}
+                                chez <strong>{{ entreprise['Nom'] }}</strong>
+                            {% endif %}
+                        </p>
+                    {% else %}
+                        <p class="postuler-meta">Offre - En attente de données PDO</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -40,34 +48,7 @@
         <!-- Section Formulaire -->
         <div class="postuler-form-section">
             <form id="form-candidature" class="candidature-form">
-                <!-- Informations personnelles -->
-                <div class="form-section">
-                    <h2 class="section-title">Vos informations</h2>
-                    
-                    <div class="form-group">
-                        <label for="prenom" class="form-label">Prénom *</label>
-                        <input type="text" id="prenom" name="prenom" class="form-input" placeholder="Votre prénom" required>
-                        <span class="form-error" id="error-prenom"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nom" class="form-label">Nom *</label>
-                        <input type="text" id="nom" name="nom" class="form-input" placeholder="Votre nom" required>
-                        <span class="form-error" id="error-nom"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email *</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="votre.email@example.com" required>
-                        <span class="form-error" id="error-email"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telephone" class="form-label">Téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" class="form-input" placeholder="+33 6 XX XX XX XX">
-                        <span class="form-error" id="error-telephone"></span>
-                    </div>
-                </div>
+                
 
                 <!-- Lettre de motivation -->
                 <div class="form-section">
@@ -109,6 +90,8 @@
                     </button>
                     {#<a href="{{ path('AfficherOffre', {'id': offre.idOffre}) }}" class="btn btn-secondary">#}
                     <p>Att PDO</p>
+                <div>
+                    <a href="{{ path('MesOffres') }}" class="btn btn-secondary">
                         Annuler
                     </a>
                 </div>
@@ -120,14 +103,14 @@
             <div class="success-icon">✓</div>
             <h2>Candidature envoyée !</h2>
             <p>Merci de votre candidature. Nous reviendrons vers vous prochainement.</p>
-            <a href="{{ path('Home') }}" class="btn btn-primary">Retourner à l'accueil</a>
+            <a href="{{ path('Home', {'id': userId}) }}" class="btn btn-primary">Retourner à l'accueil</a>
         </div>
     </section>
 
     <!-- Meta data pour JS -->
     <div id="offre-data" 
-        {# data-offre-id="{{ offre.idOffre }}" #}
-        <p>Att PDO</p>
+        {% if offre %}data-offre-id="{{ offre['Id_offre'] }}"{% endif %}
+        style="display:none;">
     </div>
 {% endblock %}
 

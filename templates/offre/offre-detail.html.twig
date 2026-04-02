@@ -33,11 +33,24 @@
             <div class="offre-hero-content">
                 <div class="offre-header-info">
                     <h1 class="offre-titre">
-                        
+                        {% if offre %}
+                            {{ offre['Nom'] ?? 'Offre d\'emploi' }}
+                        {% else %}
                             Offre d'emploi
-                     
+                        {% endif %}
                     </h1>
-                    <p class="offre-meta">Publiée le {{ 'now'|date('d/m/Y') }}</p>
+                    <p class="offre-meta">
+                        {% if offre and offre['Date_debut'] %}
+                            Publiée le {{ offre['Date_debut']|date('d/m/Y') }}
+                        {% else %}
+                            Publiée le {{ 'now'|date('d/m/Y') }}
+                        {% endif %}
+                    </p>
+                    {% if entreprise %}
+                        <p class="offre-entreprise">
+                            <strong>Entreprise :</strong> {{ entreprise['Nom'] ?? 'Non spécifiée' }}
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -48,39 +61,53 @@
                 <div class="date-item">
                     <span class="date-label">Début :</span>
                     <span class="date-value">
-                      
+                        {% if offre and offre['Date_debut'] %}
+                            {{ offre['Date_debut']|date('d/m/Y') }}
+                        {% else %}
                             À définir
-                        
+                        {% endif %}
                     </span>
                 </div>
                 <div class="date-item">
                     <span class="date-label">Fin :</span>
                     <span class="date-value">
-                        
+                        {% if offre and offre['Date_fin'] %}
+                            {{ offre['Date_fin']|date('d/m/Y') }}
+                        {% else %}
                             À définir
-                        
+                        {% endif %}
                     </span>
                 </div>
                 <div class="date-item">
                     <span class="date-label">Durée (Jours) :</span>
                     <span class="date-value">
-                       
+                        {% if offre and offre['Duree'] %}
+                            {{ offre['Duree'] }} jours
+                        {% else %}
                             À définir
-                        
+                        {% endif %}
                     </span>
                 </div>
-            <div class="date-item">
+                <div class="date-item">
                     <span class="date-label">Rémunération (€):</span>
                     <span class="date-value">
-                        
+                        {% if offre and offre['Renumeration'] %}
+                            {{ offre['Renumeration']|number_format(2, ',', ' ') }} €
+                        {% else %}
                             À définir
-                        
+                        {% endif %}
                     </span>
                 </div>
             </div>
 
             <div class="offre-badges">
-                <span class="badge">Nouvelle offre</span>
+                <span class="badge">
+                    {% if offre %}
+                        Offre active
+                    {% else %}
+                        Nouvelle offre
+                    {% endif %}
+                </span>
             </div>
         </div>
 
@@ -89,19 +116,29 @@
             <div class="offre-description-content">
                 <h2>Description de l'offre</h2>
                 <div class="offre-description-text">
-                    
+                    {% if offre and offre['Descriptif'] %}
+                        {{ offre['Descriptif']|nl2br }}
+                    {% else %}
                         <p>Aucune description disponible pour cette offre.</p>
-                    
+                    {% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Section Actions -->
         <div class="offre-actions-section">
-            <button class="offre-btn offre-btn-primary" id="btn-postuler">
-                <span class="btn-icon">📧</span>
-                Postuler
-            </button>
+            {% if offre %}
+                <!-- DEBUG: Id offre = {{ offre['Id_offre'] }} -->
+                <a href="/offre/{{ offre['Id_offre'] }}/postuler" class="offre-btn offre-btn-primary" id="test-postuler">
+                    <span class="btn-icon">📧</span>
+                    Postuler
+                </a>
+            {% else %}
+                <button class="offre-btn offre-btn-primary" id="btn-postuler" disabled>
+                    <span class="btn-icon">📧</span>
+                    Postuler
+                </button>
+            {% endif %}
             <button class="offre-btn offre-btn-secondary" id="btn-wishlist">
                 <span class="btn-icon">❤️</span>
                 Ajouter à la wishlist
@@ -122,7 +159,7 @@
 
     <!-- Meta data pour JS -->
     <div id="offre-data" 
-         data-offre-titre="Offre"
+         {% if offre %}data-offre-titre="{{ offre['Nom'] }}" data-offre-id="{{ offre['Id_offre'] }}"{% endif %}
          style="display:none;">
     </div>
 {% endblock %}

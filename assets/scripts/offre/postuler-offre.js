@@ -1,6 +1,6 @@
 /**
  * JavaScript pour la page de candidature
- * Vérifie d'abord si l'utilisateur a un CV
+ * Gère la soumission du formulaire de postulation
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -8,121 +8,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const offreData = document.getElementById("offre-data");
     const offreId = offreData ? offreData.dataset.offreId : null;
     const formSection = document.querySelector(".postuler-form-section");
+    const successMessage = document.getElementById("success-message");
+    const btnSoumettre = document.getElementById("btn-soumettre");
 
-    // Vérifier d'abord si l'utilisateur a un CV
-    checkUserCvStatus();
-
-    /**
-     * Vérifier si l'utilisateur a un CV
-     */
-    function checkUserCvStatus() {
-        // Récupérer les données utilisateur depuis localStorage ou sessionStorage
-        const userData = localStorage.getItem("userData") || sessionStorage.getItem("userData");
-        const userLoggedIn = localStorage.getItem("user") || sessionStorage.getItem("user");
-        
-        if (!userLoggedIn || !userData) {
-            // L'utilisateur n'est pas connecté
-            redirectToLogin();
-            return;
-        }
-
-        try {
-            const user = JSON.parse(userData);
-            const userId = user.id || user.userId;
-
-            if (!userId) {
-                redirectToLogin();
-                return;
-            }
-
-            // Appeler l'endpoint pour vérifier le CV
-            fetch("/api/check-cv", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ userId: userId }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error("Erreur:", data.error);
-                    redirectToLogin();
-                    return;
-                }
-
-                // Si l'utilisateur n'a pas de CV, afficher un message et rediriger
-                if (!data.hasCv) {
-                    showNoCvMessage();
-                } else {
-                    // L'utilisateur a un CV, initialiser le formulaire
-                    initializeForm();
-                    // Auto-remplir les données
-                    populateUserData(data);
-                }
-            })
-            .catch(error => {
-                console.error("Erreur lors de la vérification du CV:", error);
-                // En cas d'erreur, laisser continuer avec le formulaire
-                initializeForm();
-            });
-        } catch (e) {
-            console.log("Impossible de parser userData");
-            initializeForm();
-        }
+    if (!form) {
+        console.error("Formulaire de candidature introuvable");
+        return;
     }
 
-    /**
-     * Afficher un message si l'utilisateur n'a pas de CV
-     */
-    function showNoCvMessage() {
-        if (formSection) {
-            formSection.innerHTML = `
-                <div class="no-cv-warning">
-                    <div class="warning-icon">⚠️</div>
-                    <h2>CV manquant</h2>
-                    <p>Pour postuler à cette offre, vous devez d'abord ajouter votre CV à votre compte.</p>
-                    <a href="/cv" class="btn btn-primary">Ajouter votre CV</a>
-                </div>
-            `;
-        }
-    }
-
-    /**
-     * Rediriger vers la page de connexion
-     */
-    function redirectToLogin() {
-        window.location.href = "/login";
-    }
-
-    /**
-     * Peupler les données utilisateur dans le formulaire
-     */
-    function populateUserData(data) {
-        if (form) {
-            const prenom = document.getElementById("prenom");
-            const nom = document.getElementById("nom");
-            const email = document.getElementById("email");
-            const telephone = document.getElementById("telephone");
-
-            if (prenom && data.prenom) prenom.value = data.prenom;
-            if (nom && data.nom) nom.value = data.nom;
-            if (email && data.email) email.value = data.email;
-            if (telephone && data.telephone) telephone.value = data.telephone;
-        }
-    }
+    // Initialiser le formulaire
+    initializeForm();
 
     /**
      * Initialiser le formulaire
      */
     function initializeForm() {
         // Submission du formulaire
-        if (form) {
-            form.addEventListener("submit", handleFormSubmit);
-        }
-
-        // Auto-fill si l'utilisateur est connecté
-        autoFillUserData();
+        form.addEventListener("submit", handleFormSubmit);
     }
 
     /**
@@ -148,42 +50,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Réinitialiser les erreurs
         document.querySelectorAll(".form-error").forEach(error => error.textContent = "");
-        document.querySelectorAll(".form-input, .form-textarea").forEach(input => {
+        document.querySelectorAll(".form-textarea").forEach(input => {
             input.classList.remove("error", "valid");
         });
-
-        // Prenom
-        const prenom = document.getElementById("prenom").value.trim();
-        if (!prenom) {
-            showFieldError("prenom", "Le prénom est requis");
-            isValid = false;
-        }
-
-        // Nom
-        const nom = document.getElementById("nom").value.trim();
-        if (!nom) {
-            showFieldError("nom", "Le nom est requis");
-            isValid = false;
-        }
-
-        // Email
-        const email = document.getElementById("email").value.trim();
-        if (!email || !isValidEmail(email)) {
-            showFieldError("email", "Veuillez entrer un email valide");
-            isValid = false;
-        }
-
-        // Téléphone (optionnel mais valider si rempli)
-        const telephone = document.getElementById("telephone").value.trim();
-        if (telephone && !isValidPhone(telephone)) {
-            showFieldError("telephone", "Format de téléphone invalide");
-            isValid = false;
-        }
 
         // Lettre de motivation
         const lettre = document.getElementById("lettre").value.trim();
         if (!lettre || lettre.length < 50) {
             showFieldError("lettre", "La lettre doit faire au moins 50 caractères");
+            isValid = false;
+        } else if (lettre.length > 5000) {
+            showFieldError("lettre", "La lettre ne doit pas dépasser 5000 caractères");
             isValid = false;
         }
 
@@ -198,78 +75,87 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * Soumettre le formulaire
+     * Soumettre le formulaire au backend
      */
     function submitForm() {
-        const submitBtn = document.querySelector(".btn-primary");
-        const originalText = submitBtn.textContent;
+        const submitBtn = document.querySelector(".form-actions .btn-primary") || btnSoumettre;
+        const originalText = submitBtn ? submitBtn.textContent : "Soumettre ma candidature";
 
         // État de chargement
-        submitBtn.disabled = true;
-        submitBtn.classList.add("btn-loading");
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add("btn-loading");
+            submitBtn.textContent = "Envoi en cours...";
+        }
         form.classList.add("form-loading");
 
-        // Créer les données du formulaire
-        const formData = new FormData(form);
-        formData.append("offre_id", offreId);
+        // Récupérer les données du formulaire
+        const lettre = document.getElementById("lettre").value.trim();
 
-        // Envoyer le formulaire (simulation)
-        setTimeout(() => {
-            // En production, faire un vrai appel AJAX
-            console.log("Candidature soumise pour l'offre", offreId);
-            console.log("Données:", {
-                prenom: formData.get("prenom"),
-                nom: formData.get("nom"),
-                email: formData.get("email"),
-                telephone: formData.get("telephone"),
-                lettre: formData.get("lettre"),
-            });
-
-            // Afficher le message de succès
-            form.style.display = "none";
-            document.getElementById("success-message").style.display = "block";
-
-            // Réinitialiser le bouton
-            submitBtn.disabled = false;
-            submitBtn.classList.remove("btn-loading");
-            submitBtn.textContent = originalText;
-        }, 1500);
-    }
-
-    /**
-     * Auto-remplir avec les données de l'utilisateur connecté
-     */
-    function autoFillUserData() {
-        // Récupérer les données depuis localStorage ou sessionStorage
-        const userData = localStorage.getItem("userData") || sessionStorage.getItem("userData");
-        
-        if (userData) {
-            try {
-                const user = JSON.parse(userData);
-                if (user.prenom) document.getElementById("prenom").value = user.prenom;
-                if (user.nom) document.getElementById("nom").value = user.nom;
-                if (user.email) document.getElementById("email").value = user.email;
-                if (user.telephone) document.getElementById("telephone").value = user.telephone;
-            } catch (e) {
-                console.log("Impossible de parser userData");
+        // Envoyer au backend
+        fetch(`/offre/${offreId}/postuler/submit`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                lettre: lettre
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Succès - Afficher le message de succès
+                form.style.display = "none";
+                if (successMessage) {
+                    successMessage.style.display = "block";
+                    successMessage.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                // Erreur
+                showError(data.message || "Une erreur s'est produite");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove("btn-loading");
+                    submitBtn.textContent = originalText;
+                }
+                form.classList.remove("form-loading");
             }
-        }
+        })
+        .catch(error => {
+            console.error("Erreur réseau:", error);
+            showError("Erreur de connexion au serveur. Veuillez réessayer.");
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("btn-loading");
+                submitBtn.textContent = originalText;
+            }
+            form.classList.remove("form-loading");
+        });
     }
 
     /**
-     * Valider un email
+     * Afficher une erreur globale
      */
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
+    function showError(message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.style.cssText = `
+            background-color: #ffebee;
+            border: 1px solid #d32f2f;
+            color: #d32f2f;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        `;
+        errorDiv.textContent = message;
 
-    /**
-     * Valider un téléphone
-     */
-    function isValidPhone(phone) {
-        const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s]?[0-9]{3}[-\s]?[0-9]{4,6}$/;
-        return phoneRegex.test(phone.replace(/\s/g, ""));
+        formSection.insertBefore(errorDiv, form);
+
+        // Auto-remove après 5 secondes
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
     }
 
     /**
@@ -309,6 +195,29 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Valider en temps réel
      */
+    const letreInput = document.getElementById("lettre");
+    if (letreInput) {
+        letreInput.addEventListener("input", (e) => {
+            const length = e.target.value.length;
+            const helper = letreInput.parentElement.querySelector(".form-helper");
+            
+            if (helper) {
+                if (length < 50) {
+                    helper.textContent = `Minimum 50 caractères (${length}/50)`;
+                    helper.style.color = "#d32f2f";
+                } else {
+                    helper.textContent = `${length}/5000 caractères`;
+                    helper.style.color = "#666";
+                }
+            }
+
+            // Auto-clear error on input
+            if (length > 0) {
+                clearFieldError("lettre");
+            }
+        });
+    }
+
     document.querySelectorAll(".form-input").forEach(input => {
         input.addEventListener("blur", () => {
             if (input.value.trim()) {
