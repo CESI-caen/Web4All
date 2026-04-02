@@ -15,7 +15,7 @@ class ParametreController extends AbstractController
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('parametre/index.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);  // 'ancien_page_title' => 'Home'  <-- non dynamique
+        return $this->render('parametre/index.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);  // 'ancien_page_title' => 'Home'  <-- non dynamique
     }
 
     #[Route('/parametres/langage', name: 'Langage')]   // Route pour la page de paramètres
@@ -42,6 +42,6 @@ class ParametreController extends AbstractController
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('parametre/modifier-mdp.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
+        return $this->render('parametre/modifier-mdp.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
     }
 }

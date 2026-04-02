@@ -31,7 +31,10 @@
 
 {% block main %}
 
-<p> Lorsque qu'il y aura la BDD faire des requetes pour afficher les infos de l'utilisateur </p>
+<p>Tu es connecté en tant que {{ user.prenom }} {{ user.nom }}</p>
+<p>Ton adresse email est {{ user.email }}</p>
+<p> ton téléphone est {{ user.telephone }}</p>
+<p> tu es {{user.nom_type_compte}}</p>
    
 {% endblock %}
 

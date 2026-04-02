@@ -27,6 +27,7 @@ class AuthentificationController extends AbstractController
         if ($request->isMethod('POST')) {
             $pdo = new PdoService();
             $userModel = new UserModel($pdo);
+            $AccountModel = new AccountModel($pdo);
 
             $email = $request->request->get('email');
             $password = $request->request->get('password');
@@ -43,7 +44,8 @@ class AuthentificationController extends AbstractController
                     'telephone' => $user['Telephone'],
                     'genre' => $user['Genre'],
                     'ecole' => $user['Ecole'],
-                    'id_type_compte' => $user['Id_type_compte']
+                    'id_type_compte' => $user['Id_type_compte'],
+                    'nom_type_compte' => $AccountModel->getAccountById($user['Id_type_compte'])['Nom']
                 ]);
                 
                 return $this->redirectToRoute('Home', ['id' => $user['Id_utilisateur']
@@ -173,7 +175,8 @@ class AuthentificationController extends AbstractController
             'telephone' => '0201030405',
             'genre' => 'autre',
             'ecole' => 'Aucune',
-            'id_type_compte' => '1'
+            'id_type_compte' => '1',
+            'nom_type_compte' => ''
         ]);
 
         // Récupérer l'ID de la session créée
