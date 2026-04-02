@@ -30,7 +30,6 @@ main {
 .menu-panel {
   position: sticky;
   top: 62px;
-  padding-top: 25px;
   background-color: var(--color-bg-container);
   border: 1px solid var(--color-border);
   border-radius: 10px;
@@ -177,6 +176,7 @@ main {
     max-width: 300px;
     position: sticky;
     bottom: 0;
+    
   }
 
   .offre-container {
@@ -193,6 +193,7 @@ main {
     cursor: pointer;
 
     font-size: 14px;
+
   }
   .notif-pannel{
       position: sticky;

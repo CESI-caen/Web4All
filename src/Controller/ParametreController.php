@@ -26,7 +26,7 @@ class ParametreController extends AbstractController
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('parametre/langage.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
+        return $this->render('parametre/langage.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);  // 'ancien_page_title' => 'Paramètres'  <-- non dynamique
     }
 
     #[Route('/parametres/compte', name: 'Compte')]   // Route pour la page de paramètres

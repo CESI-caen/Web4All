@@ -172,7 +172,7 @@
     cursor: pointer;
     transition: var(--offre-transition);
     box-shadow: var(--offre-shadow);
-    min-width: 150px;
+    min-width: 500px;
 }
 
 .offre-btn-primary {

@@ -10,18 +10,22 @@
            {% if user %}
                 <button > {{ user.prenom }} {{ user.nom }} </button>
             {% else %}
-                <button > Invité </button>
+                <button style="color:red;" > Inconnu </button>
             {% endif %}
         </div>
 
-        <a href="{{ path('Profil') }}"> <div class="menu-item">
+        
+        {% if user and user.id != 999 %}
+            <a href="{{ path('Profil') }}"> <div class="menu-item">
             <button > Profils </button>
         </div> </a>
+        {% endif %}
 
+        {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
         <a href="{{ path('Fichiers Personnels') }}"> <div class="menu-item">
             <button > Fichiers personnels </button>
         </div> </a>
-
+        {% endif %}
         
 
         {% if user and user.id != 999 and user.nom_type_compte == 'pilote' %}
@@ -29,31 +33,50 @@
             <button > Création de compte Etudiant</button>
         </div> </a>
         {% endif %}
-
-        <a href="{{ path('Entreprise') }}"> <div class="menu-item">
+        
+        {% if user and user.id != 999 and user.nom_type_compte == 'recruteur' %}
+            <a href="{{ path('Entreprise') }}"> <div class="menu-item">
             <button > Mon entreprise </button>
         </div> </a>
 
         <a href="{{ path('MesOffres') }}"> <div class="menu-item">
             <button > Mes offres </button>
         </div> </a>
-
-       <a href="{{ path('Paramètres') }}"> <div class="menu-item">
+        {% endif %}
+       
+        {% if userId and userId != 0 %}
+        <a href="{{ path('Paramètres') }}"> <div class="menu-item">
             <button > Paramètres </button>
-        </div> </a>
+        </div> </a> 
+        {% else %}
+            <a href="{{ path('GuestLogin') }}"> <div class="menu-item-pc">
+            <button >  Continuez en Invité ? </button>
+        </div> </a> 
+        {% endif %}
+
+         {% if user and user.id != 999 %}
        <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
             <button >  Wishlist </button>
         </div> </a> 
+        {% endif %}
+
+        {% if userId and userId != 0 %}
         <a href="{{ path('Recherche') }}"> <div class="menu-item-pc">
             <button >  Recherche </button>
         </div> </a> 
+        {% else %}
+            <a href="{{ path('GuestLogin') }}"> <div class="menu-item-pc">
+            <button >  Continuez en Invité ? </button>
+        </div> </a> 
+        {% endif %}
+        
         
         {% if user and user.id != 999 %}
-            <a href="{{ path('Deconnexion') }}"> <div class="menu-item-pc">
+            <a href="{{ path('Deconnexion') }}"> <div class="menu-item">
                 <button >  Deconnexion </button>
             </div> </a> 
         {% else %}
-            <a href="{{ path('Connexion') }}"> <div class="menu-item-pc">
+            <a href="{{ path('Connexion') }}"> <div class="menu-item">
                 <button >  Connexion </button>
             </div> </a> 
         {% endif %}
@@ -62,6 +85,8 @@
 
         <div id="NotificationPannel" class="notif-pannel" style = "grid-area: notification" hidden> 
             <h1>Notifications</h1>
+            
+            {% if userId and userId != 0 %}
             <div class="notif-item">
                 <button > Notification selon bdd</button>
             </div>
@@ -70,4 +95,9 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue volutpat elit non congue. Curabitur at sodales sem, nec condimentum sapien. Ut pretium interdum nibh, a rhoncus eros accumsan a. Suspendisse potenti. Nam libero magna, volutpat sed lorem eget, vestibulum porttitor dolor. Mauris erat lacus, imperdiet vitae velit a, feugiat.</p>
                 </div>
             {% endfor %}
+            {% else %}
+                <a href="{{ path('Login') }}"> <div class="menu-item-pc">
+                <button >  Veuillez vous connecter pour consulter les notifications </button>
+            </div> </a> 
+            {% endif %}
         </div>

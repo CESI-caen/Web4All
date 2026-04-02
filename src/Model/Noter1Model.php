@@ -5,7 +5,7 @@ use App\Service\PdoService;
 
 
 // Modèle de la table Noter_1 = noter une offre, qui représente la relation entre un utilisateur et une offre accompagnée d'une note et d'un commentaire
-class Noter_1Model
+class Noter1Model
 {
     private \PDO $pdo;
 

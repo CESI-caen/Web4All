@@ -48,8 +48,7 @@ class AuthentificationController extends AbstractController
                     'nom_type_compte' => $AccountModel->getAccountById($user['Id_type_compte'])['Nom']
                 ]);
                 
-                return $this->redirectToRoute('Home', ['id' => $user['Id_utilisateur']
-                ]);
+                return $this->redirectToRoute('Home');
             } else {
                 $error = 'Email ou mot de passe incorrect.';
                 $success = null; // clear success on error
@@ -122,7 +121,7 @@ class AuthentificationController extends AbstractController
                                 $error = "Cet e-mail d'entreprise est déjà utilisé. Veuillez en choisir un autre.";
                                 $userModel->deleteUser($userModel->getUserByEmail($email)['Id_utilisateur']);
                                 $page = 1;
-                                return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error, 'userId' => $userId]);
+                                return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email, 'error' => $error, 'userId' => $userId, 'user' => $user]);
                             }
 
                             $villeRow = $VilleModel->getIdByName($Villeentreprise);
@@ -160,7 +159,7 @@ class AuthentificationController extends AbstractController
                 $page = 1;
             }
         }
-        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error, 'userId' => $userId]);
+        return $this->render('authentification/create-account.html.twig', ['page' => $page, 'email' => $email,'villes' => $villes ,'error' => $error, 'userId' => $userId, 'user' => $user]);
     }
 
     #[Route('/guest-login', name: 'GuestLogin')]
@@ -179,19 +178,15 @@ class AuthentificationController extends AbstractController
             'nom_type_compte' => ''
         ]);
 
-        // Récupérer l'ID de la session créée
-        $user = $request->getSession()->get('user');
-        $guestId = $user['id']; // Récupérer l'ID d'invité (999)
-    
         // Rediriger vers la page d'accueil
-        return $this->redirectToRoute('Home', ['id' => $guestId]);
+        return $this->redirectToRoute('Home');
     }
 
     #[Route('/', name: 'Connexion')]
     public function Connexion(Request $request): Response
     {
         if ($request->getSession()->has('user') && $request->getSession()->get('user')['id'] != 999) {
-            return $this->redirectToRoute('Home', ['id' => $request->getSession()->get('user')['id']]);
+            return $this->redirectToRoute('Home');
         }else{
             return $this->redirectToRoute('Login');
         }

@@ -34,7 +34,7 @@
                 <div class="offre-header-info">
                     <h1 class="offre-titre">
                         
-                            Offre d'emploi
+                            {{offre.Nom}}
                      
                     </h1>
                     <p class="offre-meta">Publiée le {{ 'now'|date('d/m/Y') }}</p>
@@ -49,7 +49,7 @@
                     <span class="date-label">Début :</span>
                     <span class="date-value">
                       
-                            À définir
+                            {{offre.Date_debut|date('d/m/Y')}}
                         
                     </span>
                 </div>
@@ -57,7 +57,7 @@
                     <span class="date-label">Fin :</span>
                     <span class="date-value">
                         
-                            À définir
+                            {{offre.Date_fin|date('d/m/Y')}}
                         
                     </span>
                 </div>
@@ -65,7 +65,7 @@
                     <span class="date-label">Durée (Jours) :</span>
                     <span class="date-value">
                        
-                            À définir
+                           {{ (offre.Date_fin|date('U') - offre.Date_debut|date('U')) // 86400 }}
                         
                     </span>
                 </div>
@@ -73,25 +73,22 @@
                     <span class="date-label">Rémunération (€):</span>
                     <span class="date-value">
                         
-                            À définir
+                           {{ offre.Renumeration }} €
                         
                     </span>
                 </div>
             </div>
 
-            <div class="offre-badges">
-                <span class="badge">Nouvelle offre</span>
-            </div>
         </div>
 
         <!-- Section Description -->
         <div class="offre-description-section">
             <div class="offre-description-content">
-                <h2>Description de l'offre</h2>
+                <h2>Description</h2>
                 <div class="offre-description-text">
-                    
-                        <p>Aucune description disponible pour cette offre.</p>
-                    
+                    <p>
+                        {{ offre.Descriptif }} €
+                    </p>
                 </div>
             </div>
         </div>
@@ -106,18 +103,8 @@
                 <span class="btn-icon">❤️</span>
                 Ajouter à la wishlist
             </button>
-            <button class="offre-btn offre-btn-outline" id="btn-partager">
-                <span class="btn-icon">🔗</span>
-                Partager
-            </button>
         </div>
 
-        <!-- Section Retour -->
-        <div class="offre-back-section">
-            <a href="{{ path('MesOffres') }}" class="offre-back-link">
-                ← Retour aux offres
-            </a>
-        </div>
     </section>
 
     <!-- Meta data pour JS -->

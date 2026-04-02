@@ -14,7 +14,11 @@
     <button class="mobile-nav-button">
         <div class="header-title">
             {% if userId %}
-                <a href="{{ path(page_title) }}">{{ page_title }}</a>
+                {% if page_title == 'Offre' %}
+                    <a href="{{ path(page_title, {id: offre.Id_offre}) }}">{{ page_title }}</a>
+                {% else %}
+                    <a href="{{ path(page_title) }}">{{ page_title }}</a>
+                {% endif %}
             {% else %}
                 <a href="{{ path('Login') }}">{{ page_title }}</a>
             {% endif %}

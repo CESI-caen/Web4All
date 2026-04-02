@@ -41,7 +41,8 @@
             {% for offre in offres %}
                 <div class="offre-item">
                     <header>
-                        <p class="bulle-offre-titre">Offre {{offre.Nom}}</p>
+                        
+                        <p class="bulle-offre-titre"><a href="{{ path('Offre', {'id': offre.Id_offre}) }}" > {{ offre.Nom }} </a></p>
                         <p class="bulle-offre-dates">{{offre.Date_debut}} -> {{offre.Date_fin}}</p>
                     </header>
                     <hr>
@@ -49,6 +50,7 @@
                         <p>{{offre.Descriptif}}</p>
                     </div>
                 </div>
+                
             {% endfor %}
         </div>
 {% endblock %}

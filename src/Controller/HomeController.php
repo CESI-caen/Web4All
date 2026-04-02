@@ -17,7 +17,7 @@ use \App\Model\VouloirModel;
 
 class HomeController extends AbstractController
 {
-    #[Route(['/', '/home'], name: 'Home')]
+    #[Route('/home', name: 'Home')]
     public function index(Request $request): Response
     {
         $pdo = new PdoService();
@@ -56,7 +56,8 @@ class HomeController extends AbstractController
                 $filtre_ville,
                 $filtre_date
             ],
-            'userId' => $userId
+            'userId' => $userId, 
+            'user' => $user
         ]);
     }
 
@@ -106,7 +107,7 @@ class HomeController extends AbstractController
         }
         $ville = $VilleModel->getCityById($UserModel->getUserById($userId)['Id_ville'])['Nom'];
         
-        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'groupe' => $groupe, 'type_compte' => $type_compte, 'ville' => $ville, 'genre' => $genre]);
+        return $this->render('home/profil.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'groupe' => $groupe, 'type_compte' => $type_compte, 'ville' => $ville, 'genre' => $genre]);
     }
 
     #[Route('/wishlist', name: 'WishList')]
@@ -122,7 +123,7 @@ class HomeController extends AbstractController
 
         $Wishlists = $VouloirModel->getWishLists($userId);
 
-        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'Wishlists' => $Wishlists]);
+        return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Wishlists' => $Wishlists]);
     }
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response
@@ -131,7 +132,7 @@ class HomeController extends AbstractController
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
         
-        return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
+        return $this->render('home/creer_etudiant.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
     }
 
     #[Route('/entreprise', name: 'Entreprise')]
@@ -141,7 +142,7 @@ class HomeController extends AbstractController
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
         
-        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);
+        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
     }
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
@@ -151,7 +152,7 @@ class HomeController extends AbstractController
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
         
-        return $this->render('home/cv.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId]);    // 'ancien_page_title' => 'Home'  <-- non dynamique
+        return $this->render('home/cv.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);    // 'ancien_page_title' => 'Home'  <-- non dynamique
     }
 
     #[Route('/upload', name: 'upload', methods: ['POST'])]
