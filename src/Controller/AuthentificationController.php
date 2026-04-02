@@ -17,7 +17,7 @@ use App\Model\ExercerDansModel;
 
 class AuthentificationController extends AbstractController
 {
-    #[Route('/login', name: 'Login')]
+    #[Route('/', name: 'Login')]
     public function sign_in(Request $request): Response
     {
         $error = null;

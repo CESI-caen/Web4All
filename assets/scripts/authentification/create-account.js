@@ -1,19 +1,5 @@
 
 
-const loginBtn = document.getElementById("login");
-if (loginBtn) {
-    loginBtn.onclick = function () {
-        window.location.href = "/login";
-    };
-}
-
-const guestBtn = document.getElementById("guest");
-if (guestBtn) {
-    guestBtn.onclick = function () {
-        window.location.href = "/";
-    };
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     const radios = document.querySelectorAll('input[name="account_type"]');
     const labelGroupe = document.getElementById('labelGroupe');
