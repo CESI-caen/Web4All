@@ -53,7 +53,6 @@ class AuthentificationController extends AbstractController
                 $success = null; // clear success on error
             }
         }
-        var_dump($user = $request->getSession()->get('user'));
 
         return $this->render('authentification/login.html.twig', ['error' => $error, 'success' => $success, 'email' => $email]);
     }
