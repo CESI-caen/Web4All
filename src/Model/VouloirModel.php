@@ -133,7 +133,6 @@ class VouloirModel
         return (int)$requete->fetchColumn();
     }
 
-
     // methodes pour whishlists
     public function getWishLists(int $id_user): array
     {

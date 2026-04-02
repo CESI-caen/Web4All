@@ -5,8 +5,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Service\PdoService;
-use App\Model\UserModel;
+use App\Model\UtilisateurModel;
 use App\Model\AccountModel;
 use App\Model\VilleModel;
 use App\Model\EntrepriseModel;
@@ -26,7 +27,7 @@ class AuthentificationController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $pdo = new PdoService();
-            $userModel = new UserModel($pdo);
+            $userModel = new UtilisateurModel($pdo);
             $AccountModel = new AccountModel($pdo);
 
             $email = $request->request->get('email');
@@ -62,7 +63,7 @@ class AuthentificationController extends AbstractController
     public function sign_up(Request $request): Response
     {
         $pdo = new PdoService();
-        $userModel = new UserModel($pdo);
+        $userModel = new UtilisateurModel($pdo);
         $AccountModel = new AccountModel($pdo);
         $VilleModel = new VilleModel($pdo);
         $EntrepriseModel = new EntrepriseModel($pdo);

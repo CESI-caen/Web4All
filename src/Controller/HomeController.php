@@ -10,20 +10,13 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException; // POur gére
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\PdoService;
 use App\Model\OffreModel;
-<<<<<<< Updated upstream
-use \App\Model\UserModel;
+use \App\Model\UtilisateurModel;
 use \App\Model\VilleModel;
 use \App\Model\EntrepriseModel;
 use \App\Model\AccountModel;
 use \App\Model\VouloirModel;
-=======
-use App\Model\UtilisateurModel;
-use App\Model\VilleModel;
-use App\Model\EntrepriseModel;
-use App\Model\AccountModel;
 use App\Model\DomaineModel;
 use App\Model\CompetenceModel;
->>>>>>> Stashed changes
 
 class HomeController extends AbstractController
 {
