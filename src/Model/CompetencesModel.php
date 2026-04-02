@@ -11,7 +11,7 @@ namespace App\Model;
 // Inclut le fichier qui gère l'objet pdo, pour la connection à la bdd
 use App\Service\PdoService;
 
-class OCompetencesModel {
+class CompetencesModel {
     /**
      * Database connection instance
      *
