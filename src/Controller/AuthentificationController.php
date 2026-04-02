@@ -167,8 +167,8 @@ class AuthentificationController extends AbstractController
         // Créer une session d'invité
         $request->getSession()->set('user', [
             'id' => 999,
-            'nom' => 'Connecté en tant que ',
-            'prenom' => 'invité',
+            'nom' => '',
+            'prenom' => 'Connecté en tant que invité',
             'email' => 'invite@gmail.com',
             'telephone' => '0201030405',
             'genre' => 'autre',
@@ -187,7 +187,7 @@ class AuthentificationController extends AbstractController
     #[Route('/', name: 'Connexion')]
     public function Connexion(Request $request): Response
     {
-        if ($request->getSession()->has('user')) {
+        if ($request->getSession()->has('user') && $request->getSession()->get('user')['id'] != 999) {
             return $this->redirectToRoute('Home', ['id' => $request->getSession()->get('user')['id']]);
         }else{
             return $this->redirectToRoute('Login');
@@ -197,9 +197,10 @@ class AuthentificationController extends AbstractController
     #[Route('/deconnexion', name: 'Deconnexion')]
     public function Deconnexion(Request $request): Response
     {
-        // Supprimer la session utilisateur
-        $request->getSession()->invalidate();
-        session_abort();
+        // Supprimer la session
+        $session = $request->getSession();
+        $session->invalidate();
+
         // Rediriger vers la page de login
         return $this->redirectToRoute('Login');
     }
