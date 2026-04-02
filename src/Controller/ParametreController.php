@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\PdoService;
-use App\Model\UserModel;
+use App\Model\UtilisateurModel;
 
 class ParametreController extends AbstractController
 {
@@ -42,7 +42,7 @@ class ParametreController extends AbstractController
     public function Modifiermdp(Request $request): Response
     {   
         $pdo = new PdoService();
-        $userModel = new UserModel($pdo);
+        $userModel = new UtilisateurModel($pdo);
 
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');

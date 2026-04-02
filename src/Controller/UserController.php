@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Model\UserModel;
+use App\Model\UtilisateurModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'user_list')]
-    public function list(UserModel $userModel): Response
+    public function list(UtilisateurModel $userModel): Response
     {
         $users = $userModel->getAllUsers();
 
@@ -19,7 +19,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{id}', name: 'user_show')]
-    public function show(int $id, UserModel $userModel): Response
+    public function show(int $id, UtilisateurModel $userModel): Response
     {
         $user = $userModel->getUserById($id);
 

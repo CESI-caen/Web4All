@@ -3,17 +3,27 @@
 namespace App\Controller;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request; // Pour gérer les requêtes HTTP
+use Symfony\Component\HttpFoundation\Response; // Pour les requêtes et les réponses HTTP
+use Symfony\Component\Routing\Annotation\Route; // Pour les routes
+use Symfony\Component\HttpFoundation\File\Exception\FileException; // POur gérer les erreurs de déplacement du fichier
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\PdoService;
 use App\Model\OffreModel;
+<<<<<<< Updated upstream
 use \App\Model\UserModel;
 use \App\Model\VilleModel;
 use \App\Model\EntrepriseModel;
 use \App\Model\AccountModel;
 use \App\Model\VouloirModel;
+=======
+use App\Model\UtilisateurModel;
+use App\Model\VilleModel;
+use App\Model\EntrepriseModel;
+use App\Model\AccountModel;
+use App\Model\DomaineModel;
+use App\Model\CompetenceModel;
+>>>>>>> Stashed changes
 
 class HomeController extends AbstractController
 {
@@ -35,36 +45,48 @@ class HomeController extends AbstractController
     public function recherche(Request $request): Response
     {
         $currentRoute = $request->attributes->get('_route');
-        $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? null;
+        $user = $request->getSession()->get('user'); // Récupère les données de l'utilisateur connecté depuis la session
+        $userId = $user['id'] ?? null; // Stocke l'ID de l'utilisateur ou null s'il n'est pas connecté
 
-        // Pour récupérer les données de la recherche depuis l'Url
+        // Pour récupérer les données de la recherche depuis l'Url (car verbe GET utilisé)
         $recherche    = $request->query->get('recherche', '');
         $filtre_type  = $request->query->all('filtre_type');  // Tableau [], 'all' est utilisé pour les checkboxes
         $filtre_ville = $request->query->all('filtre_ville'); // Tableau []
         $filtre_date  = $request->query->get('filtre_date');
+        $choix_filtres = [
+            $recherche,
+            $filtre_type,
+            $filtre_ville,
+            $filtre_date
+        ]; // Pour afficher les choix, même quand la page est recharger
 
+        // Récupérer les données des villes et domaines pour les afficher dans les filtres de la page de recherche
+        $pdo = new PdoService();
 
+        $VilleModel = new VilleModel($pdo);
+        $villes = $VilleModel->getAllCities();
+
+        $DomaineModel = new DomaineModel($pdo);
+        $domaines = $DomaineModel->getAllDomains();
+
+        // Afficher la page de recherche avec les données nécessaires
         return $this->render('recherche/recherche.html.twig', [
             'ancien_page_title' => 'Home', 
             'page_title' => $currentRoute, 
-            'villes' => ['ville_1'], // sera récupéré depuis la base de données
-            'domaines' => ['domaine_1'], // sera récupéré depuis la base de données
-            'choix_filtres' => [
-                $recherche,
-                $filtre_type,
-                $filtre_ville,
-                $filtre_date
-            ],
-            'userId' => $userId, 
-            'user' => $user
+            'villes' => $villes,
+            'domaines' => $domaines,
+            'choix_filtres' => $choix_filtres,
+            'filtre_type' => $filtre_type,
+            'filtre_ville' => $filtre_ville,
+            'filtre_date' => $filtre_date,
+            'userId' => $userId
         ]);
     }
 
     #[Route('/profil', name: 'Profil')]
     public function profil(Request $request): Response
     {
-        $UserModel = new UserModel(new PdoService());
+        $UserModel = new UtilisateurModel(new PdoService());
         $VilleModel = new VilleModel(new PdoService());
         $EntrepriseModel = new EntrepriseModel(new PdoService());
         $AccountModel = new AccountModel(new PdoService());
