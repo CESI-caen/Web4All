@@ -16,6 +16,7 @@ use App\Model\EntrepriseModel;
 use App\Model\AccountModel;
 use App\Model\DomaineModel;
 use App\Model\CompetenceModel;
+use App\Model\VouloirModel;
 
 class HomeController extends AbstractController
 {
@@ -40,17 +41,7 @@ class HomeController extends AbstractController
         $user = $request->getSession()->get('user'); // Récupère les données de l'utilisateur connecté depuis la session
         $userId = $user['id'] ?? null; // Stocke l'ID de l'utilisateur ou null s'il n'est pas connecté
 
-        // Pour récupérer les données de la recherche depuis l'Url (car verbe GET utilisé)
-        $recherche    = $request->query->get('recherche', '');
-        $filtre_type  = $request->query->all('filtre_type');  // Tableau [], 'all' est utilisé pour les checkboxes
-        $filtre_ville = $request->query->all('filtre_ville'); // Tableau []
-        $filtre_date  = $request->query->get('filtre_date');
-        $choix_filtres = [
-            $recherche,
-            $filtre_type,
-            $filtre_ville,
-            $filtre_date
-        ]; // Pour afficher les choix, même quand la page est recharger
+        // ###################### LOGIQUE DE LA PAGE DE RECHERCHE ######################
 
         // Récupérer les données des villes et domaines pour les afficher dans les filtres de la page de recherche
         $pdo = new PdoService();
@@ -61,18 +52,83 @@ class HomeController extends AbstractController
         $DomaineModel = new DomaineModel($pdo);
         $domaines = $DomaineModel->getAllDomains();
 
-        // Afficher la page de recherche avec les données nécessaires
-        return $this->render('recherche/recherche.html.twig', [
-            'ancien_page_title' => 'Home', 
-            'page_title' => $currentRoute, 
-            'villes' => $villes,
-            'domaines' => $domaines,
-            'choix_filtres' => $choix_filtres,
-            'filtre_type' => $filtre_type,
-            'filtre_ville' => $filtre_ville,
-            'filtre_date' => $filtre_date,
-            'userId' => $userId
-        ]);
+        // ###########################################################################################
+
+
+        // ###################### LOGIQUE DE REDIRECTION (RESULTATS) ######################
+
+        // Pour récupérer les données de la recherche depuis l'Url (car verbe GET utilisé)
+        $recherche    = $request->query->get('recherche', '');
+        $filtre_type  = $request->query->get('filtre_type'); 
+        $filtre_ville = $request->query->all('filtre_ville[]'); // Tableau [], pour les checkboxes
+        $filtre_date  = $request->query->get('filtre_date', '');
+        $filtre_domaine = $request->query->all('filtre_domaine[]', '');
+
+        //$filtre_type = is_array($filtre_type) ? $filtre_type : [$filtre_type]; // Assure que $filtre_type est toujours un tableau, même s'il n'y a qu'un seul type de recherche sélectionné
+
+        // $filtre_type_display = implode(', ', array_map('strval', $filtre_type)); // Convertit le tableau en une chaîne de caractères pour l'affichage, en séparant les éléments par des virgules
+        // $filtre_ville_display = implode(', ', array_map('strval', $filtre_ville));
+
+
+        // Si type de recherche est 'offres' -> render('offre/offre-detail.html.twig', ['offres' => $offres]); faire $offres avec OffreModel
+        // Si type de recherche est 'entreprises' -> render('home/entreprise.html.twig', ['entreprises' => $entreprises]); faire $entreprises avec EntrepriseModel
+        // Si type de recherche est 'comptes' -> render('home/profil.html.twig', ['profils' => $profils]); faire $profils avec UtilisateurModel
+
+        // TODO : faire en sorte de pouvoir faire une nouvelle recherche apres avoir consulter les resultats
+        //        actuellement, le resultat de la recherche s'affiche à l'infini, et on ne peut plus aller sur la page de recherche.
+
+        switch ($filtre_type) {
+            case 'entreprises':
+            $EntrepriseModel = new EntrepriseModel($pdo);
+            $entreprises = [['Nom' => 'Test test']];
+            // TODO : requete spécial dans Model/recherche.php
+
+            return $this->render('home/entreprise.html.twig', [
+                'ancien_page_title' => 'Recherche',
+                'page_title' => 'Entreprise',
+                'entreprises' => $entreprises,
+                'user' => $user,
+                'userId' => $userId
+            ]);
+
+            case 'comptes':
+            $UtilisateurModel = new UtilisateurModel($pdo);
+            $profils = [['Nom' => 'Test test']];
+            // TODO : requete spécial dans Model/recherche.php
+
+            return $this->render('home/profil.html.twig', [
+                'ancien_page_title' => 'Recherche',
+                'page_title' => 'Profil',
+                'profils' => $profils,
+                'user' => $user,
+                'userId' => $userId
+            ]);
+
+            case 'offres':
+            $OffreModel = new OffreModel($pdo);
+            $offres = [['Nom' => 'Test test', 'Id_offre' => 1, 'Descriptif' => 'testetestest', 'Date_debut' => '2024-01-01', 'Date_fin' => '2024-01-01', 'Id_entreprise' => 1, 'Id_domaine' => 1]];
+            // TODO : requete spécial dans Model/recherche.php
+
+            return $this->render('home/index.html.twig', [
+                'ancien_page_title' => 'Recherche',
+                'page_title' => 'Home',
+                'offres' => $offres,
+                'user' => $user,
+                'userId' => $userId
+            ]);
+
+            default:
+                return $this->render('recherche/recherche.html.twig', [
+                    'ancien_page_title' => 'Home', 
+                    'page_title' => $currentRoute,
+
+                    'villes' => $villes,
+                    'domaines' => $domaines,
+
+                    'user' => $user,
+                    'userId' => $userId
+                ]);
+        }
     }
 
     #[Route('/profil', name: 'Profil')]

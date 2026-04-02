@@ -4,7 +4,7 @@
             <button class="mobile-nav-button" onclick="document.getElementById('Bouton_gauche').click()"> {# onclick.click sert à cliquer sur la balise <a> qui est plus petite#}
                 {% block boutton_gauche %}{% endblock %}            
             </button>
-            {% if user and user.id != 999 %}
+            {% if user and user.id != 999 %} {# Affiche le bouton du milieu uniquement si l'utilisateur est connecté et n'est pas un invité (id 999) #}
             <button class="mobile-nav-button" onclick="document.getElementById('Bouton_milieu').click()"> {# onclick.click sert à cliquer sur la balise <a> qui est plus petite#}
                 {% block boutton_milieu %}{% endblock %}
             </button>
