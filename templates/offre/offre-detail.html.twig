@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-
+        {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
         <!-- Section Actions -->
         <div class="offre-actions-section">
             <button class="offre-btn offre-btn-primary" onclick="document.getElementById("btn_Postuler").click()">
@@ -104,6 +104,7 @@
                 <a href="{{ path('Wishlist_ajout', {'id': offre.Id_offre}) }}" id="btn_wishlist">Wishlist</a>
             </button>
         </div>
+        {% endif %}
 
     </section>
 {% endblock %}
