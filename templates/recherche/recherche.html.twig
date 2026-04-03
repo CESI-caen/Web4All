@@ -42,14 +42,15 @@
         <div class="recherche-barre">
             {{ include('components/barre-recherche.html.twig', {
                 action: encore_entry_script_tags('recherche.js'),
-                placeholder: 'test'
+                placeholder: 'Informatique Caen ...'
             }) }}
         </div>
         <div class="recherche-filtres">
-            <div class="filtres-container" id="filtre-type-container">
-                <div class="filtre"> {# Menu déroulant à 1 choix possible #}
+            <div class="filtres-container">
+                <div class="filtre" id="filtre-type-container"> {# Menu déroulant à 1 choix possible #}
                     <label for="filtre-type">Type de la recherche</label>
-                    <select id="filtre-type" name="filtre-type">
+                    <select id="filtre-type" name="filtre_type">
+                        <option value="default">Choisir un type de recherche</option>
                         <option value="offres">Offres</option>
                         <option value="entreprises">Entreprises</option>
                         <option value="comptes">Comptes</option> {# ATTENTION : Bien regarder la matrices de permissions pour la gestion backend #}
@@ -57,14 +58,14 @@
                 </div>
                 <div class="filtre" id="filtre-date-container"> {# Menu déroulant à 1 choix possible #}
                     <label for="filtre-date">Date de publication</label>
-                    <select id="filtre-date" name="filtre-date">
+                    <select id="filtre-date" name="filtre_date">
                         <option value="toutes">Toutes les dates</option>
                         <option value="24h">Les dernières 24 heures</option>
                         <option value="7j"> Les 7 derniers jours</option>
                         <option value="mois">Ce mois ci</option>
                     </select>
                 </div>
-                <div class="filtre" name="filtre-ville-container"> {# Menu déroulant de cases à cocher pour la localisation (Ville), les villes sont récupéré depuis la bdd (voir .env) par le modele, et passé par le controller #}
+                <div class="filtre" id="filtre-ville-container"> {# Menu déroulant de cases à cocher pour la localisation (Ville), les villes sont récupéré depuis la bdd (voir .env) par le modele, et passé par le controller #}
                     <div class="dropdown-checkbox" id="filtre-type-dropdown-ville">
                         <label for="filtre-type-dropdown">Localisation</label>
                         <button type="button" class="dropdown-trigger" aria-expanded="false" aria-controls="filtre-type-liste">
@@ -73,8 +74,8 @@
                         <ul class="dropdown-liste" id="filtre-type-liste-ville" hidden>
                             {% for ville in villes %} {# passer 'villes' depuis le controller (à la place de '0..50') #}
                             <li><label>
-                                <input type="checkbox" name="filtre_ville[]" value="{{ ville }}">
-                                TEST ({{ ville }})
+                                <input type="checkbox" name="filtre_ville[]" value="{{ ville.Nom }}">
+                                {{ ville.Nom }}
                             </label></li>
                             {% endfor %}
                         </ul>
@@ -89,13 +90,17 @@
                         <ul class="dropdown-liste" id="filtre-type-liste-domaine" hidden>
                             {% for domaine in domaines %} {# #}
                             <li><label>
-                                <input type="checkbox" name="filtre_domaine[]" value="{{ domaine }}">
-                                TEST ({{ domaine }})
+                                <input type="checkbox" name="filtre_domaine[]" value="{{ domaine.Nom }}">
+                                {{ domaine.Nom }}
                             </label></li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="deselect-all" id="deselect-all">
+                <p class="info-mobile">Clicker sur la loupe en bas pour tout désélectionner</p>
+                <p class="info-desktop">Clicker sur le titre en haut pour tout désélectionner</p>
             </div>
         </div>
     </form>

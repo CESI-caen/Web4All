@@ -38,23 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Masquage des filtres selon le type de recherche ---
-    const filtreType = document.querySelector('#filtre-type'); // id, pas name
+    // Masquage si 'Type de recherche' = 'Comptes' de 'Date de publication', 'Localisation' et 'Domaines'
+    const typeFilter = document.getElementById('filtre-type'); // Sélectionne le menu déroulant pour le type de recherche
+    const dateFilter = document.getElementById('filtre-date-container');
+    const villeFilter = document.getElementById('filtre-ville-container');
+    const domaineFilter = document.getElementById('filtre-domaine-container');
 
-    function appliquerFiltreType() {
-        const dateContainer    = document.querySelector('#filtre-date-container');
-        const villeContainer   = document.querySelector('#filtre-ville-container');
-        const domaineContainer = document.querySelector('#filtre-domaine-container');
-        const estComptes       = filtreType.value === 'comptes';
+    function toggleFilters() {
+        const selectedType = typeFilter.value;
+        const isAccountType = selectedType === 'comptes';
+        
+        dateFilter.style.display = isAccountType ? 'none' : '';
+        villeFilter.style.display = isAccountType ? 'none' : '';
+        domaineFilter.style.display = isAccountType ? 'none' : '';
 
-        dateContainer.style.display    = estComptes ? 'none' : '';
-        villeContainer.style.display   = estComptes ? 'none' : '';
-        domaineContainer.style.display = estComptes ? 'none' : '';
+        const isCompanyType = selectedType === 'entreprises';
+
+        if (isCompanyType) {
+            dateFilter.style.display = 'none';
+        }
     }
 
-    // TODO 2 : initialiser la visibilité dès le chargement
-    appliquerFiltreType();
-    filtreType.addEventListener('change', appliquerFiltreType);
+    toggleFilters();
+    typeFilter.addEventListener('change', toggleFilters);
+
 
 });
 

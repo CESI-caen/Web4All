@@ -58,6 +58,22 @@ body {
     }
 }
 
+/* ########## DESELECTION ########## */
+.deselect-all {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 1024px) {
+    .info-mobile {
+        display: block;
+    }
+    .info-desktop {
+        display: none;
+    }
+}
 
 .avoid-footer-overlap {
     height: 70px; /* Même hauteur que le footer incéré, pour éviter le chevauchement */
@@ -68,4 +84,12 @@ body {
         margin-right: 25%;
         margin-left: 25%;
     }
+
+    .info-mobile {
+        display: none;
+    }
+    .info-desktop {
+        display: block;
+    }
+
 }

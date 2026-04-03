@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 Internal Server Error</title>
+</head>
+<body>
+    <h1>500 Internal Server Error</h1>
+    <p>Sorry for the disruption.</p>
+    <p>An error occurred while processing your request.</p>
+    <hr>
+    <p><a href="/">Go to Home</a></p>
+</body>
+</html>

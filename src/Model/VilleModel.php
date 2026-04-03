@@ -12,6 +12,13 @@ class VilleModel
         $this->pdo = $pdoService->getPdo();
     }
 
+    /**
+     * Retrieves all cities from the database.
+     *
+     * @return array An associative array of all city records from the Villes table,
+     *               where each row is represented as an array with column names as keys.
+     *               Returns an empty array if no cities are found.
+     */
     public function getAllCities(): array
     {
         $requete = $this->pdo->query("SELECT * FROM Villes");
