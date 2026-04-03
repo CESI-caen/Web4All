@@ -38,6 +38,18 @@ class OffreModel
         return $requete->fetchAll();
     }
 
+    /** Get all job offers for a specific enterprise
+     *
+     * @param int $enterpriseId The ID of the enterprise
+     * @return array The list of job offers for the enterprise
+     */
+    public function getOffresByEnterpriseId(int $enterpriseId): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :enterprise_id");
+        $requete->execute(['enterprise_id' => $enterpriseId]);
+        return $requete->fetchAll();
+    }
+
     /** Get a job offer by its ID
      *
      * @param int $id The ID of the offer
@@ -48,6 +60,18 @@ class OffreModel
         $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_offre = :id");
         $requete->execute(['id' => $id]);
         return $requete->fetch();
+    }
+
+    /** Get a job offer by its ID
+     *
+     * @param int $id The ID of the offer
+     * @return array|false The job offer if found, false otherwise
+     */
+    public function getOffreById_entreprise(int $id): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :id");
+        $requete->execute(['id' => $id]);
+        return $requete->fetchAll();
     }
 
     /** Get the name of a job offer by its ID

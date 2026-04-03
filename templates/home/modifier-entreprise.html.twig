@@ -1,0 +1,79 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Modifier {{ entreprise.Nom }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('profil') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+{% block main %} 
+    <section class="container">
+        <div id="data">
+            <h1>Modifier l'entreprise</h1>
+            <form method="POST" action="{{ path('ModifierEntreprise', {'id': entreprise.Id_entreprise}) }}">
+                <label>Nom de l'entreprise :<br>
+                    <input type="text" name="nom" value="{{ entreprise.Nom }}" required>
+                </label><br><br>
+
+                <label>Email<br>
+                    <input type="email" name="email" value="{{ entreprise.Email }}" required>
+                </label><br><br>
+
+                <label>Téléphone<br>
+                    <input type="tel" name="telephone" value="{{ entreprise.Telephone }}" required>
+                </label><br><br>
+
+                <label>Description<br>
+                    <textarea name="descriptif" rows="5" required>{{ entreprise.Descriptif }}</textarea>
+                </label><br><br>
+
+                <label>Ville<br>
+                    <select name="ville" required>
+                        <option value="">Sélectionnez une ville</option>
+                        {% for v in villes %}
+                            <option value="{{ v.Nom }}" {% if v.Id_ville == entreprise.Id_ville %}selected{% endif %}>
+                                {{ v.Nom }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label><br><br>
+
+                <label>Domaines d'activité<br>
+                    {% for domaine in tousLesDomaines %}
+                        <div style="margin-bottom: 8px;">
+                            <input type="checkbox" id="domaine_{{ domaine.Id_domaine }}" name="domaines[]" value="{{ domaine.Nom }}"
+                                {% for d in domaines %}
+                                    {% if d.Id_domaine == domaine.Id_domaine %}checked{% endif %}
+                                {% endfor %}>
+                            <label for="domaine_{{ domaine.Id_domaine }}" style="display:inline;">{{ domaine.Nom }}</label>
+                        </div>
+                    {% endfor %}
+                </label><br><br>
+
+                <button type="submit">Enregistrer les modifications</button>
+                <a href="{{ path('Entreprise', {'id': entreprise.Id_entreprise}) }}"><button type="button">Annuler</button></a>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

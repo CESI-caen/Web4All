@@ -49,7 +49,11 @@
                 </label><br><br>
 
                 <label class="titre">Ville<br>
-                <input name="ville" type="text" placeholder="Ville" value={{ ville}} required>
+                    <select name="ville">
+                        {% for ville_option in villes %}
+                            <option value="{{ ville_option.Nom }}" {% if ville_option.Nom == ville %}selected{% endif %}>{{ ville_option.Nom }}</option>
+                        {% endfor %}
+                    </select>
                 </label><br><br>
 
                 <label class="groupe">

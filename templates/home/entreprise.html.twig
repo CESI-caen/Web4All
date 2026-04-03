@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    Entreprise
+    {{ entreprise.Nom }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -24,51 +24,79 @@
 {% endblock %}
 
 {% block main %} 
+   
     <section id="buttons">
-        <div class="button edit">Modifier l'entreprise</div>
-        <div class="button delete">Supprimer l'entreprise</div>
+        {% if user and user.id == entreprise.Id_utilisateur %}
+            <a href="{{ path('ModifierEntreprise', {'id': entreprise.Id_entreprise}) }}" class="button edit">Modifier l'entreprise</a>
+            <a href="#" class="button delete">Supprimer l'entreprise</a>
+        {% endif %}
     </section>
     <section class="container">
         <div id="photo" style="grid-area: photo;">
             <img src="{{ asset('build/images/image.png') }}" alt="Photo de l'entreprise">
         </div>
         <div class="block" id="nom" style="grid-area: nom;">
-            <h1>Nom de l'entreprise</h1>
+            <h1>{{ entreprise.Nom }}</h1>
         </div>
         <div class="block" id="infos" style="grid-area: infos;">
             <div class="info">
                 <p class="title">Adresse</p>
-                <p>Adresse de l'entreprise</p>
+                <p>{{ ville.Nom }}</p>
             </div>
             <div class="info">
                 <p class="title">Téléphone</p>
-                <p>Numéro de téléphone de l'entreprise</p>
+                <p>{{ entreprise.Telephone }}</p>
             </div>
             <div class="info">
                 <p class="title">Email</p>
-                <p>Email de l'entreprise</p>
+                <p>{{ entreprise.Email }}</p>
             </div>
         </div>
         <div class="block" id="description" style="grid-area: description;">
             <h1>Description de l'entreprise :</h1>
-            <p>Description de l'entreprise</p>
+            <p>{{ entreprise.Descriptif }}</p>
+        </div>
+        <div class="block" id="domaines" style="grid-area: description;">
+            <h1>Domaines d'activité :</h1>
+            {% if domaines %}
+                <ul>
+                    {% for domaine in domaines %}
+                        <li>{{ domaine.Nom }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun domaine spécifié</p>
+            {% endif %}
         </div>
         <div class="block" id="offres" style="grid-area: offres;">
             <h2>Offres</h2>
             <div id="liste">
-                {% for i in 1..5 %}
-                    <div class="offre">
-                        <img class="pp" src="{{ asset('build/images/image.png') }}" alt="photo">
-
-                        <div class="content">
-                            <p class="title">Nom Recruteur</p>
-                            <p class="subtitle">Nom de l'offre</p>
-                        </div>
-                    </div>
-                {% endfor %}
+                {% if offres %}
+                    {% for offre in offres %}
+                        <a href="{{ path('Offre', {'id': offre.Id_offre}) }}" class="offre" style="text-decoration: none; color: inherit;">
+                            <img class="pp" src="{{ asset('build/images/image.png') }}" alt="photo">
+                            <div class="content">
+                                <p class="title">{{ entreprise.Nom }}</p>
+                                <p class="subtitle">{{ (offre.Descriptif|length > 50 ? offre.Descriptif|slice(0, 50) ~ '...' : offre.Descriptif) }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <p>Aucune offre disponible pour cette entreprise</p>
+                {% endif %}
             </div>  
         </div>
     </section>
+    
+    
+    {% for note in notes|default([]) %} {#Selon ordre BDD#}
+        <div class="container" id="offres" style="background-color: var(--color-bg-container);">
+        <h2>Commentaires : </h2>
+        <P>Note : {{note.Note}}</p>
+        <P>Commentaire : {{note.Commentaire}}</p>
+        <p>Posté par : {{note.Nom}} {{note.Prenom}}</p>
+    </div>
+    {% endfor %}
 {% endblock %}
 
 {% block footer %}
