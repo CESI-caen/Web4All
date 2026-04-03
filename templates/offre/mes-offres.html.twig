@@ -29,6 +29,9 @@
         <div class="btn-Create">
             Créer une offre
         </div>
+        {% if error is defined and error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
         <div class="Edition-container hidden">
             <form method="POST" action="{{ path('MesOffres') }}" class="Edition-form">
                 <label>Nom de l'offre</label>

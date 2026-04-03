@@ -35,8 +35,14 @@ class HomeController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        $perpage = 2;
+        $nbpages = ceil(count($offres) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
        
-        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
+        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => array_slice($offres, ($page - 1) * $perpage, $perpage), 'userId' => $userId,'user' => $user, 'page' => $page, 'nbpages' => $nbpages, 'baseUrl' => $this->generateUrl('Home'), 'nbpages' => $nbpages]);
     }
 
     // -----------------------------------------------------------------------
@@ -347,6 +353,7 @@ class HomeController extends AbstractController
         $OffreModel = new OffreModel($pdo);
         $ExercerDansModel = new \App\Model\ExercerDansModel($pdo);
         $VilleModel = new VilleModel($pdo);
+        $Note2 = new Noter2Model($pdo);
 
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
@@ -369,17 +376,10 @@ class HomeController extends AbstractController
         $ville = $VilleModel->getCityById($entreprise['Id_ville']);
 
         // Récupérer les notes pour chaque offre d'entreprise (optionnel)
-        $Note1Model = new Noter1Model($pdo);
-        $notes = [];
-        foreach ($offres as $offreItem) {
-            $offreNotes = $Note1Model->getNotesByOffer($offreItem['Id_offre']);
-            if (!empty($offreNotes)) {
-                $notes = array_merge($notes, $offreNotes);
-            }
-        }
+        $notes = $Note2->getNotesByCompany($id);
 
         return $this->render('home/entreprise.html.twig', [
-            'ancien_page_title' => 'Home',
+            'ancien_page_title' => 'ListEntreprises',
             'page_title' => $currentRoute,
             'userId' => $userId,
             'user' => $user,
@@ -419,7 +419,7 @@ class HomeController extends AbstractController
                 $message = "Votre avis a été mis à jour.";
             }
          }
-    return $this->render('offre/avis-entreprise.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $entreprise, 'entreprise_id' => $id, 'notes' => $notes, 'message' => $message ?? null]);
+    return $this->render('offre/avis-entreprise.html.twig', ['ancien_page_title' => 'Entreprise','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $entreprise, 'entreprise_id' => $id, 'notes' => $notes, 'message' => $message ?? null]);
     }
 
     #[Route('/entreprises', name: 'ListEntreprises')]

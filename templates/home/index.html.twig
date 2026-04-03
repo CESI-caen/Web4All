@@ -52,6 +52,37 @@
                 </div>
                 
             {% endfor %}
+            {% if nbpages > 1 %}
+        <div class="pagination">
+            <input type="button"
+                   value="Précédent"
+                   onclick="window.location.href='?page={{ max(page - 1, 1) }}'"
+                   class="btn">
+            {% if page == 1 %}
+                <strong>1...</strong>
+            {% else %}
+                <a href="{{ baseUrl }}?page=1">1...</a>
+            {% endif %}
+            {% for i in (page - 2)..(page + 2) %}
+                {% if i > 1 and i < nbpages %}
+                    {% if i == page %}
+                        <strong>{{ i }}</strong>
+                    {% else %}
+                        <a href="{{ baseUrl }}?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if page == nbpages %}
+                <strong>...{{ nbpages }}</strong>
+            {% else %}
+                <a href="{{ baseUrl }}?page={{ nbpages }}">...{{ nbpages }}</a>
+            {% endif %}
+            <input type="button"
+                   value="Suivant"
+                   onclick="window.location.href='?page={{ min(page + 1, nbpages) }}'"
+                   class="btn">
+        </div>
+    {% endif %}
         </div>
 {% endblock %}
 

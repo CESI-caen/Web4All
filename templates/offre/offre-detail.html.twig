@@ -106,14 +106,14 @@
                 <span class="btn-icon">📧</span>
                 <a href="{{ path('Postuler') }}" id="btn_Postuler">Postuler</a>
             </button>
-            <button class="offre-btn offre-btn-secondary" onclick="">
+            <button class="offre-btn offre-btn-secondary" onclick="document.getElementById("btn_wishlist").click()">
                 <span class="btn-icon">❤️</span>
                 <a href="{{ path('Wishlist_ajout', {'id': offre.Id_offre}) }}" id="btn_wishlist">Wishlist</a>
             </button>
             {% endif %}
-            <button class="offre-btn offre-btn-secondary" onclick="">
+            <button class="offre-btn offre-btn-secondary" onclick="document.getElementById("btn_avis-offre").click()">
                 <span class="btn-icon">❤️</span>
-                <a href="{{ path('AvisOffre', {'id': offre.Id_offre}) }}" id="btn_avis">Avis</a>
+                <a href="{{ path('AvisOffre', {'id': offre.Id_offre}) }}" id="btn_avis-offre">Avis</a>
             </button>
         </div>
         
