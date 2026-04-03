@@ -1,0 +1,59 @@
+{% extends 'components/base.html.twig' %}
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+    Entreprises
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('entreprise.css') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+{% block main %} 
+    <section class="container">
+        <div class="block">
+            <h1>Liste des Entreprises</h1>
+        </div>
+        
+        {% if entreprises %}
+            <div class="entreprises-list">
+                {% for entreprise in entreprises %}
+                    <div class="entreprise-card">
+                        <div class="entreprise-photo">
+                            <img src="{{ asset('build/images/image.png') }}" alt="Logo de {{ entreprise.Nom }}">
+                        </div>
+                        <div class="entreprise-info">
+                            <h2>{{ entreprise.Nom }}</h2>
+                            <p class="entreprise-email">{{ entreprise.Email }}</p>
+                            <p class="entreprise-telephone">{{ entreprise.Telephone }}</p>
+                            <p class="entreprise-description">{{ (entreprise.Descriptif|length > 150 ? entreprise.Descriptif|slice(0, 150) ~ '...' : entreprise.Descriptif) }}</p>
+                            <a href="{{ path('Entreprise', {'id': entreprise.Id_entreprise}) }}" class="btn-detail">Voir les détails</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="block">
+                <p>Aucune entreprise disponible.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('components/footer.html.twig') }}
+{% endblock %}

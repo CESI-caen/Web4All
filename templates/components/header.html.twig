@@ -3,6 +3,12 @@
         <button class="mobile-nav-button">
             <div class="header-title">
                 {% if userId %}
+                    {% if ancien_page_title == 'Entreprise' and entreprise is defined %}
+                        <a href="{{ path(ancien_page_title, {id: entreprise.Id_entreprise}) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+                    {% elseif ancien_page_title == 'Offre' and offre is defined %}
+                        <a href="{{ path(ancien_page_title, {id: offre.Id_offre}) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
+                    {% else %}
+                        <a href="{{ path(ancien_page_title) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
                     {% if ancien_page_title == 'Offre' or ancien_page_title == 'AvisOffre' %}
                         {% if offre_id is defined %}
                             <a href="{{ path(ancien_page_title, {id: offre_id}) }}"><img class="icon" src="{{asset('build/images/icon_return.png')}}" alt="Home"></a>
@@ -20,6 +26,14 @@
     <button class="mobile-nav-button">
         <div class="header-title">
             {% if userId %}
+                {% if page_title == 'Offre' %}
+                    <a href="{{ path(page_title, {id: offre.Id_offre}) }}">{{ page_title }}</a>
+                {% elseif page_title == 'Entreprise' and entreprise is defined %}
+                    <a href="{{ path(page_title, {id: entreprise.Id_entreprise}) }}">{{ page_title }}</a>
+                {% elseif page_title == 'ModifierEntreprise' and entreprise is defined %}
+                    <a href="{{ path(page_title, {id: entreprise.Id_entreprise}) }}">{{ page_title }}</a>
+                {% elseif page_title == 'ModifierOffre' and offre is defined %}
+                    <a href="{{ path(page_title, {id: offre.Id_offre}) }}">{{ page_title }}</a>
                 {% if page_title == 'Offre' or page_title == 'AvisOffre' %}
                     {% if offre_id is defined %}
                         <a href="{{ path(page_title, {id: offre_id}) }}">{{ page_title }}</a>
