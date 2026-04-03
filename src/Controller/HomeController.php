@@ -35,8 +35,14 @@ class HomeController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        $perpage = 2;
+        $nbpages = ceil(count($offres) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
        
-        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
+        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => array_slice($offres, ($page - 1) * $perpage, $perpage), 'userId' => $userId,'user' => $user, 'page' => $page, 'nbpages' => $nbpages, 'baseUrl' => $this->generateUrl('Home'), 'nbpages' => $nbpages]);
     }
 
     // -----------------------------------------------------------------------
