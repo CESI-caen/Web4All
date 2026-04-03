@@ -42,13 +42,22 @@ class OffreController extends AbstractController
         $userId = $user['id'] ?? null;
 
         $offre = $OffreModel->getOffreById($id);
-        $Note = $Note1->getNotesByOffer($offre['Id_offre']);
+        $notes = $Note1->getNotesByOffer($offre['Id_offre']);
 
         // Récupérer l'entreprise associée à l'offre
         $entrepriseRow = $OffreModel->getEntrepriseIdByOffreId($id);
         $entreprise = $EntrepriseModel->getEnterpriseById((int)$entrepriseRow['Id_entreprise']);
 
-        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'entreprise' => $entreprise]);
+        return $this->render('offre/offre-detail.html.twig', [
+            'ancien_page_title' => 'Home',
+            'page_title' => $currentRoute,
+            'userId' => $userId,
+            'user' => $user,
+            'offre' => $offre,
+            'entreprise' => $entreprise,
+            'notes' => $notes,
+            'offre_id' => $id,
+        ]);
     }
 
     #[Route('/offre/{id}/modifier', name: 'ModifierOffre')]
