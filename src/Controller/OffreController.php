@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\PdoService;
 use App\Model\OffreModel;
 use App\Model\VouloirModel;
+use App\Model\AccountModel;
+use App\Model\EntrepriseModel;
 
 class OffreController extends AbstractController
 {
@@ -17,10 +19,41 @@ class OffreController extends AbstractController
     #[Route('/mes-offres', name: 'MesOffres')]
     public function mesOffres(Request $request): Response
     {
+        $AccountModel = new AccountModel(new PdoService());
+        $EntrepriseModel = new EntrepriseModel(new PdoService());
+        $OffreModel = new OffreModel(new PdoService());
+
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
+
+        if (isset($_POST['type-form']) && $_POST['type-form'] === 'edition') {
+            $offreNom = $_POST['offre-name'];
+            $offreDescription = $_POST['offre-description'];
+            $offreStart = $_POST['offre-start'];
+            $offreEnd = $_POST['offre-end'];
+            $offreSalary = $_POST['offre-salary'];
+            $EntrepriseId = $EntrepriseModel->getEnterpriseByUserId($userId)['Id_entreprise'];
+            $duration = (new \DateTime($offreEnd))->diff(new \DateTime($offreStart))->days; // Calcul de la durée en jours
+            if ($_POST['offre-id']) {
+                $OffreModel->updateOffre($_POST['offre-id'], $offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary);
+            } else {
+                $OffreModel->addOffre($offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary, $EntrepriseId);
+            }
+            return $this->redirectToRoute('MesOffres');
+        }
+
+        $Offres = $OffreModel->getAllOffresByUserId($userId);
+
+        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Offres' => $Offres]);
+    }
+
+    #[Route('/offre/delete/{id}', name: 'offre_delete', methods: ['POST'])]
+    public function delete(int $id): Response
+    {
+        $OffreModel = new OffreModel(new PdoService());
+        $OffreModel->deleteOffre($id);
+        return $this->redirectToRoute('MesOffres');
     }
 
     //#[Route('/offre/{id}', name: 'AfficherOffre')]
