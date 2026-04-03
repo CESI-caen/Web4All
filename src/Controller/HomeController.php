@@ -17,13 +17,14 @@ use App\Model\AccountModel;
 use App\Model\DomaineModel;
 use App\Model\CompetenceModel;
 use App\Model\VouloirModel;
+use App\Model\Noter2Model;
 
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'Home')]
     public function index(Request $request): Response
     {
-        if (!$request->getSession()->has('user') || $request->getSession()->get('user')['id'] == 999) {
+        if (!$request->getSession()->has('user')) {
             return $this->redirectToRoute('Login');
         }
         $pdo = new PdoService();
@@ -193,11 +194,30 @@ class HomeController extends AbstractController
     #[Route('/entreprise', name: 'Entreprise')]
     public function entreprise(Request $request): Response
     {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('Login');
+        }
+        if ( $request->getSession()->get('user')['id'] == 999 || $request->getSession()->get('user')['nom_type_compte'] != 'recruteur') {
+            return $this->redirectToRoute('Home');
+        }
+        $pdo = new PDOService();
+        $userModel = new UtilisateurModel($pdo);
+        $EntrepriseModel = new EntrepriseModel($pdo);
+        $OffreModel = new OffreModel($pdo);
+        $VilleModel = new VilleModel($pdo);
+        $Note2 = new Noter2Model($pdo);
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        $Entreprise = $EntrepriseModel->getEnterpriseByUserId($userId);
+        $Offres = $OffreModel->getOffreById_entreprise($Entreprise['Id_entreprise']);
+        $ville = $VilleModel->getCityById($Entreprise['Id_ville'])['Nom'];
+        $Note = $Note2->getNotesByCompany($Entreprise['Id_entreprise']);
         
-        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
+
+        
+        return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $Entreprise, 'offres' => $Offres, 'ville' => $ville, 'notes' => $Note]);
     }
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents

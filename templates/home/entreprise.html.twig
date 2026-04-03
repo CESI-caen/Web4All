@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block main %} 
-    {% if user and user.id != 999 and user.nom_type_compte == 'recruteur' %}
+   
     <section id="buttons">
         <div class="button edit">Modifier l'entreprise</div>
         <div class="button delete">Supprimer l'entreprise</div>
@@ -34,45 +34,52 @@
             <img src="{{ asset('build/images/image.png') }}" alt="Photo de l'entreprise">
         </div>
         <div class="block" id="nom" style="grid-area: nom;">
-            <h1>Nom de l'entreprise</h1>
+            <h1>{{entreprise.Nom}}</h1>
         </div>
         <div class="block" id="infos" style="grid-area: infos;">
             <div class="info">
                 <p class="title">Adresse</p>
-                <p>Adresse de l'entreprise</p>
+                <p>{{ville}}</p>
             </div>
             <div class="info">
                 <p class="title">Téléphone</p>
-                <p>Numéro de téléphone de l'entreprise</p>
+                <p>{{entreprise.Telephone}}</p>
             </div>
             <div class="info">
                 <p class="title">Email</p>
-                <p>Email de l'entreprise</p>
+                <p>{{entreprise.Email}}</p>
             </div>
         </div>
         <div class="block" id="description" style="grid-area: description;">
             <h1>Description de l'entreprise :</h1>
-            <p>Description de l'entreprise</p>
+            <p>{{entreprise.Descriptif}}</p>
         </div>
         <div class="block" id="offres" style="grid-area: offres;">
             <h2>Offres</h2>
             <div id="liste">
-                {% for i in 1..5 %}
+                {% for offre in offres %}
                     <div class="offre">
                         <img class="pp" src="{{ asset('build/images/image.png') }}" alt="photo">
 
                         <div class="content">
-                            <p class="title">Nom Recruteur</p>
-                            <p class="subtitle">Nom de l'offre</p>
+                            <p class="title"> {{user.nom}} {{user.prenom}}</p>
+                            <p class="subtitle">{{offre.Nom}}</p>
                         </div>
                     </div>
                 {% endfor %}
             </div>  
         </div>
     </section>
-    {% else %}
-        <p style="color:red; text-align:center;">Vous n'avez pas la permission d'accéder à cette page.</p>
-    {% endif %}
+    
+    
+    {% for note in notes %} // Selon ordre BDD
+        <div class="container" id="offres" style="background-color: var(--color-bg-container);">
+        <h2>Commentaires : </h2>
+        <P>Note : {{note.Note}}</p>
+        <P>Commentaire : {{note.Commentaire}}</p>
+        <p>Posté par : {{note.Nom}} {{note.Prenom}}</p>
+    </div>
+    {% endfor %}
 {% endblock %}
 
 {% block footer %}

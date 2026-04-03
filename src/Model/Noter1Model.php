@@ -105,7 +105,7 @@ class Noter1Model
      */
     public function getNotesByOffer(int $id_offre): array
     {
-        $requete = $this->pdo->prepare("SELECT * FROM Noter_1 WHERE Id_offre = :id_offre");
+        $requete = $this->pdo->prepare("SELECT Noter_1.*, Utilisateurs.Nom, Utilisateurs.Prenom FROM Noter_1 JOIN Utilisateurs ON Noter_1.Id_utilisateur = Utilisateurs.Id_utilisateur WHERE Id_offre = :id_offre");
         $requete->execute(['id_offre' => $id_offre]);
         return $requete->fetchAll();
     }

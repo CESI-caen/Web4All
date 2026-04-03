@@ -50,6 +50,18 @@ class OffreModel
         return $requete->fetch();
     }
 
+    /** Get a job offer by its ID
+     *
+     * @param int $id The ID of the offer
+     * @return array|false The job offer if found, false otherwise
+     */
+    public function getOffreById_entreprise(int $id): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :id");
+        $requete->execute(['id' => $id]);
+        return $requete->fetchAll();
+    }
+
     /** Get the name of a job offer by its ID
      *
      * @param string $id The ID of the offer

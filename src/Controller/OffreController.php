@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\PdoService;
 use App\Model\OffreModel;
+use App\Model\Noter1Model;
 use App\Model\VouloirModel;
 
 class OffreController extends AbstractController
@@ -32,14 +33,16 @@ class OffreController extends AbstractController
     {
         $pdo = new PdoService();
         $OffreModel = new OffreModel($pdo);
+        $Note1 = new Noter1Model($pdo);
 
-        $currentRoute = $request->attributes->get('_route');
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
 
         $offre = $OffreModel->getOffreById($id);
+        $Note = $Note1->getNotesByOffer($offre['Id_offre']);
 
-        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre]);
+        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'notes' => $Note]);
     }
 
     #[Route('/postuler', name: 'Postuler')]  // Postuler à une offre
