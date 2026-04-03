@@ -92,9 +92,10 @@
                 </div>
             </div>
         </div>
+        <div class="offre-actions-section">
         {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
         <!-- Section Actions -->
-        <div class="offre-actions-section">
+        
             <button class="offre-btn offre-btn-primary" onclick="document.getElementById("btn_Postuler").click()">
                 <span class="btn-icon">📧</span>
                 <a href="{{ path('Postuler') }}" id="btn_Postuler">Postuler</a>
@@ -103,8 +104,13 @@
                 <span class="btn-icon">❤️</span>
                 <a href="{{ path('Wishlist_ajout', {'id': offre.Id_offre}) }}" id="btn_wishlist">Wishlist</a>
             </button>
+            {% endif %}
+            <button class="offre-btn offre-btn-secondary" onclick="">
+                <span class="btn-icon">❤️</span>
+                <a href="{{ path('AvisOffre', {'id': offre.Id_offre}) }}" id="btn_avis">Avis</a>
+            </button>
         </div>
-        {% endif %}
+        
 
     {% for note in notes %} {#Selon ordre BDD#}
         <div id="offres" style="background-color: var(--color-bg-container);">

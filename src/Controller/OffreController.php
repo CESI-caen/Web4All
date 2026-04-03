@@ -42,7 +42,7 @@ class OffreController extends AbstractController
         $offre = $OffreModel->getOffreById($id);
         $Note = $Note1->getNotesByOffer($offre['Id_offre']);
 
-        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'notes' => $Note]);
+        return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'offre_id' => $id, 'notes' => $Note]);
     }
 
     #[Route('/postuler', name: 'Postuler')]  // Postuler à une offre
@@ -68,12 +68,34 @@ class OffreController extends AbstractController
         return $this->redirectToRoute('Home');
     }
 
-    #[Route('/avis', name: 'Avis')]  // Avis d'une offre
-    public function avis(Request $request): Response
+    #[Route('/offre/{id}/avis', name: 'AvisOffre')]  // Avis d'une offre
+    public function avis(int $id,Request $request): Response
     {
+        
+        
+        $pdo = new PdoService();
+        $OffreModel = new OffreModel($pdo);
+        $Note1 = new Noter1Model($pdo);
+        $offre = $OffreModel->getOffreById($id);
+
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('offre/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]);
+        $notes = $Note1->getRelation($userId, $id);
+
+         if ($request->isMethod('POST')){
+            $comment = $request->request->get('comment');
+            $note = $request->request->get('note');
+            if (!$Note1->relationExists($userId, $id)){
+                $Note1->addRelation($userId, $id, $note, $comment);
+                $notes = $Note1->getRelation($userId, $id);
+                $message = "Votre avis a été ajouté.";
+            }else{
+                $Note1->updateNoteAndComment($userId, $id, $note, $comment);
+                $notes = $Note1->getRelation($userId, $id);
+                $message = "Votre avis a été mis à jour.";
+            }
+         }
+    return $this->render('offre/avis-offre.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'offre_id' => $id, 'notes' => $notes, 'message' => $message ?? null]);
     }
 }

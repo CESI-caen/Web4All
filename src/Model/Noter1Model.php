@@ -41,6 +41,13 @@ class Noter1Model
         return $requete->fetch() !== false;
     }
 
+    public function getRelation(int $id_user, int $id_offre): array|false
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Noter_1 WHERE Id_utilisateur = :id_user AND Id_offre = :id_offre");
+        $requete->execute(['id_user' => $id_user, 'id_offre' => $id_offre]);
+        return $requete->fetch();
+    }
+
     /** Delete a relation between a user and an offer
      *
      * @param int $id_user The ID of the user
