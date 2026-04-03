@@ -311,6 +311,35 @@ class HomeController extends AbstractController
 
         return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Wishlists' => $Wishlists]);
     }
+    #[Route('/wishlist_ajout/{id}', name: 'Wishlist_ajout')]
+    public function wishlist_ajout(int $id, Request $request): Response
+    {
+        $pdo = new PdoService();
+        $VouloirModel = new VouloirModel($pdo);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        if ($VouloirModel->relationExists($userId, $id)){
+            return $this->redirectToRoute('Offre',['id' => $id, 'message' => 'Déja dans ta wishlist']);
+        }
+        $VouloirModel->addRelation($userId, $id);
+
+        // Rediriger vers la page de Home après ajout wishlist
+        return $this->redirectToRoute('WishList');
+    }
+
+    #[Route('/wishlist_retire/{id}', name: 'Wishlist_retire')]
+    public function wishlist_retire(int $id, Request $request): Response
+    {
+        $pdo = new PdoService();
+        $VouloirModel = new VouloirModel($pdo);
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+    
+        $VouloirModel->deleteRelation($userId, $id);
+
+        // Rediriger vers la page de Home après ajout wishlist
+        return $this->redirectToRoute('Home');
+    }
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response
     {
