@@ -35,8 +35,14 @@ class HomeController extends AbstractController
         $currentRoute = $request->attributes->get('_route');
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
+
+        $perpage = 2;
+        $nbpages = ceil(count($offres) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
        
-        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
+        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => array_slice($offres, ($page - 1) * $perpage, $perpage), 'userId' => $userId,'user' => $user, 'page' => $page, 'nbpages' => $nbpages, 'baseUrl' => $this->generateUrl('Home')]);
     }
 
     // -----------------------------------------------------------------------
@@ -72,9 +78,9 @@ class HomeController extends AbstractController
         // On regroupe tous les filtres pour les passer à la route de résultats. Pour faire ensuite lkes requêtes filtrées dans les modèles.
         $params = [
             'recherche'      => $request->query->get('recherche', ''),
-            'filtre_ville'   => $request->query->all('filtre_ville[]'),
+            'filtre_ville'   => $request->query->all('filtre_ville'),
             'filtre_date'    => $request->query->get('filtre_date', ''),
-            'filtre_domaine' => $request->query->all('filtre_domaine[]'),
+            'filtre_domaine' => $request->query->all('filtre_domaine'),
         ];
 
         // redirectToRoute génère une vraie réponse HTTP 302.
@@ -114,22 +120,46 @@ class HomeController extends AbstractController
         $userId = $user['id'] ?? null;
 
         $recherche      = $request->query->get('recherche', '');
-        $filtre_ville   = $request->query->all('filtre_ville');
-        $filtre_date    = $request->query->get('filtre_date', '');
         $filtre_domaine = $request->query->all('filtre_domaine');
+        if (empty($filtre_domaine)) {
+            $filtre_domaine = null; // Pour que le modèle sache qu'il ne doit pas filtrer par domaine
+        } elseif (is_array($filtre_domaine)) {
+            foreach ($filtre_domaine as $domaine) {
+                $domaine = (string) $domaine; // Conversion de chaque domaine en string, pour que le modèle puisse faire la requête SQL correctement
+            }
+        }
+        $filtre_ville   = $request->query->all('filtre_ville');
+        if (empty($filtre_ville)) {
+            $filtre_ville = null; // Pour que le modèle sache qu'il ne doit pas filtrer par ville
+        } elseif (is_array($filtre_ville)) {
+            foreach ($filtre_ville as $ville) {
+                $ville = (string) $ville; // Conversion de chaque ville en string, pour que le modèle puisse faire la requête SQL correctement
+            }
+        }
+        $filtre_date    = $request->query->get('filtre_date', '');
 
-        // TODO : remplacer par la vraie requête filtrée dans OffreModel
-        $offres = [
-            [
-                'Nom'          => 'Test test',
-                'Id_offre'     => 1,
-                'Descriptif'   => 'testetestest',
-                'Date_debut'   => '2024-01-01',
-                'Date_fin'     => '2024-01-01',
-                'Id_entreprise'=> 1,
-                'Id_domaine'   => 1,
-            ]
-        ];
+
+        switch ($filtre_date) {
+            case 'toutes':
+                $date_publication = null; // Pas de filtre sur la date
+                break;
+            case '24h': // Cette semaine
+                $date_publication = date('Y-m-d', strtotime('-1 day'));
+                break;
+            case '7j': // Ce mois-ci
+                $date_publication = date('Y-m-d', strtotime('-7 days'));
+                break;
+            case 'mois': // Ce mois-ci
+                $date_publication = date('Y-m-01'); // Premier jour du mois en cours
+                break;
+        }
+
+        $offres = (new OffreModel($pdo))->filterOffresForSearch($filtre_domaine, $filtre_ville, $date_publication);
+
+        $perpage = 2;
+        $nbpages = ceil(count($offres) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
 
         return $this->render('home/index.html.twig', [
             'ancien_page_title' => 'Recherche',
@@ -137,6 +167,9 @@ class HomeController extends AbstractController
             'offres'            => $offres,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
@@ -157,12 +190,20 @@ class HomeController extends AbstractController
 
         $entreprises = [['Nom' => 'Test test']];
 
+        $perpage = 2;
+        $nbpages = ceil(count($entreprises) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
         return $this->render('home/entreprise.html.twig', [
             'ancien_page_title' => 'Recherche',
-            'page_title'        => 'Entreprise',
+            'page_title'        => 'ListEntreprises',
             'entreprises'       => $entreprises,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
@@ -183,12 +224,20 @@ class HomeController extends AbstractController
 
         $profils = [['Nom' => 'Test test']];
 
+        $perpage = 2;
+        $nbpages = ceil(count($profils) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
         return $this->render('home/profil.html.twig', [
             'ancien_page_title' => 'Recherche',
             'page_title'        => 'Profil',
             'profils'           => $profils,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
@@ -262,37 +311,6 @@ class HomeController extends AbstractController
 
         return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Wishlists' => $Wishlists]);
     }
-
-    #[Route('/wishlist_ajout/{id}', name: 'Wishlist_ajout')]
-    public function wishlist_ajout(int $id, Request $request): Response
-    {
-        $pdo = new PdoService();
-        $VouloirModel = new VouloirModel($pdo);
-        $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? null;
-        if ($VouloirModel->relationExists($userId, $id)){
-            return $this->redirectToRoute('Offre',['id' => $id, 'message' => 'Déja dans ta wishlist']);
-        }
-        $VouloirModel->addRelation($userId, $id);
-
-        // Rediriger vers la page de Home après ajout wishlist
-        return $this->redirectToRoute('WishList');
-    }
-
-    #[Route('/wishlist_retire/{id}', name: 'Wishlist_retire')]
-    public function wishlist_retire(int $id, Request $request): Response
-    {
-        $pdo = new PdoService();
-        $VouloirModel = new VouloirModel($pdo);
-        $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? null;
-    
-        $VouloirModel->deleteRelation($userId, $id);
-
-        // Rediriger vers la page de Home après ajout wishlist
-        return $this->redirectToRoute('Home');
-    }
-
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response
     {
@@ -379,6 +397,7 @@ class HomeController extends AbstractController
             'notes' => $notes,
         ]);
     }
+
     #[Route('/entreprise/{id}/avis', name: 'AvisEntreprise')]  // Avis d'une offre
     public function avis(int $id,Request $request): Response
     {
@@ -525,7 +544,6 @@ class HomeController extends AbstractController
         
         return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $Entreprise, 'offres' => $Offres, 'ville' => $ville, 'notes' => $Note]);
     }
-
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response

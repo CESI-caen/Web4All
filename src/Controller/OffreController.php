@@ -30,6 +30,8 @@ class OffreController extends AbstractController
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
 
+        $error = $request->query->get('error') ?? null;
+
         if (isset($_POST['type-form']) && $_POST['type-form'] === 'edition') {
             $offreNom = $_POST['offre-name'];
             $offreDescription = $_POST['offre-description'];
@@ -37,18 +39,24 @@ class OffreController extends AbstractController
             $offreEnd = $_POST['offre-end'];
             $offreSalary = $_POST['offre-salary'];
             $EntrepriseId = $EntrepriseModel->getEnterpriseByUserId($userId)['Id_entreprise'];
-            $duration = (new \DateTime($offreEnd))->diff(new \DateTime($offreStart))->days; // Calcul de la durée en jours
-            if ($_POST['offre-id']) {
-                $OffreModel->updateOffre($_POST['offre-id'], $offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary);
+            $duration = (strtotime($offreEnd) - strtotime($offreStart)) / 86400; // Conversion en jours
+
+            if ($duration <= 0 || $offreSalary < 0) {
+                return $this->redirectToRoute('MesOffres', ['error' => 'La durée doit être positive et le salaire ne peut pas être négatif.']);
             } else {
-                $OffreModel->addOffre($offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary, $EntrepriseId);
+                if ($_POST['offre-id']) {
+                    $OffreModel->updateOffre($_POST['offre-id'], $offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary);
+                } else {
+                    $OffreModel->addOffre($offreNom, $offreDescription, $offreStart, $offreEnd, $duration, $offreSalary, $EntrepriseId);
+                }
             }
+            
             return $this->redirectToRoute('MesOffres');
         }
 
         $Offres = $OffreModel->getAllOffresByUserId($userId);
 
-        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Offres' => $Offres]);
+        return $this->render('offre/mes-offres.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Offres' => $Offres, 'error' => $error]);
     }
 
     #[Route('/offre/delete/{id}', name: 'offre_delete', methods: ['POST'])]

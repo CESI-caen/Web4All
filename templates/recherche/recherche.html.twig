@@ -71,7 +71,7 @@
                         <button type="button" class="dropdown-trigger" aria-expanded="false" aria-controls="filtre-type-liste">
                             0 Sélectionné
                         </button>
-                        <ul class="dropdown-liste" id="filtre-type-liste-ville" hidden>
+                        <ul class="dropdown-liste" id="filtre-type-liste-ville">
                             {% for ville in villes %} {# passer 'villes' depuis le controller (à la place de '0..50') #}
                             <li><label>
                                 <input type="checkbox" name="filtre_ville[]" value="{{ ville.Nom }}">
