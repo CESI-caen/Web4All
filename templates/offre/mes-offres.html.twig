@@ -10,12 +10,13 @@
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('palette') }}
-    {{ encore_entry_link_tags('mes-offres.css') }}
     {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('mes-offres.css') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('theme') }}
+    {{ encore_entry_script_tags('mes-offres.js') }}
 {% endblock %}
 
 {% block header %}
@@ -28,16 +29,36 @@
         <div class="btn-Create">
             Créer une offre
         </div>
+        <div class="Edition-container hidden">
+            <form method="POST" action="{{ path('MesOffres') }}" class="Edition-form">
+                <label>Nom de l'offre</label>
+                <input type="text" id="offre-name" name="offre-name" required>
+                <label>Description de l'offre</label>
+                <textarea id="offre-description" name="offre-description" rows="4" required></textarea>
+                <label>Date de début</label>
+                <input type="date" name="offre-start" min="2026-01-01" required>
+                <label>Date de fin</label>
+                <input type="date" name="offre-end" min="2026-01-02" required>
+                <label>Rémuneration</label>
+                <input type="number" name="offre-salary" step="0.01" min="0" required>
+                <input type="hidden" name="offre-id" value="">
+                <input type="hidden" name="type-form" value="edition">
+                <div class="btns">
+                    <button type="submit" class="save-btn">Enregistrer</button>
+                </div>
+            </form>
+        </div>
         <div class="Offres">
-            {% for i in 1..5 %}
+            {% if Offres is not empty %}
+                {% for offre in Offres %}
             <div class="Offre">
                 <img id="offre-image" src="{{ asset('build/images/image.png') }}">
                 <div class="content">
-                    <p class="title">Nom Recruteur</p>
-                    <p class="subtitle">Nom de l'offre</p>
+                    <p class="title">{{ offre.Nom }}</p>
+                    <p class="subtitle">{{ offre.Descriptif|slice(0, 20) }}{% if offre.Descriptif|length > 20 %}...{% endif %}</p>
                 </div>
                 <div class="Offre-btn">
-                    <div class="Offre-btn-Edit">
+                    <div class="Offre-btn-Edit" data-nom="{{ offre.Nom }}" data-id="{{ offre.Id_offre }}" data-description="{{ offre.Descriptif }}" data-start="{{ offre.Date_debut|date('Y-m-d') }}" data-end="{{ offre.Date_fin|date('Y-m-d') }}" data-salary="{{ offre.Renumeration }}">
                     <div class="icon">
                         <img src="{{ asset('build/images/editer.png') }}" alt="edit">
                     </div>
@@ -45,7 +66,7 @@
                         Editer
                     </div>
                     </div>
-                    <div class="Offre-btn-Delete">
+                    <div class="Offre-btn-Delete" data-id="{{ offre.Id_offre }}">
                     <div class="icon">
                         <img src="{{ asset('build/images/croix.png') }}" alt="delete">
                     </div>
@@ -56,6 +77,9 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+                <p class="no-offres">Aucune offre disponible.</p>
+            {% endif %}
         </div>
     </section>
     {% else %}
