@@ -33,19 +33,21 @@
 {% block main %}
     {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
     <section class="container">
-        <form action="{{ path('upload') }}" method="post" enctype="multipart/form-data" > <!-- Possible de limiter ici : accept=".pdf,.png,.jpg,.jpeg" -->
-            
+        <!-- CV -->
+        <form action="{{ path('upload') }}" method="post" enctype="multipart/form-data">
+        <h2> Upload de votre CV </h2>
             <div class="boite-upload">
-                <span class="texte-placeholder" id="nom-fichier"><input type="file" name="file" id="input-cv" accept=".pdf" ></span>
-                
+            
+                <input type="file" name="file" accept=".pdf">
+                <input type="hidden" name="type" value="cv">                
                 <img class="icon" src="{{asset('build/images/icon_file.png')}}" onclick="document.getElementById('input-cv').click()" alt="Fichier">
             </div>
-            <p> {{ message }} </p>
             <br>
-            <button class="bouton-a" id="Upload" type="submit">Upload</button>
-
+            <button class="bouton-a" id="Upload" type="submit">Upload Cv</button>
         </form>
-    </section>   
+
+        <p>{{message}} </p>
+    </section> 
     {% else %}
         <p style="color:red; text-align:center;">Vous n'avez pas la permission d'accéder à cette page.</p>
     {% endif %} 

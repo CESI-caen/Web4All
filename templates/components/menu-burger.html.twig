@@ -54,9 +54,13 @@
         </div> </a> 
         {% endif %}
 
-         {% if user and user.id != 999 %}
+         {% if user and user.id != 999  and user.nom_type_compte == 'etudiant'%}
        <a href="{{ path('WishList') }}"> <div class="menu-item-pc">
             <button >  Wishlist </button>
+        </div> </a> 
+
+        <a href="{{ path('Candidature') }}"> <div class="menu-item-pc">
+            <button >  Candidature </button>
         </div> </a> 
         {% endif %}
 

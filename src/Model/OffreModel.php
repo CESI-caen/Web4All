@@ -177,6 +177,13 @@ class OffreModel
         return $requete->execute(['nom' => $nom, 'description' => $description, 'date_debut' => $date_start, 'date_fin' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id' => $id]);
     }
 
+    public function getEnterpriseByIdoffre(int $id_offre): array|false
+    {
+        $requete = $this->pdo->prepare("SELECT Offres.*, Entreprises.Nom As Nom_entreprise FROM Offres Join Entreprises On Entreprises.Id_entreprise = Offres.Id_entreprise WHERE Id_offre = :id_offre");
+        $requete->execute(['id_offre' => $id_offre]);
+        return $requete->fetch();
+    }
+
     /** Update the name of a job offer by its ID
      *
      * @param int $id The ID of the offer to update

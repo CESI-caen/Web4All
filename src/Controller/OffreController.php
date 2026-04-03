@@ -12,6 +12,8 @@ use App\Model\Noter1Model;
 use App\Model\VouloirModel;
 use App\Model\AccountModel;
 use App\Model\EntrepriseModel;
+use App\Model\UtilisateurModel;
+use App\Model\PostulerModel;
 
 class OffreController extends AbstractController
 {
@@ -67,14 +69,16 @@ class OffreController extends AbstractController
         $pdo = new PdoService();
         $OffreModel = new OffreModel($pdo);
         $EntrepriseModel = new EntrepriseModel($pdo);
+        $userModel = new UtilisateurModel($pdo);
         $Note1 = new Noter1Model($pdo);
 
         $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
-        $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? null;
+        $userSession = $request->getSession()->get('user');
+        $userId = $userSession['id'] ?? null;
 
         $offre = $OffreModel->getOffreById($id);
         $notes = $Note1->getNotesByOffer($offre['Id_offre']);
+    
 
         // Récupérer l'entreprise associée à l'offre
         $entrepriseRow = $OffreModel->getEntrepriseIdByOffreId($id);
@@ -84,11 +88,11 @@ class OffreController extends AbstractController
             'ancien_page_title' => 'Home',
             'page_title' => $currentRoute,
             'userId' => $userId,
-            'user' => $user,
+            'user' => $userSession,
             'offre' => $offre,
             'entreprise' => $entreprise,
             'notes' => $notes,
-            'offre_id' => $id,
+            'offre_id' => $id
         ]);
     }
 
@@ -141,27 +145,39 @@ class OffreController extends AbstractController
         return $this->render('offre/offre-detail.html.twig', ['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'offre' => $offre, 'offre_id' => $id, 'notes' => $Note]);
     }
 
-    #[Route('/postuler', name: 'Postuler')]  // Postuler à une offre
-    public function postuler(Request $request): Response
-    {
-        $currentRoute = $request->attributes->get('_route');
+    #[Route('/candidature', name: 'Candidature')]
+    public function whishList(Request $request): Response
+    {   
+        $pdo = new PdoService();
+        $PostulerModel = new PostulerModel($pdo);
+        
+
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
         $user = $request->getSession()->get('user');
         $userId = $user['id'] ?? null;
-        return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'MesOffres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user]); // modifier le chermin retour 
+
+        $Candidatures = $PostulerModel->getCandidatures($userId);
+
+        return $this->render('home/candidature.html.twig',['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'candidatures' => $Candidatures]);
     }
 
-    #[Route('/wishlist_ajout/{id}', name: 'Wishlist_ajout')]
-    public function wishlist_ajout(int $id, Request $request): Response
+    #[Route('/postuler/{id}', name: 'Postuler')]  // Postuler à une offre
+    public function postuler(int $id ,Request $request): Response
     {
         $pdo = new PdoService();
-        $VouloirModel = new VouloirModel($pdo);
-        $user = $request->getSession()->get('user');
-        $userId = $user['id'] ?? null;
-    
-        $VouloirModel->addRelation($userId, $id);
+       
+        $PostulerModel = new PostulerModel($pdo);
+        $currentRoute = $request->attributes->get('_route');
+        $userSession = $request->getSession()->get('user');
+        $userId = $userSession['id'] ?? null;
 
-        // Rediriger vers la page de Home après ajout wishlist
-        return $this->redirectToRoute('Home');
+        if ($PostulerModel->relationExists($userId, $id)){
+            return $this->redirectToRoute('Offre',['id' => $id, 'message' => 'Déja dans tes candidatures']);
+        }
+        $PostulerModel->addRelation($userId, $id);
+
+        return $this->redirectToRoute('Candidature');
+        //return $this->render('offre/postuler-offre.html.twig', ['ancien_page_title' => 'WishList','page_title' => $currentRoute, 'userId' => $userId, 'user' => $userSession]); // modifier le chermin retour 
     }
 
     #[Route('/offre/{id}/avis', name: 'AvisOffre')]  // Avis d'une offre

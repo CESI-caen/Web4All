@@ -139,4 +139,16 @@ class PostulerModel
         $requete->execute(['id_offre' => $id_offre]);
         return (int)$requete->fetchColumn();
     }
+
+    // methodes pour candidature
+    public function getCandidatures(int $id_user): array
+    {
+        $requete = $this->pdo->prepare("SELECT Postuler.*, Offres.Nom AS Nom_Offre, Entreprises.Nom AS Nom_Entreprise, Utilisateurs.Nom AS Nom_Utilisateur, Utilisateurs.Prenom AS Prenom_Utilisateur FROM Postuler
+                                        JOIN Offres ON Offres.Id_offre = Postuler.Id_offre
+                                        JOIN Entreprises ON Offres.Id_entreprise = Entreprises.Id_entreprise
+                                        JOIN Utilisateurs On Utilisateurs.Id_utilisateur = Entreprises.Id_utilisateur
+                                        WHERE Postuler.Id_utilisateur = :id_user");
+        $requete->execute(['id_user' => $id_user]);
+        return $requete->fetchAll();
+    }
 }

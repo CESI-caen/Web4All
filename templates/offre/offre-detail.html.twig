@@ -76,7 +76,7 @@
                     </span>
                 </div>
             <div class="date-item">
-                    <span class="date-label">Rémunération (€):</span>
+                    <span class="date-label">Rémunération (€):</span> 
                     <span class="date-value">
                         
                            {{ offre.Renumeration }} €
@@ -101,10 +101,9 @@
         <div class="offre-actions-section">
         {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
         <!-- Section Actions -->
-        
             <button class="offre-btn offre-btn-primary" onclick="document.getElementById("btn_Postuler").click()">
                 <span class="btn-icon">📧</span>
-                <a href="{{ path('Postuler') }}" id="btn_Postuler">Postuler</a>
+                <a href="{{ path('Postuler', {'id': offre.Id_offre}) }}" id="btn_Postuler">Postuler</a>
             </button>
             <button class="offre-btn offre-btn-secondary" onclick="document.getElementById("btn_wishlist").click()">
                 <span class="btn-icon">❤️</span>

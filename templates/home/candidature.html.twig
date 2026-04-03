@@ -26,23 +26,14 @@
 
 {% block main %}
     <section class="container">
-    {% for Wishlist in Wishlists %}
+    {% for candidature in candidatures %}
         <div class="item">
             <img class="pp" src="{{ asset('build/images/image.png') }}" alt="photo">
 
             <div class="content">
-                <p class="title">{{ Wishlist.Nom_Utilisateur }} {{ Wishlist.Prenom_Utilisateur }}
-                <p class="title">{{ Wishlist.Nom_Entreprise}}</p>
-                <p class="subtitle">{{ Wishlist.Nom_Offre }}</p>
-            </div>
-
-            <div class="actions">
-                <a href="{{path('Postuler' , {id: Wishlist.Id_offre})}}">
-                <img class="plus icon" src="{{ asset('build/images/plus.png') }}" alt="plus">
-                </a>
-                <a href="{{ path('Wishlist_retire', {id: Wishlist.Id_offre}) }}">
-                <img class="heart icon" src="{{ asset('build/images/coeur.png') }}" alt="heart">
-                </a>
+                <p class="title">{{ candidature.Nom_Utilisateur }} {{ candidature.Prenom_Utilisateur }}
+                <p class="title">{{ candidature.Nom_Entreprise}}</p>
+                <p class="subtitle">{{ candidature.Nom_Offre }}</p>
             </div>
         </div>
     {% endfor %}

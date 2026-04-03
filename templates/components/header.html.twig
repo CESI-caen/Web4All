@@ -15,9 +15,14 @@
                         {% set id = offre_id %}
                     {% endif %}
 
-                    <a href="{{ id ? path(route, {id: id}) : path(route) }}">
+                    {% if id is not null %}
+                        <a href="{{ path(route, {id: id}) }}">
+                    {% else %}
+                        <a href="{{ path('Home') }}">
+                    {% endif %}
                         <img class="icon" src="{{ asset('build/images/icon_return.png') }}" alt="Retour">
                     </a>
+
                 {% else %}
                     <a href="{{ path('Login') }}">
                         <img class="icon" src="{{ asset('build/images/icon_return.png') }}" alt="Retour">
@@ -43,9 +48,14 @@
                     {% set id = offre_id %}
                 {% endif %}
 
-                <a href="{{ id ? path(route, {id: id}) : path(route) }}">
+                {% if id is not null %}
+                    <a href="{{ path(route, {id: id}) }}">
+                {% else %}
+                    <a href="{{ path(route) }}">
+                {% endif %}
                     {{ page_title }}
                 </a>
+
             {% else %}
                 <a href="{{ path('Login') }}">{{ page_title }}</a>
             {% endif %}
