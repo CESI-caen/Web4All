@@ -32,32 +32,29 @@
 
 {% block main %}
 
-    <form action="" method="post">
+    <form action="" method="POST">
         <div>
             <label>Titre de l'offre :
-                <select> #TODO : remplacer par une liste d'offres réelles de la bdd 
-                    <option value="">Sélectionner</option>
-                    <option value="Homme">Homme</option>
-                    <option value="Femme">Femme</option>
-                    <option value="Autre">Autre</option>
-                </select>
+                {{offre.Nom}}
             </label>
         </div>
 
         <div>
             <label for="commentaire">Commentaire sur L'offre</label>
-            <textarea name="comment" id="commentaire" maxlength="450" required></textarea>
+            <textarea placeholder= "{% if notes %}{{ notes.Commentaire }}{% else %}...{% endif %}"
+            name="comment" id="commentaire" maxlength="450" required></textarea>
         </div>
         
         <div class="stars">
             <label for="commentaire" class="startext">Note</label>
-            <div class="star" data-value="1"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
-            <div class="star" data-value="2"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
-            <div class="star" data-value="3"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
-            <div class="star" data-value="4"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
-            <div class="star" data-value="5"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="1" id="1"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="2" id="2"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="3" id="3"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="4" id="4"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="5" id="5"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
         </div>
-        <input type="hidden" name="note" id="note" value="0">
+        <p> {{message}}</p>
+        <input type="hidden" name="note" id="note" value="{% if notes %}{{ notes.Note }}{% else %}0{% endif %}">
         <button type="submit">Valider</button>
     </form>
 

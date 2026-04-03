@@ -24,6 +24,7 @@
 {% endblock %}
 
 {% block main %} 
+   
     <section id="buttons">
         {% if user and user.id == entreprise.Id_utilisateur %}
             <a href="{{ path('ModifierEntreprise', {'id': entreprise.Id_entreprise}) }}" class="button edit">Modifier l'entreprise</a>
@@ -86,6 +87,16 @@
             </div>  
         </div>
     </section>
+    
+    
+    {% for note in notes %} {#Selon ordre BDD#}
+        <div class="container" id="offres" style="background-color: var(--color-bg-container);">
+        <h2>Commentaires : </h2>
+        <P>Note : {{note.Note}}</p>
+        <P>Commentaire : {{note.Commentaire}}</p>
+        <p>Posté par : {{note.Nom}} {{note.Prenom}}</p>
+    </div>
+    {% endfor %}
 {% endblock %}
 
 {% block footer %}

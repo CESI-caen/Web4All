@@ -105,7 +105,7 @@ class Noter2Model
      */
     public function getNotesByCompany(int $id_entreprise): array
     {
-        $requete = $this->pdo->prepare("SELECT * FROM Noter_2 WHERE Id_entreprise = :id_entreprise");
+        $requete = $this->pdo->prepare("SELECT Noter_2.*, Utilisateurs.Nom, Utilisateurs.Prenom FROM Noter_2 JOIN Utilisateurs ON Noter_2.Id_utilisateur = Utilisateurs.Id_utilisateur WHERE Noter_2.Id_entreprise = :id_entreprise");
         $requete->execute(['id_entreprise' => $id_entreprise]);
         return $requete->fetchAll();
     }

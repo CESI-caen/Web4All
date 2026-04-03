@@ -45,6 +45,7 @@ class AuthentificationController extends AbstractController
                     'telephone' => $user['Telephone'],
                     'genre' => $user['Genre'],
                     'ecole' => $user['Ecole'],
+                    'id_ville' => $user['Id_ville'],
                     'id_type_compte' => $user['Id_type_compte'],
                     'nom_type_compte' => $AccountModel->getAccountById($user['Id_type_compte'])['Nom']
                 ]);

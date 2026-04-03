@@ -65,7 +65,7 @@ class UtilisateurModel
      * 
      * @return bool True if the insertion was successful, false otherwise
      */
-    public function addUser(string $name,string $firstname, string $gender, string $email, string $phone, string $password, $school ,int $id_city, int $id_account): bool
+    public function addUser(string $name,string $firstname, string $gender, string $email, string $phone, string $password, string $school ,int $id_city, int $id_account): bool
     {
         $requete = $this->pdo->prepare("INSERT INTO Utilisateurs (Nom, Prenom, Genre, Email, Telephone, Mdp, Ecole, Id_ville, Id_type_compte) VALUES (:nom, :prenom, :genre, :email, :telephone, :password, :ecole, :id_ville, :id_account)");
         return $requete->execute(['nom' => $name, 'prenom' => $firstname, 'genre' => $gender, 'email' => $email, 'telephone' => $phone, 'password' => $password, 'ecole' => $school, 'id_ville' => $id_city, 'id_account' => $id_account]);
@@ -120,6 +120,16 @@ class UtilisateurModel
     {
         $requete = $this->pdo->prepare("UPDATE Utilisateurs SET Id_ville = :id_city WHERE Id_utilisateur = :id");
         return $requete->execute(['id_city' => $id_city, 'id' => $id]);
+    }
+    public function updateCV(int $id, string $id_unique): bool
+    {
+        $requete = $this->pdo->prepare("UPDATE Utilisateurs SET Cv = :Id_unique WHERE Id_utilisateur = :id");
+        return $requete->execute(['Id_unique' => $id_unique, 'id' => $id]);
+    }
+    public function updateLettreMotivation(int $id, string $id_unique): bool
+    {
+        $requete = $this->pdo->prepare("UPDATE Utilisateurs SET Lettre_motivation = :Id_unique WHERE Id_utilisateur = :id");
+        return $requete->execute(['Id_unique' => $id_unique, 'id' => $id]);
     }
 
     /** Delete a user
