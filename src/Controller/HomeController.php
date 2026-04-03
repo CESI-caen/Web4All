@@ -34,101 +34,157 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => $offres, 'userId' => $userId,'user' => $user]);
     }
 
-    #[Route('/recherche', name: 'Recherche')] // route de la page de recherche
+    // -----------------------------------------------------------------------
+    // ROUTE 1 : Formulaire de recherche — affiche UNIQUEMENT le formulaire,
+    //           puis redirige vers la bonne route de résultats.
+    // -----------------------------------------------------------------------
+
+    #[Route('/recherche', name: 'Recherche')]
     public function recherche(Request $request): Response
     {
-        $currentRoute = $request->attributes->get('_route');
-        $user = $request->getSession()->get('user'); // Récupère les données de l'utilisateur connecté depuis la session
-        $userId = $user['id'] ?? null; // Stocke l'ID de l'utilisateur ou null s'il n'est pas connecté
-
-        // ###################### LOGIQUE DE LA PAGE DE RECHERCHE ######################
-
-        // Récupérer les données des villes et domaines pour les afficher dans les filtres de la page de recherche
         $pdo = new PdoService();
+        $user     = $request->getSession()->get('user');
+        $userId   = $user['id'] ?? null;
 
-        $VilleModel = new VilleModel($pdo);
-        $villes = $VilleModel->getAllCities();
+        $villes  = (new VilleModel($pdo))->getAllCities();
+        $domaines = (new DomaineModel($pdo))->getAllDomains();
 
-        $DomaineModel = new DomaineModel($pdo);
-        $domaines = $DomaineModel->getAllDomains();
+        // On lit filtre_type uniquement pour savoir où rediriger.
+        // Si absent (visite directe de /recherche), on affiche le formulaire.
+        $filtre_type = $request->query->get('filtre_type');
 
-        // ###########################################################################################
-
-
-        // ###################### LOGIQUE DE REDIRECTION (RESULTATS) ######################
-
-        // Pour récupérer les données de la recherche depuis l'Url (car verbe GET utilisé)
-        $recherche    = $request->query->get('recherche', '');
-        $filtre_type  = $request->query->get('filtre_type'); 
-        $filtre_ville = $request->query->all('filtre_ville[]'); // Tableau [], pour les checkboxes
-        $filtre_date  = $request->query->get('filtre_date', '');
-        $filtre_domaine = $request->query->all('filtre_domaine[]', '');
-
-        //$filtre_type = is_array($filtre_type) ? $filtre_type : [$filtre_type]; // Assure que $filtre_type est toujours un tableau, même s'il n'y a qu'un seul type de recherche sélectionné
-
-        // $filtre_type_display = implode(', ', array_map('strval', $filtre_type)); // Convertit le tableau en une chaîne de caractères pour l'affichage, en séparant les éléments par des virgules
-        // $filtre_ville_display = implode(', ', array_map('strval', $filtre_ville));
-
-
-        // Si type de recherche est 'offres' -> render('offre/offre-detail.html.twig', ['offres' => $offres]); faire $offres avec OffreModel
-        // Si type de recherche est 'entreprises' -> render('home/entreprise.html.twig', ['entreprises' => $entreprises]); faire $entreprises avec EntrepriseModel
-        // Si type de recherche est 'comptes' -> render('home/profil.html.twig', ['profils' => $profils]); faire $profils avec UtilisateurModel
-
-        // TODO : faire en sorte de pouvoir faire une nouvelle recherche apres avoir consulter les resultats
-        //        actuellement, le resultat de la recherche s'affiche à l'infini, et on ne peut plus aller sur la page de recherche.
-
-        switch ($filtre_type) {
-            case 'entreprises':
-            $EntrepriseModel = new EntrepriseModel($pdo);
-            $entreprises = [['Nom' => 'Test test']];
-            // TODO : requete spécial dans Model/recherche.php
-
-            return $this->render('home/entreprise.html.twig', [
-                'ancien_page_title' => 'Recherche',
-                'page_title' => 'Entreprise',
-                'entreprises' => $entreprises,
-                'user' => $user,
-                'userId' => $userId
+        if (!$filtre_type) {
+            return $this->render('recherche/recherche.html.twig', [
+                'ancien_page_title' => 'Home',
+                'page_title'        => 'Recherche',
+                'villes'            => $villes,
+                'domaines'          => $domaines,
+                'user'              => $user,
+                'userId'            => $userId,
             ]);
-
-            case 'comptes':
-            $UtilisateurModel = new UtilisateurModel($pdo);
-            $profils = [['Nom' => 'Test test']];
-            // TODO : requete spécial dans Model/recherche.php
-
-            return $this->render('home/profil.html.twig', [
-                'ancien_page_title' => 'Recherche',
-                'page_title' => 'Profil',
-                'profils' => $profils,
-                'user' => $user,
-                'userId' => $userId
-            ]);
-
-            case 'offres':
-            $OffreModel = new OffreModel($pdo);
-            $offres = [['Nom' => 'Test test', 'Id_offre' => 1, 'Descriptif' => 'testetestest', 'Date_debut' => '2024-01-01', 'Date_fin' => '2024-01-01', 'Id_entreprise' => 1, 'Id_domaine' => 1]];
-            // TODO : requete spécial dans Model/recherche.php
-
-            return $this->render('home/index.html.twig', [
-                'ancien_page_title' => 'Recherche',
-                'page_title' => 'Home',
-                'offres' => $offres,
-                'user' => $user,
-                'userId' => $userId
-            ]);
-
-            default:
-                return $this->render('recherche/recherche.html.twig', [
-                    'ancien_page_title' => 'Home', 
-                    'page_title' => $currentRoute,
-
-                    'villes' => $villes,
-                    'domaines' => $domaines,
-
-                    'user' => $user,
-                    'userId' => $userId
-                ]);
         }
+
+        // On regroupe tous les filtres pour les passer à la route de résultats. Pour faire ensuite lkes requêtes filtrées dans les modèles.
+        $params = [
+            'recherche'      => $request->query->get('recherche', ''),
+            'filtre_ville'   => $request->query->all('filtre_ville[]'),
+            'filtre_date'    => $request->query->get('filtre_date', ''),
+            'filtre_domaine' => $request->query->all('filtre_domaine[]'),
+        ];
+
+        // redirectToRoute génère une vraie réponse HTTP 302.
+        // Le navigateur change d'URL — les deux états deviennent distincts.
+        $routeMap = [
+            'offres'      => 'ResultatsOffres',
+            'entreprises' => 'ResultatsEntreprises',
+            'comptes'     => 'ResultatsComptes',
+        ];
+
+        // Si filtre_type ne correspond à rien de connu, on reste sur le formulaire.
+        if (!array_key_exists($filtre_type, $routeMap)) {
+            return $this->render('recherche/recherche.html.twig', [
+                'ancien_page_title' => 'Home',
+                'page_title'        => 'Recherche',
+                'villes'            => $villes,
+                'domaines'          => $domaines,
+                'user'              => $user,
+                'userId'            => $userId,
+            ]);
+        }
+
+        return $this->redirectToRoute($routeMap[$filtre_type], $params);
+    }
+
+
+    // -----------------------------------------------------------------------
+    // ROUTE 2 : Résultats — Offres
+    // URL : /resultats/offres?recherche=...&filtre_ville[]=...
+    // -----------------------------------------------------------------------
+
+    #[Route('/resultat/offres', name: 'ResultatsOffres')] // C'est bien Home qui affiche les offres
+    public function resultatsOffres(Request $request): Response
+    {
+        $pdo    = new PdoService();
+        $user   = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        $recherche      = $request->query->get('recherche', '');
+        $filtre_ville   = $request->query->all('filtre_ville');
+        $filtre_date    = $request->query->get('filtre_date', '');
+        $filtre_domaine = $request->query->all('filtre_domaine');
+
+        // TODO : remplacer par la vraie requête filtrée dans OffreModel
+        $offres = [
+            [
+                'Nom'          => 'Test test',
+                'Id_offre'     => 1,
+                'Descriptif'   => 'testetestest',
+                'Date_debut'   => '2024-01-01',
+                'Date_fin'     => '2024-01-01',
+                'Id_entreprise'=> 1,
+                'Id_domaine'   => 1,
+            ]
+        ];
+
+        return $this->render('home/index.html.twig', [
+            'ancien_page_title' => 'Recherche',
+            'page_title'        => 'Home',
+            'offres'            => $offres,
+            'user'              => $user,
+            'userId'            => $userId,
+        ]);
+    }
+
+
+    // -----------------------------------------------------------------------
+    // ROUTE 3 : Résultats — Entreprises
+    // -----------------------------------------------------------------------
+
+    #[Route('/resultats/entreprises', name: 'ResultatsEntreprises')]
+    public function resultatsEntreprises(Request $request): Response
+    {
+        $pdo    = new PdoService();
+        $user   = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        $recherche = $request->query->get('recherche', '');
+        // TODO : requête filtrée dans EntrepriseModel
+
+        $entreprises = [['Nom' => 'Test test']];
+
+        return $this->render('home/entreprise.html.twig', [
+            'ancien_page_title' => 'Recherche',
+            'page_title'        => 'Entreprise',
+            'entreprises'       => $entreprises,
+            'user'              => $user,
+            'userId'            => $userId,
+        ]);
+    }
+
+
+    // -----------------------------------------------------------------------
+    // ROUTE 4 : Résultats — Comptes
+    // -----------------------------------------------------------------------
+
+    #[Route('/resultats/comptes', name: 'ResultatsComptes')]
+    public function resultatsComptes(Request $request): Response
+    {
+        $pdo    = new PdoService();
+        $user   = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        $recherche = $request->query->get('recherche', '');
+        // TODO : requête filtrée dans UtilisateurModel
+
+        $profils = [['Nom' => 'Test test']];
+
+        return $this->render('home/profil.html.twig', [
+            'ancien_page_title' => 'Recherche',
+            'page_title'        => 'Profil',
+            'profils'           => $profils,
+            'user'              => $user,
+            'userId'            => $userId,
+        ]);
     }
 
     #[Route('/profil', name: 'Profil')]
