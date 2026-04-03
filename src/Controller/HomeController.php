@@ -42,7 +42,7 @@ class HomeController extends AbstractController
         $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
 
        
-        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => array_slice($offres, ($page - 1) * $perpage, $perpage), 'userId' => $userId,'user' => $user, 'page' => $page, 'nbpages' => $nbpages, 'baseUrl' => $this->generateUrl('Home'), 'nbpages' => $nbpages]);
+        return $this->render('home/index.html.twig', ['ancien_page_title' => 'null','page_title' => $currentRoute, 'offres' => array_slice($offres, ($page - 1) * $perpage, $perpage), 'userId' => $userId,'user' => $user, 'page' => $page, 'nbpages' => $nbpages, 'baseUrl' => $this->generateUrl('Home')]);
     }
 
     // -----------------------------------------------------------------------
@@ -138,10 +138,6 @@ class HomeController extends AbstractController
         }
         $filtre_date    = $request->query->get('filtre_date', '');
 
-        var_dump($recherche);
-        var_dump($filtre_date);
-        var_dump($filtre_domaine);
-        var_dump($filtre_ville);
 
         switch ($filtre_date) {
             case 'toutes':
@@ -158,19 +154,12 @@ class HomeController extends AbstractController
                 break;
         }
 
-        // TODO : remplacer par la vraie requête filtrée dans OffreModel
         $offres = (new OffreModel($pdo))->filterOffresForSearch($filtre_domaine, $filtre_ville, $date_publication);
-        /* $offres = [
-            [
-                'Nom'          => 'Test test',
-                'Id_offre'     => 1,
-                'Descriptif'   => 'testetestest',
-                'Date_debut'   => '2024-01-01',
-                'Date_fin'     => '2024-01-01',
-                'Id_entreprise'=> 1,
-                'Id_domaine'   => 1,
-            ]
-        ]; */
+
+        $perpage = 2;
+        $nbpages = ceil(count($offres) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
 
         return $this->render('home/index.html.twig', [
             'ancien_page_title' => 'Recherche',
@@ -178,6 +167,9 @@ class HomeController extends AbstractController
             'offres'            => $offres,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
@@ -198,12 +190,20 @@ class HomeController extends AbstractController
 
         $entreprises = [['Nom' => 'Test test']];
 
+        $perpage = 2;
+        $nbpages = ceil(count($entreprises) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
         return $this->render('home/entreprise.html.twig', [
             'ancien_page_title' => 'Recherche',
             'page_title'        => 'ListEntreprises',
             'entreprises'       => $entreprises,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
@@ -224,12 +224,20 @@ class HomeController extends AbstractController
 
         $profils = [['Nom' => 'Test test']];
 
+        $perpage = 2;
+        $nbpages = ceil(count($profils) / $perpage);
+        $pageParam = $request->query->get('page');
+        $page = ($pageParam && $pageParam > 0 && $pageParam <= $nbpages) ? (int)$pageParam : 1;
+
         return $this->render('home/profil.html.twig', [
             'ancien_page_title' => 'Recherche',
             'page_title'        => 'Profil',
             'profils'           => $profils,
             'user'              => $user,
             'userId'            => $userId,
+            'page'              => $page,
+            'nbpages'           => $nbpages,
+            'baseUrl'           => $this->generateUrl('Recherche')
         ]);
     }
 
