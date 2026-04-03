@@ -163,8 +163,8 @@ h1 {
                          "description description description offres";
     }
     #photo img {
-        width: 20vw;
-        height: 20vw;
+        width: 15vw;
+        height: 15vw;
     }
     #infos {
         display: flex;
