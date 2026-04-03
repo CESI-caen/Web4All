@@ -34,13 +34,11 @@
 
     <form action="" method="POST">
         <div>
-            <label>Titre de l'offre :
-                {{offre.Nom}}
-            </label>
+            <label>Nom de l'entreprise : {{ entreprise.Nom }}</label>
         </div>
 
         <div>
-            <label for="commentaire">Commentaire sur L'offre</label>
+            <label for="commentaire">Commentaire sur l'entreprise</label>
             <textarea placeholder= "{% if notes %}{{ notes.Commentaire }}{% else %}...{% endif %}"
             name="comment" id="commentaire" maxlength="450" required></textarea>
         </div>

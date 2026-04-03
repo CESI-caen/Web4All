@@ -153,26 +153,52 @@
 /* Section Actions */
 .offre-actions-section {
     display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 12px;
+    margin: 0 auto 30px auto;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    width: fit-content;
 }
 
 .offre-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 24px;
-    font-size: 1rem;
+    padding: 8px 14px;
+    font-size: 0.95rem;
     font-weight: 600;
     border: none;
     border-radius: var(--offre-border-radius);
     cursor: pointer;
     transition: var(--offre-transition);
     box-shadow: var(--offre-shadow);
-    min-width: 500px;
+    min-width: 120px;
+    width: auto;
+    max-width: 150px;
+    height: 36px;
+}
+
+@media (max-width: 768px) {
+    .offre-actions-section {
+        width: 100%;
+        gap: 10px;
+        padding: 0 12px;
+        margin-bottom: 20px;
+    }
+
+    .offre-btn {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        height: 42px;
+    }
+
+    .offre-btn:first-child {
+        margin-top: 0;
+    }
 }
 
 .offre-btn-primary {
@@ -376,4 +402,49 @@
     padding: 15px;
     border-radius: var(--offre-border-radius);
     margin-bottom: 20px;
+}
+
+/* Styles pour les boutons de modification et suppression */
+#buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    max-width: 150px;
+    height: 36px;
+    transition: all 0.2s ease;
+}
+
+.button.edit {
+    background-color: #28a745;
+    color: white;
+}
+
+.button.edit:hover {
+    background-color: #218838;
+}
+
+.button.delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button.delete:hover {
+    background-color: #c82333;
 }

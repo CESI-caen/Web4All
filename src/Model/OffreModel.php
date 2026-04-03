@@ -33,8 +33,20 @@ class OffreModel
      */
     public function getAllOffresByUserId(int $userId): array
     {
-        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise IN (SELECT Id_entreprise FROM Entreprises WHERE Id_user = :user_id)");
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise IN (SELECT Id_entreprise FROM Entreprises WHERE Id_utilisateur = :user_id)");
         $requete->execute(['user_id' => $userId]);
+        return $requete->fetchAll();
+    }
+
+    /** Get all job offers for a specific enterprise
+     *
+     * @param int $enterpriseId The ID of the enterprise
+     * @return array The list of job offers for the enterprise
+     */
+    public function getOffresByEnterpriseId(int $enterpriseId): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :enterprise_id");
+        $requete->execute(['enterprise_id' => $enterpriseId]);
         return $requete->fetchAll();
     }
 
@@ -48,6 +60,18 @@ class OffreModel
         $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_offre = :id");
         $requete->execute(['id' => $id]);
         return $requete->fetch();
+    }
+
+    /** Get a job offer by its ID
+     *
+     * @param int $id The ID of the offer
+     * @return array|false The job offer if found, false otherwise
+     */
+    public function getOffreById_entreprise(int $id): array
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Offres WHERE Id_entreprise = :id");
+        $requete->execute(['id' => $id]);
+        return $requete->fetchAll();
     }
 
     /** Get the name of a job offer by its ID
@@ -130,10 +154,10 @@ class OffreModel
      * @param int $id_entreprise The ID of the company offering the position
      * @return bool True if the insertion was successful, false otherwise
      */
-    public function addOffre(string $descriptif, string $date_start, string $date_end, int $duration, float $salary, int $id_entreprise): bool
+    public function addOffre(string $nom,string $descriptif, string $date_start, string $date_end, int $duration, float $salary, int $id_entreprise): bool
     {
-        $requete = $this->pdo->prepare("INSERT INTO Offres (Descriptif, Date_start, Date_end, Duration, Salary, Id_entreprise) VALUES (:descriptif, :date_start, :date_end, :duration, :salary, :id_entreprise)");
-        return $requete->execute(['descriptif' => $descriptif, 'date_start' => $date_start, 'date_end' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id_entreprise' => $id_entreprise ]);
+        $requete = $this->pdo->prepare("INSERT INTO Offres (Nom, Descriptif, Date_debut, Date_fin, Duree, Renumeration, Id_entreprise) VALUES (:nom, :descriptif, :date_start, :date_end, :duration, :salary, :id_entreprise)");
+        return $requete->execute(['nom' => $nom, 'descriptif' => $descriptif, 'date_start' => $date_start, 'date_end' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id_entreprise' => $id_entreprise ]);
     }
 
     /**
@@ -147,10 +171,10 @@ class OffreModel
      * @param float $salary The new salary of the offer
      * @return bool True if the update was successful, false otherwise
      */
-    public function updateOffre(int $id, string $description, string $date_start, string $date_end, int $duration, float $salary): bool // à completer avec request->request->get() ( string $descriptif, string $date_debut, string $date_fin, int $duree, float $renumeration)
+    public function updateOffre(int $id,string $nom, string $description, string $date_start, string $date_end, int $duration, float $salary): bool // à completer avec request->request->get() ( string $descriptif, string $date_debut, string $date_fin, int $duree, float $renumeration)
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Description = :description, Date_debut = :date_debut, Date_fin = :date_fin, Duree = :duration, Renumeration = :salary WHERE Id_offre = :id");
-        return $requete->execute(['description' => $description, 'date_debut' => $date_start, 'date_fin' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id' => $id]);
+        $requete = $this->pdo->prepare("UPDATE Offres SET Nom = :nom, Descriptif = :description, Date_debut = :date_debut, Date_fin = :date_fin, Duree = :duration, Renumeration = :salary WHERE Id_offre = :id");
+        return $requete->execute(['nom' => $nom, 'description' => $description, 'date_debut' => $date_start, 'date_fin' => $date_end, 'duration' => $duration, 'salary' => $salary, 'id' => $id]);
     }
 
     /** Update the name of a job offer by its ID
