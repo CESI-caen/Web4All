@@ -25,9 +25,10 @@
 
 {% block main %}
 
+{% if user and user.id != 999 and user.nom_type_compte == 'pilote' %}
 
 <section class="container">
-    <form>
+    <form method="POST">
         <label class="titre">Nom<br>
             <input name="nom" type="text" placeholder="Nom" required>
         </label>
@@ -35,20 +36,16 @@
             <input name="prenom" type="text" placeholder="Prenom" required>
         </label>
             <label>Genre :
-                <select>
+                <select name="genre">
                     <option value="">Sélectionner</option>
                     <option value="Homme">Homme</option>
                     <option value="Femme">Femme</option>
                     <option value="Autre">Autre</option>
                 </select>
             </label>
-        <label class="titre">Ville Ecole <br>
-            <input name="ville" type="text" placeholder="Ville" required>
-        </label>
 
-        <label class="groupe">
-            <span id="labelGroupe">École</span><br>
-            <input id="inputGroupe" name="groupe" type="text" placeholder="École" required>
+        <label class="titre">Teléphone<br>
+            <input name="tel" type="tel" placeholder="Numéro Teléphone" required>
         </label>
         <label class="email">Email<br>
             <input name="email" type="email" placeholder="Email" required>
@@ -59,6 +56,7 @@
         <label class="titre">Confirmation du mot de passe<br>
              <input name="password_confirm" type="password" placeholder="Confirmer le mot de passe" required>
         </label>
+        <p> {{message}}</p>
         <div class="buttons">
             <label>
                 <input type="hidden" name="page" value="1">
@@ -68,6 +66,9 @@
         </div>
     </form>
 </section>
+{% else %}
+    <p style="color:red; text-align:center;">Vous n'avez pas la permission d'accéder à cette page.</p>
+{% endif %}
     
 {% endblock %}
 

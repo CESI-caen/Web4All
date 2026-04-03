@@ -72,4 +72,31 @@ class ParametreController extends AbstractController
         }
     return $this->render('parametre/modifier-mdp.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'message' => $message]);
     }
+
+    #[Route('/parametres/supprimer-compte', name: 'Supprimer-compte')]   // Route pour la page de paramètres
+    public function SupprimerCompte(Request $request): Response
+    {   
+        $pdo = new PdoService();
+        $userModel = new UtilisateurModel($pdo);
+
+        $currentRoute = $request->attributes->get('_route'); // Récupère le nom de la route actuelle
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+
+        $user_bdd = $userModel->getUserByEmail($user['email']);
+
+        $mdp_actuel = $request->request->get('current_password');
+
+        $message = null;
+         if ($request->isMethod('POST')) {
+            if ($user_bdd && $user_bdd['Mdp'] === $mdp_actuel) { //password_verify($mdp_actuel, $user_bdd['Mdp'])
+                $userModel->deleteUser($userId);
+                return $this->redirectToRoute('Deconnexion');
+            }else{
+                $message = "Mot de passe actuel incorrect !";
+            } 
+         }
+    return $this->render('parametre/supprimer-compte.html.twig',['ancien_page_title' => 'Paramètres','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'message' => $message]);
+       
+    }
 }

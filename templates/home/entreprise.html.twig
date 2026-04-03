@@ -24,6 +24,7 @@
 {% endblock %}
 
 {% block main %} 
+    {% if user and user.id != 999 and user.nom_type_compte == 'recruteur' %}
     <section id="buttons">
         <div class="button edit">Modifier l'entreprise</div>
         <div class="button delete">Supprimer l'entreprise</div>
@@ -69,6 +70,9 @@
             </div>  
         </div>
     </section>
+    {% else %}
+        <p style="color:red; text-align:center;">Vous n'avez pas la permission d'accéder à cette page.</p>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

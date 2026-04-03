@@ -49,8 +49,11 @@
         {# Exemple de requête SELECT avec condition basique #}
         <a href="/parametres/compte"> <div class="item"> <button> Compte Information </button> </div> </a>
         <a href="/parametres/modifier-mdp"> <div class="item"> <button> Modifier le mot de passe </button> </div> </a>  
+        
     {% endif %}
-    {# Exemple de requête UPDATE avec condition basique #}
+    {% if user and user.id != 999 and user.nom_type_compte == 'etudiant' %}
+    <a href="/parametres/supprimer-compte"> <div class="item"> <button> Supprimer le compte </button> </div> </a> 
+    {% endif %}
     
 
   </div>
