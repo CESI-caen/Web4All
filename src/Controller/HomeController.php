@@ -72,9 +72,9 @@ class HomeController extends AbstractController
         // On regroupe tous les filtres pour les passer à la route de résultats. Pour faire ensuite lkes requêtes filtrées dans les modèles.
         $params = [
             'recherche'      => $request->query->get('recherche', ''),
-            'filtre_ville'   => $request->query->all('filtre_ville[]'),
+            'filtre_ville'   => $request->query->all('filtre_ville'),
             'filtre_date'    => $request->query->get('filtre_date', ''),
-            'filtre_domaine' => $request->query->all('filtre_domaine[]'),
+            'filtre_domaine' => $request->query->all('filtre_domaine'),
         ];
 
         // redirectToRoute génère une vraie réponse HTTP 302.
@@ -114,12 +114,47 @@ class HomeController extends AbstractController
         $userId = $user['id'] ?? null;
 
         $recherche      = $request->query->get('recherche', '');
-        $filtre_ville   = $request->query->all('filtre_ville');
-        $filtre_date    = $request->query->get('filtre_date', '');
         $filtre_domaine = $request->query->all('filtre_domaine');
+        if (empty($filtre_domaine)) {
+            $filtre_domaine = null; // Pour que le modèle sache qu'il ne doit pas filtrer par domaine
+        } elseif (is_array($filtre_domaine)) {
+            foreach ($filtre_domaine as $domaine) {
+                $domaine = (string) $domaine; // Conversion de chaque domaine en string, pour que le modèle puisse faire la requête SQL correctement
+            }
+        }
+        $filtre_ville   = $request->query->all('filtre_ville');
+        if (empty($filtre_ville)) {
+            $filtre_ville = null; // Pour que le modèle sache qu'il ne doit pas filtrer par ville
+        } elseif (is_array($filtre_ville)) {
+            foreach ($filtre_ville as $ville) {
+                $ville = (string) $ville; // Conversion de chaque ville en string, pour que le modèle puisse faire la requête SQL correctement
+            }
+        }
+        $filtre_date    = $request->query->get('filtre_date', '');
+
+        var_dump($recherche);
+        var_dump($filtre_date);
+        var_dump($filtre_domaine);
+        var_dump($filtre_ville);
+
+        switch ($filtre_date) {
+            case 'toutes':
+                $date_publication = null; // Pas de filtre sur la date
+                break;
+            case '24h': // Cette semaine
+                $date_publication = date('Y-m-d', strtotime('-1 day'));
+                break;
+            case '7j': // Ce mois-ci
+                $date_publication = date('Y-m-d', strtotime('-7 days'));
+                break;
+            case 'mois': // Ce mois-ci
+                $date_publication = date('Y-m-01'); // Premier jour du mois en cours
+                break;
+        }
 
         // TODO : remplacer par la vraie requête filtrée dans OffreModel
-        $offres = [
+        $offres = (new OffreModel($pdo))->filterOffresForSearch($filtre_domaine, $filtre_ville, $date_publication);
+        /* $offres = [
             [
                 'Nom'          => 'Test test',
                 'Id_offre'     => 1,
@@ -129,7 +164,7 @@ class HomeController extends AbstractController
                 'Id_entreprise'=> 1,
                 'Id_domaine'   => 1,
             ]
-        ];
+        ]; */
 
         return $this->render('home/index.html.twig', [
             'ancien_page_title' => 'Recherche',
@@ -159,7 +194,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/entreprise.html.twig', [
             'ancien_page_title' => 'Recherche',
-            'page_title'        => 'Entreprise',
+            'page_title'        => 'ListEntreprises',
             'entreprises'       => $entreprises,
             'user'              => $user,
             'userId'            => $userId,
@@ -262,6 +297,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/wishlist.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'Wishlists' => $Wishlists]);
     }
+
     #[Route('/creer_etudiant', name: 'Inscription Etudiant')] // Route pour la page de création d'étudiant
     public function creer(Request $request): Response
     {
@@ -354,6 +390,7 @@ class HomeController extends AbstractController
             'notes' => $notes,
         ]);
     }
+
     #[Route('/entreprise/{id}/avis', name: 'AvisEntreprise')]  // Avis d'une offre
     public function avis(int $id,Request $request): Response
     {
@@ -500,7 +537,6 @@ class HomeController extends AbstractController
         
         return $this->render('home/entreprise.html.twig',['ancien_page_title' => 'Home','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $Entreprise, 'offres' => $Offres, 'ville' => $ville, 'notes' => $Note]);
     }
-
 
     #[Route('/cv', name: 'Fichiers Personnels')]  // Route pour la page de documents
     public function document(Request $request): Response

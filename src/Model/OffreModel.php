@@ -143,6 +143,16 @@ class OffreModel
         return $requete->fetch();
     }
 
+    /** Get all publication dates of job offers
+     *
+     * @return array The list of publication dates
+     */
+    public function getAllDatePosted(): array
+    {
+        $requete = $this->pdo->query("SELECT Date_publication FROM Offres");
+        return $requete->fetchAll();
+    }
+
     /**
      * Add a new offer (offre)
      * 
@@ -197,26 +207,32 @@ class OffreModel
 
     public function updateOffreSalary(int $id, float $salary): bool
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Salary = :salary WHERE Id_offre = :id");
+        $requete = $this->pdo->prepare("UPDATE Offres SET Renumeration = :salary WHERE Id_offre = :id");
         return $requete->execute(['salary' => $salary, 'id' => $id]);
     }
 
     public function updateOffreDuration(int $id, int $duration): bool
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Duration = :duration WHERE Id_offre = :id");
+        $requete = $this->pdo->prepare("UPDATE Offres SET Duree = :duration WHERE Id_offre = :id");
         return $requete->execute(['duration' => $duration, 'id' => $id]);
     }
 
     public function updateOffreDateStart(int $id, string $date_start): bool
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Date_start = :date_start WHERE Id_offre = :id");
+        $requete = $this->pdo->prepare("UPDATE Offres SET Date_debut = :date_start WHERE Id_offre = :id");
         return $requete->execute(['date_start' => $date_start, 'id' => $id]);
     }
 
     public function updateOffreDateEnd(int $id, string $date_end): bool
     {
-        $requete = $this->pdo->prepare("UPDATE Offres SET Date_end = :date_end WHERE Id_offre = :id");
+        $requete = $this->pdo->prepare("UPDATE Offres SET Date_fin = :date_end WHERE Id_offre = :id");
         return $requete->execute(['date_end' => $date_end, 'id' => $id]);
+    }
+
+    public function updateOffreDatePosted(int $id, string $date_posted): bool
+    {
+        $requete = $this->pdo->prepare("UPDATE Offres SET Date_publication = :date_posted WHERE Id_offre = :id");
+        return $requete->execute(['date_posted' => $date_posted, 'id' => $id]);
     }
 
     /**
@@ -229,5 +245,67 @@ class OffreModel
     {
         $requete = $this->pdo->prepare("DELETE FROM Offres WHERE Id_offre = :id");
         return $requete->execute(['id' => $id]);
+    }
+
+    /**
+     * Filter offers based on the provided criteria
+     * 
+     * @param string|null $domain The domain to filter by (optional)
+     * @param string|null $city The city to filter by (optional)
+     * @param string|null $date_publication The publication date (min) to filter by (optional)
+     */
+
+    public function filterOffresForSearch(?array $domain, ?array $city, ?string $date_publication): array
+    {
+        $query = "SELECT DISTINCT Offres.* FROM Offres";
+        $params = [];
+        $joins = [];
+        $conditions = ["1=1"];
+
+        if (!empty($domain) || !empty($city)) {
+            $joins[] = "INNER JOIN Entreprises ON Offres.Id_entreprise = Entreprises.Id_entreprise";
+        }
+
+        if (!empty($domain)) {
+            $joins[] = "INNER JOIN Exercer_dans ON Entreprises.Id_entreprise = Exercer_dans.Id_entreprise";
+            $joins[] = "INNER JOIN Domaines ON Exercer_dans.Id_domaine = Domaines.Id_domaine";
+
+            $domainPlaceholders = [];
+            foreach ($domain as $index => $value) {
+                $key = "domain_$index";
+                $domainPlaceholders[] = ":$key";
+                $params[$key] = $value;
+            }
+
+            $conditions[] = "Domaines.Nom IN (" . implode(", ", $domainPlaceholders) . ")";
+        }
+
+        if ($date_publication) {
+            $conditions[] = "Offres.Date_publication > :date_publication";
+            $params['date_publication'] = $date_publication;
+        }
+
+        if (!empty($city)) {
+            $joins[] = "INNER JOIN Villes ON Entreprises.Id_ville = Villes.Id_ville";
+
+            $cityPlaceholders = [];
+            foreach ($city as $index => $value) {
+                $key = "city_$index";
+                $cityPlaceholders[] = ":$key";
+                $params[$key] = $value;
+            }
+
+            $conditions[] = "Villes.Nom IN (" . implode(", ", $cityPlaceholders) . ")";
+        }
+
+        if (!empty($joins)) {
+            $query .= " " . implode(" ", $joins);
+        }
+
+        $query .= " WHERE " . implode(" AND ", $conditions);
+
+        $requete = $this->pdo->prepare($query);
+        $requete->execute($params);
+        return $requete->fetchAll();
     }
 }
