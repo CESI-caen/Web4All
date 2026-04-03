@@ -17,6 +17,7 @@ use App\Model\AccountModel;
 use App\Model\DomaineModel;
 use App\Model\CompetenceModel;
 use App\Model\VouloirModel;
+use App\Model\Noter1Model;
 use App\Model\Noter2Model;
 
 class HomeController extends AbstractController
@@ -220,6 +221,16 @@ class HomeController extends AbstractController
         // Récupérer la ville de l'entreprise
         $ville = $VilleModel->getCityById($entreprise['Id_ville']);
 
+        // Récupérer les notes pour chaque offre d'entreprise (optionnel)
+        $Note1Model = new Noter1Model($pdo);
+        $notes = [];
+        foreach ($offres as $offreItem) {
+            $offreNotes = $Note1Model->getNotesByOffer($offreItem['Id_offre']);
+            if (!empty($offreNotes)) {
+                $notes = array_merge($notes, $offreNotes);
+            }
+        }
+
         return $this->render('home/entreprise.html.twig', [
             'ancien_page_title' => 'Home',
             'page_title' => $currentRoute,
@@ -228,7 +239,8 @@ class HomeController extends AbstractController
             'entreprise' => $entreprise,
             'offres' => $offres,
             'domaines' => $domaines,
-            'ville' => $ville
+            'ville' => $ville,
+            'notes' => $notes,
         ]);
     }
 

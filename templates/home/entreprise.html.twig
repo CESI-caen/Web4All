@@ -89,7 +89,7 @@
     </section>
     
     
-    {% for note in notes %} {#Selon ordre BDD#}
+    {% for note in notes|default([]) %} {#Selon ordre BDD#}
         <div class="container" id="offres" style="background-color: var(--color-bg-container);">
         <h2>Commentaires : </h2>
         <P>Note : {{note.Note}}</p>
