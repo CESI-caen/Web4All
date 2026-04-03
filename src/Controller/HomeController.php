@@ -243,6 +243,36 @@ class HomeController extends AbstractController
             'notes' => $notes,
         ]);
     }
+    #[Route('/entreprise/{id}/avis', name: 'AvisEntreprise')]  // Avis d'une offre
+    public function avis(int $id,Request $request): Response
+    {
+        
+        
+        $pdo = new PdoService();
+        $EntrepriseModel = new EntrepriseModel($pdo);
+        $Note2 = new Noter2Model($pdo);
+        $entreprise = $EntrepriseModel->getEnterpriseById($id);
+
+        $currentRoute = $request->attributes->get('_route');
+        $user = $request->getSession()->get('user');
+        $userId = $user['id'] ?? null;
+        $notes = $Note2->getRelation($userId, $id);
+
+         if ($request->isMethod('POST')){
+            $comment = $request->request->get('comment');
+            $note = $request->request->get('note');
+            if (!$Note2->relationExists($userId, $id)){
+                $Note2->addRelation($userId, $id, $note, $comment);
+                $notes = $Note2->getRelation($userId, $id);
+                $message = "Votre avis a été ajouté.";
+            }else{
+                $Note2->updateNoteAndComment($userId, $id, $note, $comment);
+                $notes = $Note2->getRelation($userId, $id);
+                $message = "Votre avis a été mis à jour.";
+            }
+         }
+    return $this->render('offre/avis-entreprise.html.twig', ['ancien_page_title' => 'Offre','page_title' => $currentRoute, 'userId' => $userId, 'user' => $user, 'entreprise' => $entreprise, 'entreprise_id' => $id, 'notes' => $notes, 'message' => $message ?? null]);
+    }
 
     #[Route('/entreprises', name: 'ListEntreprises')]
     public function listEntreprises(Request $request): Response

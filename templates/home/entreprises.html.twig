@@ -33,9 +33,6 @@
             <div class="entreprises-list">
                 {% for entreprise in entreprises %}
                     <div class="entreprise-card">
-                        <div class="entreprise-photo">
-                            <img src="{{ asset('build/images/image.png') }}" alt="Logo de {{ entreprise.Nom }}">
-                        </div>
                         <div class="entreprise-info">
                             <h2>{{ entreprise.Nom }}</h2>
                             <p class="entreprise-email">{{ entreprise.Email }}</p>

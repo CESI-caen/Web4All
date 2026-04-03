@@ -1,0 +1,65 @@
+{% extends 'components/base.html.twig' %}
+
+
+{% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+
+{% block title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('palette') }}
+    {{ encore_entry_link_tags('avis-offre.css') }}
+    {{ encore_entry_link_tags('header') }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('avis-offre.js') }}
+    {{ encore_entry_script_tags('theme') }}
+{% endblock %}
+
+
+{% block header %}
+    {{ include('components/header.html.twig')}}
+{% endblock %}
+
+
+{% block main %}
+
+    <form action="" method="POST">
+        <div>
+            <label>Nom de l'entreprise : {{ entreprise.Nom }}</label>
+        </div>
+
+        <div>
+            <label for="commentaire">Commentaire sur l'entreprise</label>
+            <textarea placeholder= "{% if notes %}{{ notes.Commentaire }}{% else %}...{% endif %}"
+            name="comment" id="commentaire" maxlength="450" required></textarea>
+        </div>
+        
+        <div class="stars">
+            <label for="commentaire" class="startext">Note</label>
+            <div class="star" data-value="1" id="1"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="2" id="2"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="3" id="3"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="4" id="4"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+            <div class="star" data-value="5" id="5"><img src="{{asset('build/images/icons_étoile.png')}}" alt="Etoile"></div>
+        </div>
+        <p> {{message}}</p>
+        <input type="hidden" name="note" id="note" value="{% if notes %}{{ notes.Note }}{% else %}0{% endif %}">
+        <button type="submit">Valider</button>
+    </form>
+
+{% endblock %}
+
+
+{% block footer %}
+    {{ include('home/footer-home.html.twig')}}
+{% endblock %}
+

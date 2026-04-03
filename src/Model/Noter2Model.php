@@ -40,6 +40,12 @@ class Noter2Model
         $requete->execute(['id_user' => $id_user, 'id_entreprise' => $id_entreprise]);
         return $requete->fetch() !== false;
     }
+    public function getRelation(int $id_user, int $id_entreprise): array|false
+    {
+        $requete = $this->pdo->prepare("SELECT * FROM Noter_2 WHERE Id_utilisateur = :id_user AND Id_entreprise = :id_entreprise");
+        $requete->execute(['id_user' => $id_user, 'id_entreprise' => $id_entreprise]);
+        return $requete->fetch();
+    }
 
     /** Delete a relation between a user and a company
      *
